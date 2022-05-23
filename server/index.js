@@ -8,7 +8,8 @@ const cookieParser = require("cookie-parser")
 const app = express()
 
 //Import Routes
-
+const userRouter = require("./routes/userRouter")
+const authRouter = require("./routes/authRouter")
 
 //Required Middle wares
 app.use(express.json())
@@ -34,6 +35,8 @@ mongoose
 
 
 //Route Middle Wares
+app.use("/api/v1/auth", authRouter)
+app.use("/api/v1/users", userRouter)
 
 app.get("/", (req, res) => {
     res.send("Hello")
