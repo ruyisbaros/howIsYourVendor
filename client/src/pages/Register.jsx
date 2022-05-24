@@ -122,10 +122,10 @@ const Register = () => {
                     </label>
                 </div>
 
-                <button type="submit" className="btn w-50" disabled={email && password && fullName && cf_password && username ? false : true}>Register</button>
+                <button style={{ backgroundColor: errText.split(" ").includes("email", "username", "passwords") && "red" }} type="submit" className="btn w-50" disabled={email && password && fullName && cf_password && username ? false : true}>Register</button>
 
                 <p className="my-3">
-                    Do you have already an account? <Link to="/login">Login Now</Link>
+                    Do you have already an account? <Link to="/">Login Now</Link>
                 </p>
             </form>
         </div>

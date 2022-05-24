@@ -29,6 +29,10 @@ button:disabled{
   cursor: not-allowed;
 }
 
+img{ 
+  object-fit: cover;
+}
+
 .link_class{
   text-decoration: none;
   color:inherit;
@@ -54,18 +58,11 @@ filter:invert(1)
   width: 100%;
   margin:auto;
 }
-/* .error {
-  width: 30%;
-  margin:30px auto;
-  height: 50px;
-  border:2px solid red;
-  background-color: yellow;
-  color:red;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
+
+.avatar{
+    width: 40px;
+    height: 40px;
+}
 
 /* ----LOGIN------ */
 
@@ -74,3 +71,7 @@ filter:invert(1)
 /* -------loading */
 
 @import url("./styles/loading.css");
+
+/* ----header */
+
+@import url("./styles/header.css");

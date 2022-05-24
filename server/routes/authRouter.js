@@ -5,6 +5,6 @@ const { register, login, logout, generateRefreshToken } = require("../controller
 router.post("/register", register)
 router.post("/login", login)
 router.post("/logout", logout)
-router.post("/refresh_token", generateRefreshToken)
+router.get("/refresh_token", generateRefreshToken)
 
 module.exports = router

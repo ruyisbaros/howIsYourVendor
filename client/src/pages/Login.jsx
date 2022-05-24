@@ -1,18 +1,18 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { authStart, authSuccess, authFailure } from '../redux/authSlicer';
 import { toast } from "react-toastify"
 
 
 const Login = () => {
 
-    /* const { } = useSelector(store => store.user) */
+    const { token } = useSelector(store => store.user)
     const dispatch = useDispatch()
-
+    const navigate = useNavigate()
     const [passType, setPassType] = useState(false)
-
+    const [errText, setErrText] = useState("")
     const [user, setUser] = useState({ email: "", password: "", })
 
     const { email, password } = user
@@ -20,6 +20,10 @@ const Login = () => {
     const handleInput = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
+
+    useEffect(() => {
+        if (token) navigate("/")
+    }, [token, navigate])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -33,6 +37,7 @@ const Login = () => {
         } catch (error) {
             toast.error(error.response.data.message)
             dispatch(authFailure(error.response.data.message))
+            setErrText(error.response.data.message)
         }
     }
     //console.log(user);
@@ -44,7 +49,9 @@ const Login = () => {
                     <label htmlFor="exampleInputEmail1">Email address</label>
                     <input type="email" name="email" className="form-control" id="exampleInputEmail1"
                         aria-describedby="emailHelp" placeholder="Enter email" required
-                        value={email} onChange={handleInput} />
+                        value={email} onChange={handleInput}
+                        style={{ backgroundColor: errText.split(" ").includes("user") && "red" }}
+                    />
                     <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div className="form-group">
@@ -60,7 +67,7 @@ const Login = () => {
                     </div>
                 </div>
 
-                <button type="submit" className="btn btn-dark w-50" disabled={email && password ? false : true}>Login</button>
+                <button style={{ backgroundColor: errText.split(" ").includes("user", "wrong") && "red" }} type="submit" className="btn btn-dark w-50" disabled={email && password ? false : true}>Login</button>
 
                 <p className="my-3">
                     Don't you have an account? <Link to="/register">Register Now</Link>

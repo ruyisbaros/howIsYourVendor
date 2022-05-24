@@ -76,7 +76,7 @@ exports.login = asyncHandler(async (req, res) => {
 exports.logout = asyncHandler(async (req, res) => {
 
     res.clearCookie("refreshToken", { path: "/api/v1/auth/refresh_token" })
-    return res.status(200).json({ message: "You have been logout!" })
+    return res.status(200).json({ message: "You have been logged out!" })
 })
 
 exports.generateRefreshToken = asyncHandler(async (req, res) => {
@@ -94,3 +94,5 @@ exports.generateRefreshToken = asyncHandler(async (req, res) => {
     const accessToken = current_user.createJwtToken()
     res.status(200).json({ accessToken, current_user })
 })
+
+

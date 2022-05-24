@@ -33,10 +33,17 @@ const userSlicer = createSlice({
         refreshTokenFail: (state, action) => {
             state.error = true
             state.message = action.payload
+        },
+        authLogout: (state, action) => {
+            state.isFetching = false;
+            state.user = "";
+            state.token = ""
+            state.message = ""
+            state.error = false;
         }
     }
 })
 
-export const { authStart, authSuccess, authFailure, refreshToken, refreshTokenFail } = userSlicer.actions
+export const { authStart, authSuccess, authFailure, refreshToken, refreshTokenFail, authLogout } = userSlicer.actions
 
 export default userSlicer.reducer
