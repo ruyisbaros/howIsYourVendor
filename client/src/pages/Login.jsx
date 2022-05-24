@@ -60,7 +60,7 @@ const Login = () => {
                     </div>
                 </div>
 
-                <button type="submit" className="btn btn-dark w-50" disabled={email && password ? false : true}>auth</button>
+                <button type="submit" className="btn btn-dark w-50" disabled={email && password ? false : true}>Login</button>
 
                 <p className="my-3">
                     Don't you have an account? <Link to="/register">Register Now</Link>

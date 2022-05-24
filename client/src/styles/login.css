@@ -21,7 +21,13 @@ box-shadow: 0 0 10px rgba(0,0,0,0.1);
 .auth_page .btn{
     display: block; 
     margin: 10px auto;
-    
+    background-color: teal;
+    color: #fff;
+    font-weight: bold;
+}
+
+.auth_page .btn:disabled{
+    background-color: red;
 }
 
 .auth_page form .pass{

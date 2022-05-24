@@ -13,6 +13,7 @@ const Register = () => {
 
     const [passType, setPassType] = useState(false)
     const [confPassType, setConfPassType] = useState(false)
+    const [errText, setErrText] = useState("")
     const [user, setUser] = useState({ fullName: "", username: "", email: "", password: "", cf_password: "", gender: "male" })
     const { email, password, fullName, username, cf_password, gender } = user
 
@@ -23,6 +24,7 @@ const Register = () => {
     const handleInput = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -37,12 +39,14 @@ const Register = () => {
             } catch (error) {
                 toast.error(error.response.data.message)
                 dispatch(authFailure(error.response.data.message))
+                setErrText(error.response.data.message)
             }
         } else {
             toast.error("Passwords don't match!")
+
         }
     }
-    console.log(gender);
+    console.log(errText.split(" ").includes("username"));
 
     return (
         <div className="auth_page">
@@ -60,13 +64,17 @@ const Register = () => {
                     <input type="text" name="username" className="form-control"
                         id="username"
                         placeholder="Enter Username" required
-                        value={username} onChange={handleInput} />
+                        value={username} onChange={handleInput}
+                        style={{ backgroundColor: errText.split(" ").includes("username") && "red" }}
+                    />
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Email Address</label>
                     <input type="email" name="email" className="form-control" id="exampleInputEmail1"
                         aria-describedby="emailHelp" placeholder="Enter email" required
-                        value={email} onChange={handleInput} />
+                        value={email} onChange={handleInput}
+                        style={{ backgroundColor: errText.split(" ").includes("email") && "red" }}
+                    />
                     <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div className="form-group">
@@ -75,7 +83,9 @@ const Register = () => {
                         <input type={passType ? "text" : "password"}
                             name="password" className="form-control"
                             id="exampleInputPassword1"
-                            placeholder="Password" required value={password} onChange={handleInput} />
+                            placeholder="Password" required value={password} onChange={handleInput}
+
+                        />
                         <small style={{ color: passType ? "red" : "teal" }} onClick={() => setPassType(!passType)}>
                             {passType ? "Hide" : "Show"}
                         </small>
@@ -87,7 +97,9 @@ const Register = () => {
                         <input type={confPassType ? "text" : "password"}
                             name="cf_password" className="form-control"
                             id="cf_password"
-                            placeholder="Confirm Password" required value={cf_password} onChange={handleInput} />
+                            placeholder="Confirm Password" required value={cf_password} onChange={handleInput}
+
+                        />
                         <small style={{ color: confPassType ? "red" : "teal" }} onClick={() => setConfPassType(!confPassType)}>
                             {confPassType ? "Hide" : "Show"}
                         </small>
@@ -110,7 +122,7 @@ const Register = () => {
                     </label>
                 </div>
 
-                <button type="submit" className="btn btn-dark w-50" disabled={email && password && fullName && cf_password && username ? false : true}>Register</button>
+                <button type="submit" className="btn w-50" disabled={email && password && fullName && cf_password && username ? false : true}>Register</button>
 
                 <p className="my-3">
                     Do you have already an account? <Link to="/login">Login Now</Link>
