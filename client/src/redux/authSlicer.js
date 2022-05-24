@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk, rejectWithValue } from "@reduxjs/toolkit"
-import axios from "axios"
 
 const initialState = {
     user: "",
@@ -13,16 +12,16 @@ const userSlicer = createSlice({
     name: "user",
     initialState,
     reducers: {
-        loginStart: (state) => {
+        authStart: (state) => {
             state.isFetching = true
         },
-        loginSuccess: (state, action) => {
+        authSuccess: (state, action) => {
             state.isFetching = false;
             state.user = action.payload.user;
             state.token = action.payload.token
             state.message = action.payload.message
         },
-        loginFailure: (state, action) => {
+        authFailure: (state, action) => {
             state.isFetching = false;
             state.error = true
             state.message = action.payload
@@ -38,6 +37,6 @@ const userSlicer = createSlice({
     }
 })
 
-export const { loginStart, loginSuccess, loginFailure, refreshToken, refreshTokenFail } = userSlicer.actions
+export const { authStart, authSuccess, authFailure, refreshToken, refreshTokenFail } = userSlicer.actions
 
 export default userSlicer.reducer

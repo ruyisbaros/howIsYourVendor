@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
 
-import userSlicer from "./loginSlicer"
+import userSlicer from "./authSlicer"
 import usersSlicer from "./usersSlicer"
 import postsSlicer from "./postsSlicer"
 

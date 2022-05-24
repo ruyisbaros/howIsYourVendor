@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
-import { loginStart, loginSuccess, loginFailure } from '../redux/loginSlicer';
+import { authStart, authSuccess, authFailure } from '../redux/authSlicer';
 import { toast } from "react-toastify"
 
 
@@ -24,22 +24,22 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            dispatch(loginStart())
+            dispatch(authStart())
             const { data } = await axios.post("/api/v1/auth/login", { email, password })
             //console.log(data);
             localStorage.setItem("firstLogin", true)
             toast.success(data.message)
-            dispatch(loginSuccess({ user: data.fulledUser, token: data.accessToken, message: data.message }))
+            dispatch(authSuccess({ user: data.fulledUser, token: data.accessToken, message: data.message }))
         } catch (error) {
             toast.error(error.response.data.message)
-            dispatch(loginFailure(error.response.data.message))
+            dispatch(authFailure(error.response.data.message))
         }
     }
     //console.log(user);
     return (
-        <div className="login_page">
+        <div className="auth_page">
             <form onSubmit={handleSubmit}>
-                <h3 className="text-capitalize text-center mb-2">Welcome to HowIsYourVendor page</h3>
+                <h3 className="text-capitalize text-center mb-5">Welcome to HowIsYourVendor page</h3>
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Email address</label>
                     <input type="email" name="email" className="form-control" id="exampleInputEmail1"
@@ -60,7 +60,7 @@ const Login = () => {
                     </div>
                 </div>
 
-                <button type="submit" className="btn btn-dark w-50" disabled={email && password ? false : true}>Login</button>
+                <button type="submit" className="btn btn-dark w-50" disabled={email && password ? false : true}>auth</button>
 
                 <p className="my-3">
                     Don't you have an account? <Link to="/register">Register Now</Link>

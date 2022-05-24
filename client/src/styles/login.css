@@ -1,4 +1,4 @@
-.login_page{
+.auth_page{
 width: 100%;
 min-height: 100vh;
 background-color: #fdfdfd;
@@ -8,7 +8,7 @@ justify-content: center;
 box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.login_page form{
+.auth_page form{
     background-color: #fff;
     max-width: 400px;
     width: 100%;
@@ -18,17 +18,17 @@ box-shadow: 0 0 10px rgba(0,0,0,0.1);
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.login_page .btn{
+.auth_page .btn{
     display: block; 
     margin: 10px auto;
     
 }
 
-.login_page form .pass{
+.auth_page form .pass{
 position: relative;
 }
 
-.login_page form .pass small{
+.auth_page form .pass small{
     position: absolute;
     top: 50%;
     right: 5px;

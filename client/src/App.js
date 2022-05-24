@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import Notify from "./components/notify/Notify";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { refreshToken, refreshTokenFail } from "./redux/loginSlicer";
+import { refreshToken, refreshTokenFail } from "./redux/authSlicer";
 import axios from "axios";
 
 function App() {
