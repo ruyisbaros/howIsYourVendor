@@ -26,10 +26,18 @@ const userSlicer = createSlice({
             state.isFetching = false;
             state.error = true
             state.message = action.payload
+        },
+        refreshToken: (state, action) => {
+            state.token = action.payload.token
+            state.user = action.payload.user;
+        },
+        refreshTokenFail: (state, action) => {
+            state.error = true
+            state.message = action.payload
         }
     }
 })
 
-export const { loginStart, loginSuccess, loginFailure } = userSlicer.actions
+export const { loginStart, loginSuccess, loginFailure, refreshToken, refreshTokenFail } = userSlicer.actions
 
 export default userSlicer.reducer

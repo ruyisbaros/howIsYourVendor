@@ -95,7 +95,7 @@ UserSchema.methods.isPasswordTrue = async function (candidatePassword) {
 //Create access token
 UserSchema.methods.createJwtToken = function () {
     return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN_KEY, {
-        expiresIn: "1d"
+        expiresIn: "15m"
     })
 }
 
