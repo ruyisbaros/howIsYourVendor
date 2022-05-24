@@ -23,6 +23,7 @@ function App() {
       dispatch(refreshToken({ token: data.accessToken, user: data.current_user }))
     } catch (error) {
       dispatch(refreshTokenFail(error.response.data.message))
+      alert(error.response.data.message)
     }
   }
 

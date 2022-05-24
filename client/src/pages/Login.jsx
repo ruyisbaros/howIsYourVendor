@@ -10,8 +10,7 @@ const Login = () => {
 
     /* const { } = useSelector(store => store.user) */
     const dispatch = useDispatch()
-    const [passWarn, setPassWarn] = useState(false)
-    const [emailWarn, setEmailWarn] = useState(false)
+
     const [passType, setPassType] = useState(false)
 
     const [user, setUser] = useState({ email: "", password: "", })
@@ -20,10 +19,6 @@ const Login = () => {
 
     const handleInput = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value })
-    }
-
-    const getPosts = async () => {
-
     }
 
     const handleSubmit = async (e) => {
