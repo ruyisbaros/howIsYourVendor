@@ -87,10 +87,10 @@ exports.generateRefreshToken = asyncHandler(async (req, res) => {
     }
     const decoded = await jwt.verify(refresh_token, process.env.REFRESH_TOKEN_KEY)
     if (!decoded) return res.status(500).json({ message: "Please login or register" })
-    const current_user = await User.findById(decoded.id)
+    const current_user = await User.findById(decoded.id).select("-password").populate("followers followings")
     //console.log(current_user);
 
 
     const accessToken = current_user.createJwtToken()
-    res.status(200).json(accessToken)
+    res.status(200).json({ accessToken, current_user })
 })

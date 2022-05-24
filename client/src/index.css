@@ -25,6 +25,10 @@ button, input{
   cursor: pointer;
 }
 
+button:disabled{
+  cursor: not-allowed;
+}
+
 .link_class{
   text-decoration: none;
   color:inherit;
@@ -50,3 +54,8 @@ filter:invert(1)
   width: 100%;
   margin:auto;
 }
+
+
+/* ----LOGIN------ */
+
+@import url("./styles/login.css");
