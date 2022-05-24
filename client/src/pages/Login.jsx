@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
-import { loginStart, loginSuccess, loginFailure } from '../redux/userSlicer';
+import { loginStart, loginSuccess, loginFailure } from '../redux/loginSlicer';
 
 
 const Login = () => {
@@ -18,13 +18,18 @@ const Login = () => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
 
+    const getPosts = async () => {
+
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
             dispatch(loginStart())
             const { data } = await axios.post("/api/v1/auth/login", { email, password })
             //console.log(data);
-            dispatch(loginSuccess({ user: data.fulledUser, token: data.accessToken }))
+            localStorage.setItem("firstLogin", true)
+            dispatch(loginSuccess({ user: data.fulledUser, token: data.accessToken, message: data.message }))
         } catch (error) {
             dispatch(loginFailure(error.response.data.message))
         }
@@ -33,7 +38,7 @@ const Login = () => {
     return (
         <div className="login_page">
             <form onSubmit={handleSubmit}>
-                <h3 className="text-capitalize">Welcome to HowIsYourVendor page</h3>
+                <h3 className="text-capitalize text-center mb-2">Welcome to HowIsYourVendor page</h3>
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Email address</label>
                     <input type="email" name="email" className="form-control" id="exampleInputEmail1"
@@ -49,7 +54,7 @@ const Login = () => {
 
                 <button type="submit" className="btn btn-dark w-50" disabled={email && password ? false : true}>Login</button>
 
-                <p className="my-2">
+                <p className="my-3">
                     Don't you have an account? <Link to="/register">Register Now</Link>
                 </p>
             </form>

@@ -41,7 +41,7 @@ exports.register = asyncHandler(async (req, res) => {
 
     const fulledUser = await User.findById(newUser._id).select("-password")
 
-    res.status(200).json({ accessToken, fulledUser })
+    res.status(200).json({ accessToken, fulledUser, message: "You logged successfully" })
 })
 
 exports.login = asyncHandler(async (req, res) => {
@@ -68,7 +68,7 @@ exports.login = asyncHandler(async (req, res) => {
 
     const fulledUser = await User.findById(user._id).select("-password")
 
-    res.status(200).json({ accessToken, fulledUser })
+    res.status(200).json({ accessToken, fulledUser, message: "You logged successfully" })
 
 
 })

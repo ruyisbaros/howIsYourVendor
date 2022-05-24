@@ -5,7 +5,7 @@ const initialState = {
     user: "",
     isFetching: false,
     error: false,
-    errorMessage: "",
+    message: "",
     token: "",
 }
 
@@ -20,11 +20,12 @@ const userSlicer = createSlice({
             state.isFetching = false;
             state.user = action.payload.user;
             state.token = action.payload.token
+            state.message = action.payload.message
         },
         loginFailure: (state, action) => {
             state.isFetching = false;
             state.error = true
-            state.errorMessage = action.payload
+            state.message = action.payload
         }
     }
 })
