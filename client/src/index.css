@@ -54,8 +54,23 @@ filter:invert(1)
   width: 100%;
   margin:auto;
 }
-
+/* .error {
+  width: 30%;
+  margin:30px auto;
+  height: 50px;
+  border:2px solid red;
+  background-color: yellow;
+  color:red;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
 
 /* ----LOGIN------ */
 
 @import url("./styles/login.css");
+
+/* -------loading */
+
+@import url("./styles/loading.css");
