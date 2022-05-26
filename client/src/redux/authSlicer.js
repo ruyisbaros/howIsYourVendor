@@ -1,15 +1,15 @@
 import { createSlice, createAsyncThunk, rejectWithValue } from "@reduxjs/toolkit"
 
 const initialState = {
-    user: "",
+    currentUser: "",
     authFetching: false,
     error: false,
     message: "",
     token: "",
 }
 
-const userSlicer = createSlice({
-    name: "user",
+const currentUserSlicer = createSlice({
+    name: "currentUser",
     initialState,
     reducers: {
         authStart: (state) => {
@@ -17,7 +17,7 @@ const userSlicer = createSlice({
         },
         authSuccess: (state, action) => {
             state.authFetching = false;
-            state.user = action.payload.user;
+            state.currentUser = action.payload.currentUser;
             state.token = action.payload.token
             state.message = action.payload.message
         },
@@ -28,7 +28,7 @@ const userSlicer = createSlice({
         },
         refreshToken: (state, action) => {
             state.token = action.payload.token
-            state.user = action.payload.user;
+            state.currentUser = action.payload.currentUser;
         },
         refreshTokenFail: (state, action) => {
             state.error = true
@@ -36,7 +36,7 @@ const userSlicer = createSlice({
         },
         authLogout: (state, action) => {
             state.authFetching = false;
-            state.user = "";
+            state.currentUser = "";
             state.token = ""
             state.message = ""
             state.error = false;
@@ -44,6 +44,6 @@ const userSlicer = createSlice({
     }
 })
 
-export const { authStart, authSuccess, authFailure, refreshToken, refreshTokenFail, authLogout } = userSlicer.actions
+export const { authStart, authSuccess, authFailure, refreshToken, refreshTokenFail, authLogout } = currentUserSlicer.actions
 
-export default userSlicer.reducer
+export default currentUserSlicer.reducer

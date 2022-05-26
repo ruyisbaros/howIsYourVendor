@@ -74,3 +74,6 @@ filter:invert(1)
 
 /* -----Avatar */
 @import url("./avatar.css");
+
+/* ----Profile */
+@import url("./profile.css");

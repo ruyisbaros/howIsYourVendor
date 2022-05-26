@@ -4,7 +4,7 @@ import Loading from './Loading';
 /* import Toast from './Toast'; */
 
 const Notify = () => {
-    const { authFetching } = useSelector(store => store.user)
+    const { authFetching } = useSelector(store => store.currentUser)
     const { profileFetching } = useSelector(store => store.profile)
     /* const { usersFetching } = useSelector(store => store.users) */
     //console.log(message);

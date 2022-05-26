@@ -8,7 +8,7 @@ import { toast } from "react-toastify"
 import Avatar from '../Avatar';
 
 const Menu = () => {
-    const { user } = useSelector(store => store.user)
+    const { currentUser } = useSelector(store => store.currentUser)
 
     const dispatch = useDispatch()
     const { pathname } = useLocation()
@@ -55,10 +55,10 @@ const Menu = () => {
                 <li className="nav-item dropdown">
                     <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {/*  {user.username.toUpperCase()} */}
-                        <Avatar src={user.avatar} size="medium-avatar" />
+                        <Avatar src={currentUser.avatar} size="medium-avatar" />
                     </span>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <Link className="dropdown-item" to={`/profile/${user._id}`}>
+                        <Link className="dropdown-item" to={`/profile/${currentUser._id}`}>
                             Profile
                         </Link>
                         <label className="dropdown-item" htmlFor="theme" onClick={() => setMode(!mode)}> {mode ? "Light Mode" : "Dark Mode"}</label>

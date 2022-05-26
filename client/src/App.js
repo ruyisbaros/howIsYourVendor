@@ -18,14 +18,14 @@ import Profile from "./pages/Profile";
 
 function App() {
 
-  const { token } = useSelector(store => store.user)
+  const { token } = useSelector(store => store.currentUser)
   const dispatch = useDispatch()
 
 
   const refreshTokenFunc = async () => {
     try {
       const { data } = await axios.get("/api/v1/auth/refresh_token")
-      dispatch(refreshToken({ token: data.accessToken, user: data.current_user }))
+      dispatch(refreshToken({ token: data.accessToken, currentUser: data.current_user }))
     } catch (error) {
       dispatch(refreshTokenFail(error.response.data.message))
       alert(error.response.data.message)

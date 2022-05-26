@@ -11,7 +11,7 @@ import LoadingGif from '../../images/loading-2.gif'
 const Search = () => {
 
     const { users, usersFetching } = useSelector(store => store.users)
-    const { token } = useSelector(store => store.user)
+    const { token } = useSelector(store => store.currentUser)
     const dispatch = useDispatch()
     const [search, setSearch] = useState("")
     const [load, setLoad] = useState(false)

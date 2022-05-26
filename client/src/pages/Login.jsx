@@ -8,7 +8,7 @@ import { toast } from "react-toastify"
 
 const Login = () => {
 
-    const { token } = useSelector(store => store.user)
+    const { token } = useSelector(store => store.currentUser)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [passType, setPassType] = useState(false)

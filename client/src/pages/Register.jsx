@@ -9,7 +9,7 @@ const Register = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { token } = useSelector(store => store.user)
+    const { token } = useSelector(store => store.currentUser)
 
     const [passType, setPassType] = useState(false)
     const [confPassType, setConfPassType] = useState(false)
