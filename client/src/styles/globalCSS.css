@@ -59,19 +59,18 @@ filter:invert(1)
   margin:auto;
 }
 
-.avatar{
-    width: 40px;
-    height: 40px;
-}
 
 /* ----LOGIN------ */
 
-@import url("./styles/login.css");
+@import url("./login.css");
 
 /* -------loading */
 
-@import url("./styles/loading.css");
+@import url("./loading.css");
 
 /* ----header */
 
-@import url("./styles/header.css");
+@import url("./header.css");
+
+/* -----Avatar */
+@import url("./avatar.css");

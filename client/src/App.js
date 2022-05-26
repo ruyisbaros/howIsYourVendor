@@ -11,6 +11,10 @@ import { useEffect } from "react";
 import { refreshToken, refreshTokenFail } from "./redux/authSlicer";
 import axios from "axios";
 import Header from "./components/Header";
+import Messages from "./pages/Messages";
+import Discover from "./pages/Discover";
+import Notifies from "./pages/Notifies";
+import Profile from "./pages/Profile";
 
 function App() {
 
@@ -49,6 +53,10 @@ function App() {
           {token && <Header />}
           <Routes>
             <Route path="/" element={token ? <Home /> : <Navigate to="/login" />} />
+            <Route path="/messages" element={token ? <Messages /> : <Login />} />
+            <Route path="/discover" element={token ? <Discover /> : <Login />} />
+            <Route path="/notify" element={token ? <Notifies /> : <Login />} />
+            <Route path="/profile/:id" element={token ? <Profile /> : <Login />} />
             <Route path="/register" element={token ? <Home /> : <Register />} />
             <Route path="/login" element={token ? <Home /> : <Login />} />
 

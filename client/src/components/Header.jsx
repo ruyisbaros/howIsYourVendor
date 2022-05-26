@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom'
 import { authLogout } from '../redux/authSlicer';
 import { toast } from "react-toastify"
+import Avatar from './Avatar';
 
 const Header = () => {
 
@@ -19,7 +20,7 @@ const Header = () => {
 
     const navLinks = [
         { label: "Home", icon: "home", path: "/" },
-        { label: "Messages", icon: "near_me", path: "/messages" },
+        { label: "Messages", icon: "forum", path: "/messages" },
         { label: "Discover", icon: "explore", path: "/discover" },
         { label: "Notify", icon: "favorite", path: "/notify" },
     ]
@@ -60,7 +61,7 @@ const Header = () => {
                     <li className="nav-item dropdown">
                         <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {/*  {user.username.toUpperCase()} */}
-                            <img src={user.avatar} alt="avatar" className="avatar" /* style={{ filter: mode && "invert(1)" }} */ />
+                            <Avatar src={user.avatar} size="medium-avatar" />
                         </span>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                             <Link className="dropdown-item" to={`/profile/${user._id}`}>
