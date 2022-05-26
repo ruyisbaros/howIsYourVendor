@@ -1,0 +1,89 @@
+.header{
+    width: 100%;
+    min-height: 70px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    box-shadow: 0 0 10px #ddd;
+}
+
+.header .navbar{
+    width: 100%;
+    height: 100%;
+
+}
+
+.header .navbar h1{
+font-size: 2rem;
+}
+
+/* Header Menu */
+.header .menu li{
+    opacity: 0.5;
+}
+.header .menu li.active{
+opacity: 1;
+}
+
+.header .menu .material-icons{
+    font-size: 30px;
+}
+
+.header .menu .dropdown-menu{
+    position: absolute;
+    left: inherit;
+    right: -15px;
+}
+
+.header .menu label{
+    cursor: pointer;
+}
+
+.header .menu label:hover,
+.header .menu a:hover{
+    background-color: #ddd;
+    font-weight: 600;
+}
+
+/* ---Search */
+
+.header .search_form {
+    position: relative;
+    /* flex:1; */
+    /* background-color: #ddd; */
+}
+
+.header #search{
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    outline: none;
+    min-width: 250px;
+    width: 100%;
+    text-indent:5px;
+    border-radius: 4px;
+}
+
+.header .search_form .search_icon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+}
+
+.header .search_form .search_icon .material-icons{
+font-size: 14px;
+}
+
+.header .close_search{
+    position: absolute;
+    top: 0;
+    right: 5px;
+    cursor: pointer;
+    font-weight: 900;
+    color:red;
+}

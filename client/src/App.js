@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { refreshToken, refreshTokenFail } from "./redux/authSlicer";
 import axios from "axios";
-import Header from "./components/Header";
+import Header from "./components/header/Header";
 import Messages from "./pages/Messages";
 import Discover from "./pages/Discover";
 import Notifies from "./pages/Notifies";

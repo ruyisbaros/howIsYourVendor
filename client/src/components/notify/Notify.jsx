@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import Loading from './Loading';
-import Toast from './Toast';
+/* import Toast from './Toast'; */
 
 const Notify = () => {
     const { isFetching } = useSelector(store => store.user)
