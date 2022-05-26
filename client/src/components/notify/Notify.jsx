@@ -5,13 +5,15 @@ import Loading from './Loading';
 
 const Notify = () => {
     const { authFetching } = useSelector(store => store.user)
-    const { usersFetching } = useSelector(store => store.users)
+    const { profileFetching } = useSelector(store => store.profile)
+    /* const { usersFetching } = useSelector(store => store.users) */
     //console.log(message);
+
     return (
         <div>
             {/*  <Loading /> */}
             {authFetching && <Loading />}
-            {usersFetching && <Loading />}
+            {profileFetching && <Loading />}
 
         </div>
     )

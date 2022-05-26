@@ -38,7 +38,7 @@ function App() {
 
       setTimeout(() => {
         refreshTokenFunc()
-      }, 14 * 60 * 1000) //14 minutes
+      }, 13 * 60 * 1000) //13 minutes
     }
 
   }, [])
