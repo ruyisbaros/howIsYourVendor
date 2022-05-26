@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     users: [],
-    isFetching: false,
+    usersFetching: false,
     error: false,
     message: "",
 }
@@ -12,19 +12,21 @@ const usersSlicer = createSlice({
     initialState,
     reducers: {
         usersFetchStart: (state) => {
-            state.isFetching = true;
+            state.usersFetching = true;
         },
 
         usersFetchSuccess: (state, action) => {
-            state.isFetching = false;
+            state.usersFetching = false;
+            state.users = action.payload
         },
 
         usersFetchFail: (state, action) => {
-            state.isFetching = true;
+            state.usersFetching = false;
+            state.error = true;
         },
     }
 })
 
-export const { } = usersSlicer.actions
+export const { usersFetchStart, usersFetchSuccess, usersFetchFail } = usersSlicer.actions
 
 export default usersSlicer.reducer

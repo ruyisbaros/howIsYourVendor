@@ -4,12 +4,14 @@ import Loading from './Loading';
 /* import Toast from './Toast'; */
 
 const Notify = () => {
-    const { isFetching } = useSelector(store => store.user)
+    const { authFetching } = useSelector(store => store.user)
+    const { usersFetching } = useSelector(store => store.users)
     //console.log(message);
     return (
         <div>
             {/*  <Loading /> */}
-            {isFetching && <Loading />}
+            {authFetching && <Loading />}
+            {usersFetching && <Loading />}
 
         </div>
     )

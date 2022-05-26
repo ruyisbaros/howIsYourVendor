@@ -1,7 +1,7 @@
 const router = require('express').Router()
-const { searchUser } = require('../controllers/userControllers')
+const { searchUsers } = require('../controllers/userControllers')
 const { protect } = require('../middleWares/authMiddleWare')
 
-router.get('/', protect, searchUser)
+router.get('/search', protect, searchUsers)
 
 module.exports = router

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, rejectWithValue } from "@reduxjs/toolkit
 
 const initialState = {
     user: "",
-    isFetching: false,
+    authFetching: false,
     error: false,
     message: "",
     token: "",
@@ -13,16 +13,16 @@ const userSlicer = createSlice({
     initialState,
     reducers: {
         authStart: (state) => {
-            state.isFetching = true
+            state.authFetching = true
         },
         authSuccess: (state, action) => {
-            state.isFetching = false;
+            state.authFetching = false;
             state.user = action.payload.user;
             state.token = action.payload.token
             state.message = action.payload.message
         },
         authFailure: (state, action) => {
-            state.isFetching = false;
+            state.authFetching = false;
             state.error = true
             state.message = action.payload
         },
@@ -35,7 +35,7 @@ const userSlicer = createSlice({
             state.message = action.payload
         },
         authLogout: (state, action) => {
-            state.isFetching = false;
+            state.authFetching = false;
             state.user = "";
             state.token = ""
             state.message = ""
