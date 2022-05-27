@@ -13,3 +13,5 @@ exports.getAUser = asyncHandler(async (req, res) => {
     res.status(200).json(user)
 
 })
+
+exports.updateProfile = asyncHandler(async (req, res) => { })

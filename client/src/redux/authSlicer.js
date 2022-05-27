@@ -40,10 +40,11 @@ const currentUserSlicer = createSlice({
             state.token = ""
             state.message = ""
             state.error = false;
-        }
+        },
+        updateCurrentUser: (state, action) => { }
     }
 })
 
-export const { authStart, authSuccess, authFailure, refreshToken, refreshTokenFail, authLogout } = currentUserSlicer.actions
+export const { authStart, authSuccess, authFailure, refreshToken, refreshTokenFail, authLogout, updateCurrentUser } = currentUserSlicer.actions
 
 export default currentUserSlicer.reducer
