@@ -14,7 +14,7 @@ const Info = () => {
         currentUser._id === profile._id ?
             (<div className="info">
                 <div className="info_container">
-                    <Avatar src={currentUser.avatar} size="supper-avatar" />
+                    <Avatar src={currentUser.avatar.url} size="supper-avatar" />
                     <div className="info_content">
                         <div className="info_content_title">
                             <h2>{currentUser.username}</h2>
@@ -37,11 +37,11 @@ const Info = () => {
             : (
                 <div className="info">
                     <div className="info_container">
-                        <Avatar src={profile.avatar} size="supper-avatar" />
+                        <Avatar src={profile.avatar.url} size="supper-avatar" />
                         <div className="info_content">
                             <div className="info_content_title">
                                 <h2>{profile.username}</h2>
-                                <button className="btn btn-outline-info">Follow</button>
+                                <button className="btn btn-outline-info follow_btn">Follow</button>
                             </div>
                             <div className="follow_btn">
                                 <span className="mr-4">{profile.followers?.length}{" "} Followers</span>

@@ -41,7 +41,9 @@ const currentUserSlicer = createSlice({
             state.message = ""
             state.error = false;
         },
-        updateCurrentUser: (state, action) => { }
+        updateCurrentUser: (state, action) => {
+            state.currentUser = action.payload;
+        }
     }
 })
 

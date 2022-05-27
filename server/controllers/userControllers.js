@@ -14,4 +14,11 @@ exports.getAUser = asyncHandler(async (req, res) => {
 
 })
 
-exports.updateProfile = asyncHandler(async (req, res) => { })
+exports.updateProfile = asyncHandler(async (req, res) => {
+    const { fullName, mobile, story, address, gender, avatar } = req.body
+
+    const updatedUser = await User.findByIdAndUpdate(req.user._id, {
+        fullName, mobile, story, address, gender, avatar
+    }, { new: true }).select("-password")
+    res.status(200).json({ updatedUser, message: "Profile has been updated successfully" })
+})

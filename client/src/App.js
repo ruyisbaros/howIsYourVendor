@@ -16,6 +16,7 @@ import Discover from "./pages/Discover";
 import Notifies from "./pages/Notifies";
 import Profile from "./pages/Profile";
 
+
 function App() {
 
   const { token } = useSelector(store => store.currentUser)
@@ -26,6 +27,7 @@ function App() {
     try {
       const { data } = await axios.get("/api/v1/auth/refresh_token")
       dispatch(refreshToken({ token: data.accessToken, currentUser: data.current_user }))
+
     } catch (error) {
       dispatch(refreshTokenFail(error.response.data.message))
       alert(error.response.data.message)

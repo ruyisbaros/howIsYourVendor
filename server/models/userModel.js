@@ -34,8 +34,8 @@ const UserSchema = new mongoose.Schema({
         minLength: 4
     },
     avatar: {
-        type: String,
-        default: "https://res.cloudinary.com/ruyisbaros/image/upload/v1653328705/ecommerce-talend/jimphnrukg6o9d3ln1mo.png"
+        type: Object,
+        default: {}
     },
     role: {
         type: String,

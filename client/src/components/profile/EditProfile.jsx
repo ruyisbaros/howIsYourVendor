@@ -1,27 +1,72 @@
+import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { toast } from "react-toastify"
+import { updateCurrentUser } from '../../redux/authSlicer'
 
 const EditProfile = ({ setEdit }) => {
 
     const { currentUser } = useSelector(store => store.currentUser)
-    const [avatar, setAvatar] = useState("")
+    const { token } = useSelector(store => store.currentUser)
+    const dispatch = useDispatch()
+    const [avatar, setAvatar] = useState(currentUser.avatar)
     const [userData, setUserData] = useState({ fullName: "", mobile: "", story: "", gender: "", address: "" })
-    const { fullName, mobile, story, gender, address } = userData
+    const { fullName, mobile, story, address, gender } = userData
 
-    const handleAvatar = () => { }
+    useEffect(() => {
+        setUserData(currentUser)
+    }, [currentUser])
+
+    const handleAvatar = async (e) => {
+
+        try {
+            const file = e.target.files[0]
+            //console.log(file);
+            if (!file) return alert("Please select an image")
+            if (file.size > 1024 * 1024) return alert("Your file is too large (max 1mb allowed)")
+            if (file.type !== "image/jpeg" && file.type !== "image/png") return alert("Only jpeg, jpg or PNG images are allowed")
+
+            let formData = new FormData();
+            formData.append("file", file);
+
+            const { data } = await axios.post("/api/v1/uploads", formData, {
+                headers: { "content-type": "multipart/form-data", authorization: token }
+            })
+
+            alert("Your file has been uploaded successfully")
+            //console.log(data);
+            setAvatar(data)
+        } catch (error) {
+            alert(error.response.data.message)
+        }
+    }
 
     const handleInput = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value })
     }
+    //console.log(avatar);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const { data } = await axios.patch("/api/v1/users/profile_update", { fullName, mobile, story, address, gender, avatar }, {
+                headers: { authorization: token }
+            })
+            dispatch(updateCurrentUser(data.updatedUser))
+            setEdit(false)
+            toast.success(data.message)
+        } catch (error) {
+            toast.error(error.response.data.message)
+        }
+    }
 
-    console.log(userData);
+    //console.log(userData);
 
     return (
         <div className="edit_profile">
             <button onClick={() => setEdit(false)} className="btn btn-danger btn_close">Close</button>
-            <form >
+            <form onSubmit={handleSubmit}>
                 <div className="info_avatar">
-                    <img src={avatar ? URL.createObjectURL(avatar) : currentUser.avatar} alt="avatar" />
+                    <img src={avatar ? avatar.url : "https://png.pngtree.com/png-vector/20190223/ourmid/pngtree-vector-avatar-icon-png-image_695765.jpg"} alt="avatar" />
                     <span>
                         <i className="fas fa-camera"></i>
                         <p>Change</p>
@@ -30,7 +75,7 @@ const EditProfile = ({ setEdit }) => {
                         />
                     </span>
                 </div>
-                <div className="form_group">
+                <div className="form-group">
                     <label htmlFor="fullName">Full Name:</label>
                     <div className="position-relative">
                         <input type="text"
@@ -48,7 +93,7 @@ const EditProfile = ({ setEdit }) => {
                     </div>
                 </div>
 
-                <div className="form_group">
+                <div className="form-group">
                     <label htmlFor="mobile">Mobile:</label>
                     <input type="text"
                         name="mobile"
@@ -59,7 +104,7 @@ const EditProfile = ({ setEdit }) => {
                         onChange={handleInput}
                     />
                 </div>
-                <div className="form_group">
+                <div className="form-group">
                     <label htmlFor="address">Address:</label>
                     <input type="text"
                         name="address"
@@ -70,7 +115,7 @@ const EditProfile = ({ setEdit }) => {
                         onChange={handleInput}
                     />
                 </div>
-                <div className="form_group">
+                <div className="form-group">
                     <label htmlFor="story">Story:</label>
                     <textarea cols="30" rows="4"
                         name="story"

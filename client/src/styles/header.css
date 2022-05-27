@@ -22,6 +22,9 @@ font-size: 2rem;
 .header .menu li{
     opacity: 0.5;
 }
+.header .menu .op-high{
+    opacity: 1;
+}
 .header .menu li.active{
 opacity: 1;
 }
