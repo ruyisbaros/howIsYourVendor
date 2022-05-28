@@ -16,7 +16,7 @@ const Search = () => {
     const [search, setSearch] = useState("")
     const [load, setLoad] = useState(false)
 
-    /* useEffect(() => {
+    useEffect(() => {
         if (search) {
             const getUsers = async () => {
                 try {
@@ -36,33 +36,33 @@ const Search = () => {
             dispatch(usersFetchSuccess([]))
         }
 
-    }, [token, dispatch, search]) */
+    }, [token, dispatch, search])
 
     const handleClose = () => {
         setSearch("")
         dispatch(usersFetchSuccess([]))
 
     }
-    const handleSearch = async (e) => {
-        e.preventDefault()
-        if (!search) return;
-        try {
-            setLoad(true)
-            dispatch(usersFetchStart())
-            const { data } = await axios.get(`/api/v1/users/search?username=${search}`, {
-                headers: { authorization: token }
-            })
-            dispatch(usersFetchSuccess(data))
-            setLoad(false)
-        } catch (error) {
-            dispatch(usersFetchFail())
-            setLoad(false)
-        }
-
-    }
+    /*  const handleSearch = async (e) => {
+         e.preventDefault()
+         if (!search) return;
+         try {
+             setLoad(true)
+             dispatch(usersFetchStart())
+             const { data } = await axios.get(`/api/v1/users/search?username=${search}`, {
+                 headers: { authorization: token }
+             })
+             dispatch(usersFetchSuccess(data))
+             setLoad(false)
+         } catch (error) {
+             dispatch(usersFetchFail())
+             setLoad(false)
+         }
+ 
+     } */
 
     return (
-        <form className="search_form" onSubmit={handleSearch}>
+        <form className="search_form" /* onSubmit={handleSearch} */>
             <input type="text" name="search" id="search" value={search} title="Enter to search"
                 onChange={(e) => setSearch(e.target.value.toLowerCase().replace(/ /g, ''))} />
             <div className="search_icon" style={{ opacity: search ? "0" : "0.5" }}>

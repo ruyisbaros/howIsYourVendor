@@ -2,13 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import Avatar from '../Avatar'
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { profileFailure, profileStart, profileSuccess } from '../../redux/profileSlicer';
+//import { useDispatch, useSelector } from 'react-redux';
+//import axios from 'axios';
+//import { profileFailure, profileStart, profileSuccess } from '../../redux/profileSlicer';
 
 const UserCard = ({ user, border, handleClose }) => {
 
-    const { token } = useSelector(store => store.currentUser)
+    /* const { token } = useSelector(store => store.currentUser)
     const dispatch = useDispatch()
 
     const getProfile = async (id) => {
@@ -22,14 +22,14 @@ const UserCard = ({ user, border, handleClose }) => {
         catch (error) {
             dispatch(profileFailure())
         }
-    }
+    } */
     return (
         <div className={`d-flex p-2 align-item-center ${border}`}>
             <div>
                 <Link className="d-flex align-item-center" to={`/profile/${user._id}`}
                     onClick={() => {
                         handleClose()
-                        getProfile(user._id)
+                        /* getProfile(user._id) */
                     }}>
                     <Avatar src={user.avatar.url} size="big-avatar" />
                     <div className="ml-3">

@@ -12,24 +12,6 @@ const Info = () => {
     const { token } = useSelector(store => store.currentUser)
 
     const [edit, setEdit] = useState(false)
-    const [follow, setFollow] = useState(false)
-
-    //Follow UnFollow functions
-    /* const handleFollow = async () => {
-        try {
-            const { data } = await axios.patch(`/api/v1/users/follow/${profile._id}`, {
-                headers: { authorization: token }
-
-            })
-
-            toast.success(data.message)
-        } catch (error) {
-            toast.error(error.response.data.message)
-            console.log(token);
-        }
-    }
-
-    const handleUnFollow = async () => { } */
 
     return (
         currentUser._id === profile._id ?

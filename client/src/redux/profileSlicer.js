@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, rejectWithValue } from "@reduxjs/toolkit"
 
 const initialState = {
-    profile: "",
+    profile: {},
     profilePosts: [],
     profileFetching: false,
     error: false,
@@ -18,17 +18,20 @@ const profileSlicer = createSlice({
         },
         profileSuccess: (state, action) => {
             state.profileFetching = false;
-            state.profile = action.payload;
+            state.profile = { ...state.profile, ...action.payload };
         },
         profileFailure: (state, action) => {
             state.profileFetching = false;
             state.error = true
             state.message = action.payload
         },
+        profileFollowUnFollowUpdates: (state, action) => {
+            state.profile = { ...state.profile, followings: action.payload.followings, followers: action.payload.followers };
+        }
 
     }
 })
 
-export const { profileStart, profileSuccess, profileFailure } = profileSlicer.actions
+export const { profileStart, profileSuccess, profileFailure, profileFollowUnFollowUpdates } = profileSlicer.actions
 
 export default profileSlicer.reducer
