@@ -19,7 +19,7 @@ import Profile from "./pages/Profile";
 
 function App() {
 
-  const { token } = useSelector(store => store.currentUser)
+  const { token, currentUser } = useSelector(store => store.currentUser)
   const dispatch = useDispatch()
 
 
@@ -40,10 +40,10 @@ function App() {
 
       setTimeout(() => {
         refreshTokenFunc()
-      }, 13 * 60 * 1000) //13 minutes
+      }, 13 * 24 * 60 * 60 * 1000) //13 days
     }
 
-  }, [])
+  }, []);
 
   return (
     <BrowserRouter>
@@ -54,7 +54,7 @@ function App() {
         <div className="main">
           {token && <Header />}
           <Routes>
-            <Route path="/" element={token ? <Home /> : <Navigate to="/login" />} />
+            <Route path="/" element={<Home />} />
             <Route path="/messages" element={token ? <Messages /> : <Login />} />
             <Route path="/discover" element={token ? <Discover /> : <Login />} />
             <Route path="/notify" element={token ? <Notifies /> : <Login />} />

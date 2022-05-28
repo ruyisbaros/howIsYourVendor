@@ -46,7 +46,7 @@ const Register = () => {
 
         }
     }
-    console.log(errText.split(" ").includes("username"));
+    //console.log(errText.split(" ").includes("username"));
 
     return (
         <div className="auth_page">

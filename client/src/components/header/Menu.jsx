@@ -6,13 +6,28 @@ import { Link, useLocation } from 'react-router-dom'
 import { authLogout } from '../../redux/authSlicer';
 import { toast } from "react-toastify"
 import Avatar from '../Avatar';
+import { profileFailure, profileStart, profileSuccess } from '../../redux/profileSlicer'
 
 const Menu = () => {
     const { currentUser } = useSelector(store => store.currentUser)
+    const { token } = useSelector(store => store.currentUser)
 
     const dispatch = useDispatch()
     const { pathname } = useLocation()
     //console.log(useLocation());
+
+    const getProfile = async (id) => {
+        try {
+            dispatch(profileStart())
+            const { data } = await axios.get(`/api/v1/users/user/${id}`, {
+                headers: { authorization: token }
+            })
+            dispatch(profileSuccess(data))
+        }
+        catch (error) {
+            dispatch(profileFailure())
+        }
+    }
 
     const isActive = (pn) => {
         if (pathname === pn) return "active"
@@ -55,10 +70,12 @@ const Menu = () => {
                 <li className="nav-item dropdown op-high">
                     <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {/*  {user.username.toUpperCase()} */}
-                        <Avatar src={currentUser.avatar.url} size="medium-avatar" />
+                        <Avatar src={currentUser?.avatar.url} size="medium-avatar" />
                     </span>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <Link className="dropdown-item" to={`/profile/${currentUser._id}`}>
+                        <Link className="dropdown-item" to={`/profile/${currentUser?._id}`}
+                            onClick={() => getProfile(currentUser?._id)}
+                        >
                             Profile
                         </Link>
                         <label className="dropdown-item" htmlFor="theme" onClick={() => setMode(!mode)}> {mode ? "Light Mode" : "Dark Mode"}</label>

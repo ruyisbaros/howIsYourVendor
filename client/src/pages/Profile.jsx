@@ -8,26 +8,27 @@ import { profileFailure, profileStart, profileSuccess } from '../redux/profileSl
 
 const Profile = () => {
 
-    const { token } = useSelector(store => store.currentUser)
+    /*const { token } = useSelector(store => store.currentUser)
     const { id } = useParams()
     const dispatch = useDispatch()
-    //console.log(id);
+    console.log(id);
 
-    useEffect(() => {
-        const getProfile = async () => {
-            try {
-                dispatch(profileStart())
-                const { data } = await axios.get(`/api/v1/users/user/${id}`, {
-                    headers: { authorization: token }
-                })
-                dispatch(profileSuccess(data))
-            }
-            catch (error) {
-                dispatch(profileFailure())
-            }
-        }
-        getProfile();
-    }, [id, dispatch, token])
+
+     useEffect(() => {
+         const getProfile = async () => {
+             try {
+                 dispatch(profileStart())
+                 const { data } = await axios.get(`/api/v1/users/user/${id}`, {
+                     headers: { authorization: token }
+                 })
+                 dispatch(profileSuccess(data))
+             }
+             catch (error) {
+                 dispatch(profileFailure())
+             }
+         }
+         getProfile();
+     }, [id]) */
 
     return (
         <div className="profile">

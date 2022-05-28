@@ -22,3 +22,20 @@ exports.updateProfile = asyncHandler(async (req, res) => {
     }, { new: true }).select("-password")
     res.status(200).json({ updatedUser, message: "Profile has been updated successfully" })
 })
+
+/* Follow un follow */
+
+exports.followingsOps = asyncHandler(async (req, res) => {
+
+    const targetUser = await User.findById(req.params.id)
+    const currentUser = await User.findById(req.body.id)
+
+    if (!targetUser.followers.includes(req.body.id)) {
+        await targetUser.updateOne({ $push: { followers: req.body.id } })
+        await currentUser.updateOne({ $push: { followings: req.params.id } })
+    } else {
+        await targetUser.updateOne({ $pull: { followers: req.body.id } })
+        await currentUser.updateOne({ $pull: { followings: req.params.id } })
+    }
+    res.status(200).json({ message: "Follow operations updated successfully" })
+})

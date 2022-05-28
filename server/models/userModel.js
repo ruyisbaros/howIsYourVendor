@@ -35,7 +35,10 @@ const UserSchema = new mongoose.Schema({
     },
     avatar: {
         type: Object,
-        default: {}
+        default: {
+            url: "https://png.pngtree.com/png-vector/20190223/ourmid/pngtree-vector-avatar-icon-png-image_695765.jpg",
+            public_id: String
+        }
     },
     role: {
         type: String,
@@ -57,7 +60,7 @@ const UserSchema = new mongoose.Schema({
     },
     story: {
         type: String,
-        default: "",
+        default: "Ahmet Erdonmez FullStack web developer @2022. JavaScript, CSS, SASS, React, React-Hooks, ContextApi, Redux, Next js, Python, Java etc.",
         maxLength: 200
     },
     website: {
@@ -95,7 +98,7 @@ UserSchema.methods.isPasswordTrue = async function (candidatePassword) {
 //Create access token
 UserSchema.methods.createJwtToken = function () {
     return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN_KEY, {
-        expiresIn: "15m"
+        expiresIn: "14d"
     })
 }
 

@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { toast } from "react-toastify"
-import { updateCurrentUser } from '../../redux/authSlicer'
+import { updateCurrentFail, updateCurrentStart, updateCurrentSuccess } from '../../redux/authSlicer'
 
 const EditProfile = ({ setEdit }) => {
 
@@ -48,14 +48,16 @@ const EditProfile = ({ setEdit }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            dispatch(updateCurrentStart())
             const { data } = await axios.patch("/api/v1/users/profile_update", { fullName, mobile, story, address, gender, avatar }, {
                 headers: { authorization: token }
             })
-            dispatch(updateCurrentUser(data.updatedUser))
+            dispatch(updateCurrentSuccess(data.updatedUser))
             setEdit(false)
             toast.success(data.message)
         } catch (error) {
             toast.error(error.response.data.message)
+            dispatch(updateCurrentFail())
         }
     }
 
@@ -132,7 +134,7 @@ const EditProfile = ({ setEdit }) => {
                 </div>
                 <label htmlFor="gender">Gender:</label>
                 <div className="input-group-prepend px-0 mb-4">
-                    <select name="gender" id="gender" className="custom-select text-capitalize"
+                    <select name="gender" id="gender" value={gender} className="custom-select text-capitalize"
                         onChange={handleInput}>
                         <option value="male">male</option>
                         <option value="female">female</option>

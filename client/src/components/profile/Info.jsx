@@ -1,20 +1,41 @@
+import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Avatar from '../Avatar'
 import EditProfile from './EditProfile'
-
+import { toast } from "react-toastify"
+import FollowBtn from '../FollowBtn';
 
 const Info = () => {
     const { profile } = useSelector(store => store.profile)
     const { currentUser } = useSelector(store => store.currentUser)
+    const { token } = useSelector(store => store.currentUser)
 
     const [edit, setEdit] = useState(false)
+    const [follow, setFollow] = useState(false)
+
+    //Follow UnFollow functions
+    /* const handleFollow = async () => {
+        try {
+            const { data } = await axios.patch(`/api/v1/users/follow/${profile._id}`, {
+                headers: { authorization: token }
+
+            })
+
+            toast.success(data.message)
+        } catch (error) {
+            toast.error(error.response.data.message)
+            console.log(token);
+        }
+    }
+
+    const handleUnFollow = async () => { } */
 
     return (
         currentUser._id === profile._id ?
             (<div className="info">
                 <div className="info_container">
-                    <Avatar src={currentUser.avatar.url} size="supper-avatar" />
+                    <Avatar src={currentUser.avatar?.url} size="supper-avatar" />
                     <div className="info_content">
                         <div className="info_content_title">
                             <h2>{currentUser.username}</h2>
@@ -24,7 +45,7 @@ const Info = () => {
                             <span className="mr-4">{currentUser?.followers.length}{" "} Followers</span>
                             <span className="ml-4">{currentUser?.followings.length}{" "} Followings</span>
                         </div>
-                        <h6>{currentUser.fullName}</h6>
+                        <h6>{currentUser.fullName} <span>{currentUser.mobile}</span> </h6>
                         <h6>{currentUser.email}</h6>
                         <p>{currentUser.address}</p>
                         <p>{currentUser.story}</p>
@@ -37,11 +58,11 @@ const Info = () => {
             : (
                 <div className="info">
                     <div className="info_container">
-                        <Avatar src={profile.avatar.url} size="supper-avatar" />
+                        <Avatar src={profile.avatar?.url} size="supper-avatar" />
                         <div className="info_content">
                             <div className="info_content_title">
                                 <h2>{profile.username}</h2>
-                                <button className="btn btn-outline-info follow_btn">Follow</button>
+                                <FollowBtn />
                             </div>
                             <div className="follow_btn">
                                 <span className="mr-4">{profile.followers?.length}{" "} Followers</span>

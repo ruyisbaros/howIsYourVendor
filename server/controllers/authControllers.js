@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 const asyncHandler = require("express-async-handler")
 
 exports.register = asyncHandler(async (req, res) => {
-    const { fullName, username, password, email, gender, story, avatar, address } = req.body
+    const { fullName, username, password, email, gender } = req.body
     let transformedUserName = username.toLowerCase().replace(/ /g, "")
 
     const user_name = await User.findOne({ username: transformedUserName })
@@ -25,9 +25,7 @@ exports.register = asyncHandler(async (req, res) => {
         password,
         email,
         gender,
-        address,
-        avatar,
-        story
+
     })
 
     const accessToken = newUser.createJwtToken()

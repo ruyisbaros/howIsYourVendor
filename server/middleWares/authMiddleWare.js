@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken")
 
 exports.protect = asyncHandler(async (req, res, next) => {
     const token = req.headers.authorization
+    console.log(token);
     if (!token) {
         return res.status(500).json({ message: 'You are not logged in' })
     }
