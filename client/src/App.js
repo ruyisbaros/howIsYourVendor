@@ -21,7 +21,7 @@ import StatusModal from "./components/status/StatusModal.jsx"
 function App() {
 
   const { token, } = useSelector(store => store.currentUser)
-  const { status } = useSelector(store => store.profile)
+  const { status } = useSelector(store => store.posts)
   const dispatch = useDispatch()
 
 

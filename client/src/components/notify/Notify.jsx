@@ -5,7 +5,8 @@ import Loading from './Loading';
 
 const Notify = () => {
     const { authFetching } = useSelector(store => store.currentUser)
-    const { profileFetching, profilePostFetching } = useSelector(store => store.profile)
+    const { profileFetching } = useSelector(store => store.profile)
+    const { profilePostFetching } = useSelector(store => store.posts)
     /* const { usersFetching } = useSelector(store => store.users) */
     //console.log(message);
 
