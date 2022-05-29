@@ -15,11 +15,13 @@ import Messages from "./pages/Messages";
 import Discover from "./pages/Discover";
 import Notifies from "./pages/Notifies";
 import Profile from "./pages/Profile";
+import StatusModal from "./components/status/StatusModal.jsx"
 
 
 function App() {
 
-  const { token, currentUser } = useSelector(store => store.currentUser)
+  const { token, } = useSelector(store => store.currentUser)
+  const { status } = useSelector(store => store.profile)
   const dispatch = useDispatch()
 
 
@@ -53,6 +55,7 @@ function App() {
       <div className="App">
         <div className="main">
           {token && <Header />}
+          {status && <StatusModal />}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/messages" element={token ? <Messages /> : <Login />} />

@@ -1,0 +1,39 @@
+.home{
+    width: 100%;
+}
+/* Status------- */
+
+.status{
+  background: #f1f1f1; 
+  box-shadow: 0 0 10px #ddd; 
+  padding: 40px;
+  height: 300px;
+  width: 100%;
+  border-radius: 5px;
+  flex-direction: column;
+ align-items: center;
+ justify-content: space-between;
+ position: relative;
+}
+
+.status .avatar_img{
+     width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 3px solid white;
+    object-fit: cover;
+}
+
+.status .statusBtn{
+    background:rgb(242, 172, 186);
+    color:white;
+    border:none;
+    border-radius: 5px;
+    outline:none;
+    padding: 10px;
+    margin: 10px 20px;
+    transition: all 0.3s ease-in;
+}
+.status .statusBtn:hover{
+    background:crimson;
+}

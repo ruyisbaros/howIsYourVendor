@@ -56,7 +56,7 @@ const Menu = () => {
                 <li className="nav-item dropdown op-high">
                     <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {/*  {user.username.toUpperCase()} */}
-                        <Avatar src={currentUser?.avatar.url} size="medium-avatar" />
+                        <Avatar src={currentUser?.avatar?.url} size="medium-avatar" />
                     </span>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                         <Link className="dropdown-item" to={`/profile/${currentUser?._id}`}

@@ -84,3 +84,10 @@ filter:invert(1)
 
 /* ------Followers */
 @import url("./followers.css");
+
+/* ----Home----- */
+
+@import url("./home.css");
+
+/* -----Status Modal------- */
+@import url("./statusModal.css");

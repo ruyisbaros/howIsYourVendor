@@ -31,10 +31,10 @@ const UserCard = ({ children, user, border, handleClose }) => {
                         handleClose()
                         /* getProfile(user._id) */
                     }}>
-                    <Avatar src={user.avatar.url} size="big-avatar" />
+                    <Avatar src={user?.avatar?.url} size="big-avatar" />
                     <div className="ml-3">
-                        <span className="d-block">{user.username}</span>
-                        <small style={{ opacity: "0.6" }}>{user.fullName}</small>
+                        <span className="d-block">{user?.username}</span>
+                        <small style={{ opacity: "0.6" }}>{user?.fullName}</small>
                     </div>
                 </Link>
             </div>

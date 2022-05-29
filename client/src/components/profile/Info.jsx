@@ -22,7 +22,7 @@ const Info = () => {
             {currentUser._id === profile._id ?
                 (<div className="info">
                     <div className="info_container">
-                        <Avatar src={currentUser.avatar?.url} size="supper-avatar" />
+                        <Avatar src={currentUser?.avatar?.url} size="supper-avatar" />
                         <div className="info_content">
                             <div className="info_content_title">
                                 <h2>{currentUser.username}</h2>
