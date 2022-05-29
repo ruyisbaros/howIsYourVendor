@@ -37,7 +37,7 @@ const FollowBtn = ({ user }) => {
             dispatch(profileFollowUnFollowUpdates({ followings: data.targetUser.followings, followers: data.targetUser.followers }))
             dispatch(updateCurrentSuccess(data.currentUser))
             toast.success(data.message)
-            console.log(data.targetUser);
+            //console.log(data.targetUser);
         } catch (error) {
             toast.error(error.response.data.message)
             console.log(token);

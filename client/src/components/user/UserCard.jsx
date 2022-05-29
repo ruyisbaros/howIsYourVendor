@@ -24,7 +24,7 @@ const UserCard = ({ children, user, border, handleClose }) => {
         }
     } */
     return (
-        <div className={`d-flex p-2 align-item-center ${border}`}>
+        <div className={`d-flex p-2 align-item-center justify-content-between ${border}`}>
             <div>
                 <Link className="d-flex align-item-center" to={`/profile/${user._id}`}
                     onClick={() => {

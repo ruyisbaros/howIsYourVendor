@@ -59,8 +59,8 @@ const Info = () => {
                                         <FollowBtn user={profile} />
                                     </div>
                                     <div className="follow_btn">
-                                        <span className="mr-4" onClick={() => setShowFollowers(true)}>{profile.followers?.length}{" "} Followers</span>
-                                        <span className="ml-4" onClick={() => setShowFollowings(true)}>{profile.followings?.length}{" "} Followings</span>
+                                        <span className="mr-4" /* onClick={() => setShowFollowers(true)} */>{profile.followers?.length}{" "} Followers</span>
+                                        <span className="ml-4" /* onClick={() => setShowFollowings(true)} */>{profile.followings?.length}{" "} Followings</span>
                                     </div>
                                     <h6>{profile.fullName}</h6>
                                     <h6>{profile.email}</h6>
