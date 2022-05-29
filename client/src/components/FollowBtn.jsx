@@ -6,20 +6,34 @@ import { updateCurrentSuccess } from '../redux/authSlicer'
 import { profileFollowUnFollowUpdates, profileSuccess } from '../redux/profileSlicer'
 
 
-const FollowBtn = () => {
-    const { profile } = useSelector(store => store.profile)
+const FollowBtn = ({ user }) => {
+    //const { profile } = useSelector(store => store.profile)
     const { currentUser } = useSelector(store => store.currentUser)
     const { token } = useSelector(store => store.currentUser)
 
     const dispatch = useDispatch()
 
-    const [edit, setEdit] = useState(false)
-    const [follow, setFollow] = useState(currentUser.followings.includes(String(profile._id)))
+    /* const [edit, setEdit] = useState(false)
+    const [follow, setFollow] = useState(currentUser.followings.includes(String(user._id))) */
 
     //Follow UnFollow functions
-    const handleFollowUnFollow = async () => {
+    /* const handleFollowUnFollow = async () => {
         try {
             const { data } = await axios.patch(`/api/v1/users/follow_unFollow/${profile._id}`, { id: currentUser._id })
+            dispatch(profileFollowUnFollowUpdates({ followings: data.targetUser.followings, followers: data.targetUser.followers }))
+            dispatch(updateCurrentSuccess(data.currentUser))
+            toast.success(data.message)
+            console.log(data.targetUser);
+        } catch (error) {
+            toast.error(error.response.data.message)
+            console.log(token);
+        }
+    } */
+    const handleFollowUnFollow = async () => {
+        try {
+            const { data } = await axios.patch(`/api/v1/users/follow_unFollow/${user._id}`, null, {
+                headers: { authorization: token }
+            })
             dispatch(profileFollowUnFollowUpdates({ followings: data.targetUser.followings, followers: data.targetUser.followers }))
             dispatch(updateCurrentSuccess(data.currentUser))
             toast.success(data.message)
@@ -35,8 +49,8 @@ const FollowBtn = () => {
     return (
         <>
 
-            <button onClick={handleFollowUnFollow} className={`btn ${currentUser.followings.includes(profile._id) ? "btn-outline-danger" : "btn-outline-info"}`}>
-                {currentUser.followings.includes(profile._id) ? "UnFollow" : "Follow"}
+            <button onClick={handleFollowUnFollow} className={`btn ${currentUser.followings.find(follow => follow.username === user.username) ? "btn-outline-danger" : "btn-outline-info"}`}>
+                {currentUser.followings.find(follow => follow.username === user.username) ? "UnFollow" : "Follow"}
             </button>
         </>
     )

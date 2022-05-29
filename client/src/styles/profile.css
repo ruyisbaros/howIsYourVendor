@@ -51,5 +51,6 @@ text-decoration: underline;
 /* Follow Button */
 
 .info_content_title .follow_btn{
-    
+    cursor: pointer;
 }
+

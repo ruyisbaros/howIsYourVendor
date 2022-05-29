@@ -6,7 +6,7 @@ import Avatar from '../Avatar'
 //import axios from 'axios';
 //import { profileFailure, profileStart, profileSuccess } from '../../redux/profileSlicer';
 
-const UserCard = ({ user, border, handleClose }) => {
+const UserCard = ({ children, user, border, handleClose }) => {
 
     /* const { token } = useSelector(store => store.currentUser)
     const dispatch = useDispatch()
@@ -38,6 +38,7 @@ const UserCard = ({ user, border, handleClose }) => {
                     </div>
                 </Link>
             </div>
+            {children}
         </div>
     )
 }

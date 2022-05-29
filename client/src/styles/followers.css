@@ -1,0 +1,22 @@
+.follow{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #0008;
+    width: 100%;
+    height: calc(100vh - 70px);
+    z-index:  40;
+}
+
+.follow_box{
+    width: 350px;
+    height: 400px;
+    border: 1px solid #222;
+    border-radius: 4px;
+    background: #fff;
+    padding: 20px;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%)
+}

@@ -3,7 +3,7 @@ const { searchUsers, getAUser, updateProfile, followingsOps } = require('../cont
 const { protect } = require('../middleWares/authMiddleWare')
 
 router.get('/search', protect, searchUsers)
-router.patch('/follow_unFollow/:id', followingsOps)
+router.patch('/follow_unFollow/:id', protect, followingsOps)
 router.get('/user/:id', protect, getAUser)
 router.patch('/profile_update', protect, updateProfile)
 

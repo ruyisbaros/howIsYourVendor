@@ -40,7 +40,7 @@ exports.register = asyncHandler(async (req, res) => {
 
     })
 
-    const fulledUser = await User.findById(newUser._id).select("-password")
+    const fulledUser = await User.findById(newUser._id).populate("followers followings", "-password").select("-password")
 
     res.status(200).json({ accessToken, fulledUser, message: "You Registered successfully" })
 })
@@ -49,7 +49,7 @@ exports.login = asyncHandler(async (req, res) => {
 
     const { email, password } = req.body
 
-    const user = await User.findOne({ email }).populate("followers followings")
+    const user = await User.findOne({ email })
     if (!user) return res.status(500).json({ message: "No user could be found!" })
 
     const isMatch = await user.isPasswordTrue(password)
@@ -67,7 +67,7 @@ exports.login = asyncHandler(async (req, res) => {
 
     })
 
-    const fulledUser = await User.findById(user._id).select("-password")
+    const fulledUser = await User.findById(user._id).populate("followers followings", "-password").select("-password")
 
     res.status(200).json({ accessToken, fulledUser, message: "You logged successfully" })
 
@@ -88,7 +88,7 @@ exports.generateRefreshToken = asyncHandler(async (req, res) => {
     }
     const decoded = await jwt.verify(refresh_token, process.env.REFRESH_TOKEN_KEY)
     if (!decoded) return res.status(500).json({ message: "Please login or register" })
-    const current_user = await User.findById(decoded.id).select("-password").populate("followers followings")
+    const current_user = await User.findById(decoded.id).populate("followers followings", "-password").select("-password")
     //console.log(current_user);
 
 
