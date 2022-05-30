@@ -6,6 +6,12 @@ import moment from 'moment'
 
 const CardHeader = ({ post }) => {
     const { currentUser } = useSelector(store => store.currentUser)
+    const dispatch = useDispatch()
+
+    const handleEditPost = (id) => {
+
+    }
+
     return (
         <div className="card_header">
             <div className="d-flex">
@@ -29,7 +35,7 @@ const CardHeader = ({ post }) => {
                     {
                         currentUser._id === post.owner._id &&
                         <>
-                            <div className="dropdown-item">
+                            <div className="dropdown-item" onClick={() => handleEditPost(post._id)}>
                                 <span className="material-icons mui" >
                                     create
                                 </span>

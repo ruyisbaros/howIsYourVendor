@@ -7,7 +7,8 @@ const initialState = {
     result: 0,
     error: false,
     status: false,
-    errorMessage: ""
+    errorMessage: "",
+    onEdit: false,
 }
 
 const postsSlicer = createSlice({

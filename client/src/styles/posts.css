@@ -2,6 +2,7 @@
     box-shadow: 0 0 8px #ddd;
 }
 
+/* Card Header */
 .posts .card_header{
     display: flex;
     align-items: center;
@@ -37,4 +38,29 @@
 }
 .card_header .dropdown-item .mui{
     font-size: 18px;
+}
+
+/* Card Body */
+
+.card_body_content{
+    padding: 0 25px;
+    margin-bottom: 10px;
+}
+
+.card_body_content .readMore{
+   cursor: pointer;
+   font-size: 12px;
+}
+
+/* Card Footer */
+.card-footer .card_icon_menu{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+.card-footer .card_icon_menu i{
+    font-size: 20px;
+    margin: 10px;
 }
