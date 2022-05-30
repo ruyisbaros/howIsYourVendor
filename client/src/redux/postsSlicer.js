@@ -18,7 +18,7 @@ const postsSlicer = createSlice({
 
         postsFetchSuccess: (state, action) => {
             state.profilePostFetching = false;
-            state.posts = action.payload
+            state.posts = [...state.posts, action.payload]
         },
 
         postsFetchFail: (state, action) => {
@@ -26,25 +26,32 @@ const postsSlicer = createSlice({
             state.error = true
             state.errorMessage = action.payload
         },
-
-        PostCreateStart: (state) => {
-            state.status = true;
-        },
         closeStatus: (state) => {
             state.status = false;
         },
+        openStatus: (state) => {
+            state.status = true;
+        },
+
+        PostCreateStart: (state) => {
+            state.status = true;
+            state.profilePostFetching = true
+        },
+
         PostCreateSuccess: (state, action) => {
             state.status = false;
+            state.profilePostFetching = false
             state.posts = [...state.posts, action.payload];
         },
-        PostCreateFail: (state, action) => {
+        PostCreateFail: (state) => {
             state.status = false;
+            state.profilePostFetching = false
             state.error = true
         },
     }
 })
 
 export const { postsFetchStart, postsFetchSuccess, postsFetchFail, PostCreateStart, PostCreateSuccess,
-    PostCreateFail, closeStatus } = postsSlicer.actions
+    PostCreateFail, closeStatus, openStatus } = postsSlicer.actions
 
 export default postsSlicer.reducer

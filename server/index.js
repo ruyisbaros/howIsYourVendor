@@ -11,6 +11,7 @@ const app = express()
 const userRouter = require("./routes/userRouter")
 const authRouter = require("./routes/authRouter")
 const uploadRouter = require("./routes/uploadRouter")
+const postRouter = require("./routes/postRouter")
 
 //Required Middle wares
 app.use(express.json())
@@ -39,6 +40,7 @@ mongoose
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/uploads", uploadRouter)
+app.use("/api/v1/posts", postRouter)
 
 app.get("/", (req, res) => {
     res.send("Hello")

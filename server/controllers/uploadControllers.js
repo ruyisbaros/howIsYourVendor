@@ -15,7 +15,7 @@ const removeTmp = (path) => {
 }
 
 exports.uploadImage = asyncHandler(async (req, res) => {
-
+    //const images = [...req.files]
     if (!req.files || Object.keys(req.files).length === 0)
         return res.status(500).json({ message: "Please attach a file" })
 

@@ -128,3 +128,13 @@
     object-fit: contain;
     
 }
+
+/* Video stream */
+
+.video-stream span{
+position: absolute;
+top: 0;
+right: 0;
+font-weight: bold;
+cursor: pointer;
+}
