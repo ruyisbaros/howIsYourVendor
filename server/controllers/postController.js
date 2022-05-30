@@ -16,7 +16,7 @@ exports.createPost = asyncHandler(async (req, res) => {
 
 exports.getAllPosts = asyncHandler(async (req, res) => {
 
-    const posts = await Posts.find({ owner: [...req.user.followings, req.user._id] }).populate("owner", "-password")
+    const posts = await Posts.find({ owner: [...req.user.followings, req.user._id] }).populate("owner", "-password").sort({ createdAt: -1 })
 
     res.status(200).json({ posts, result: posts.length })
 })

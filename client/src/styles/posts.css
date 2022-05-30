@@ -1,0 +1,40 @@
+.posts .card{
+    box-shadow: 0 0 8px #ddd;
+}
+
+.posts .card_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 15px 25px;
+}
+
+.card_header .card_name{
+    display: flex;
+    gap:20px;
+    transform: translateY(6px)
+}
+.card_header .dropdown-menu{
+    position: absolute;
+    left:inherit !important;
+    right: 0;
+     background-color: #ddd;
+}
+
+.card_header .dropdown-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px 0;
+    transition: all 0.3s;
+   
+}
+.card_header .dropdown-item:hover{
+    background:blue;
+    color:#fff;
+    font-weight: bold;
+}
+.card_header .dropdown-item .mui{
+    font-size: 18px;
+}
