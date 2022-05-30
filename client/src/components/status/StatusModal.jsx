@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { closeStatus, PostCreateFail, PostCreateStart, PostCreateSuccess } from '../../redux/postsSlicer';
+import { closeStatus, PostCreateEnd, PostCreateFail, PostCreateStart, PostCreateSuccess } from '../../redux/postsSlicer';
 import { toast } from "react-toastify"
+import loadingImg from "../../images/loading-2.gif"
 import axios from 'axios';
 
 const StatusModal = () => {
     const { currentUser, token } = useSelector(store => store.currentUser)
-    const { error } = useSelector(store => store.posts)
+    const { profilePostFetching } = useSelector(store => store.posts)
     const dispatch = useDispatch()
     const videoRef = useRef()
     const canvasRef = useRef()
@@ -26,12 +27,14 @@ const StatusModal = () => {
 
     let newImages = []
     const imageUpload = async (dt) => {
+        dispatch(PostCreateStart())
         const { data } = await axios.post("/api/v1/uploads", dt, {
             headers: { "content-type": "multipart/form-data", authorization: token }
         })
         newImages.push(data)
 
         setImages([...images, ...newImages])
+        dispatch(PostCreateEnd())
     }
     console.log(images);
     const handleImages = async (e) => {
@@ -104,6 +107,9 @@ const StatusModal = () => {
             //console.log(data);
             dispatch(PostCreateSuccess(data))
             toast.success("Your post has been created successfully")
+            setContent("")
+            setImages([])
+            if (tracks) tracks.stop();
         } catch (error) {
             toast.error("error.response.data.message")
             dispatch(PostCreateFail())
@@ -127,6 +133,7 @@ const StatusModal = () => {
                     />
                     <span>{content.length}/400</span>
                     <div className="show_images">
+                        {profilePostFetching && <img src={loadingImg} alt="loading" className="d-block mx-auto" />}
                         <div className="sml_img_box">
                             {
                                 images.map((img, i) => (
@@ -136,6 +143,7 @@ const StatusModal = () => {
                                     </div>
                                 ))
                             }
+                            {/* Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi est quos recusandae dolorum facere enim eaque, quasi modi voluptatibus possimus. */}
                         </div>
                         {images.length > 0 &&
                             <div className="img_big_box">

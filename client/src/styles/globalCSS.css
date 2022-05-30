@@ -91,3 +91,6 @@ filter:invert(1)
 
 /* -----Status Modal------- */
 @import url("./statusModal.css");
+
+/* -----Posts */
+@import url("./posts.css");

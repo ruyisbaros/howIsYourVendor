@@ -16,12 +16,13 @@ import Discover from "./pages/Discover";
 import Notifies from "./pages/Notifies";
 import Profile from "./pages/Profile";
 import StatusModal from "./components/status/StatusModal.jsx"
+import { postsFetchFail, postsFetchStart, postsFetchSuccess } from "./redux/postsSlicer";
 
 
 function App() {
 
   const { token, } = useSelector(store => store.currentUser)
-  const { status } = useSelector(store => store.posts)
+  const { status, posts } = useSelector(store => store.posts)
   const dispatch = useDispatch()
 
 
@@ -46,6 +47,24 @@ function App() {
     }
 
   }, []);
+
+  const getPosts = async () => {
+    try {
+      dispatch(postsFetchStart())
+      const { data } = await axios.get("/api/v1/posts/all", {
+        headers: { authorization: token }
+      })
+      //console.log(data);
+      dispatch(postsFetchSuccess({ posts: data.posts, result: data.results }))
+    } catch (error) {
+      dispatch(postsFetchFail(error.response.data.message))
+    }
+  }
+  /* console.log(posts); */
+
+  useEffect(() => {
+    if (token) getPosts()
+  }, [dispatch, token])
 
   return (
     <BrowserRouter>
