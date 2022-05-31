@@ -4,6 +4,7 @@ import currentUserSlicer from "./authSlicer"
 import profileSlicer from "./profileSlicer"
 import usersSlicer from "./usersSlicer"
 import postsSlicer from "./postsSlicer"
+import commentsSlicer from "./commentsSlicer"
 
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
         currentUser: currentUserSlicer,
         profile: profileSlicer,
         users: usersSlicer,
-        posts: postsSlicer
+        posts: postsSlicer,
+        comments: commentsSlicer
     }
 })

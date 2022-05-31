@@ -1,16 +1,35 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 
-const InputComments = ({ children }) => {
+const InputComments = ({ children, post }) => {
 
+  const { currentUser, token } = useSelector(store => store.currentUser)
+  const dispatch = useDispatch()
   const [content, setContent] = useState("")
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    //console.log(post, content);
+    const newComment = {
+      content,
+      likes: [],
+      createdAt: new Date().toISOString()
+    }
+
+
+  }
+
   return (
-    <form className="card-footer comment_input">
+    <form onSubmit={submitHandler} className="card-footer comment_input">
       {children}
       <input type="text" placeholder="Add your comments..." value={content}
-        onchange={(e) => setContent(e.target.value)} />
+        onChange={(e) => setContent(e.target.value)} />
 
-      <button type="submit" className="postBtn">Post</button>
+      <div className="btn_box">
+        <button onClick={() => setContent("")} className="postBtn">Cancel</button>
+        <button type="submit" style={{ background: content ? "blue" : "#ddd", color: content ? "white" : "#0008" }} className="postBtn send">Post</button>
+      </div>
+
     </form>
   )
 }

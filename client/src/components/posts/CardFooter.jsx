@@ -28,7 +28,7 @@ const CardFooter = ({ post }) => {
             <div className="card_icon_menu">
                 <div >
                     <span onClick={likeHandler}>
-                        {isLiked ? <i class="fa-solid fa-thumbs-up"></i> : <i class="fa-regular fa-thumbs-up"></i>}
+                        {isLiked ? <i className="fa-solid fa-thumbs-up"></i> : <i className="fa-regular fa-thumbs-up"></i>}
                     </span>
                     {/* <LikeButton isLiked={isLiked} setIsLiked={setIsLiked} /> */}
                     <Link to={`/post/${post._id}`} className="text-dark"><i class="fa-regular fa-comment-dots"></i></Link>

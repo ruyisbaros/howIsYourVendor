@@ -8,8 +8,8 @@ exports.createComment = asyncHandler(async (req, res) => {
     const newComment = await Comment.create({
         owner: req.user._id,
         postId, content, tag, reply
-    })
-    const updatedPost = await Posts.findOneAndUpdate(postId, { $push: { comments: newComment._id } }, { new: true })
+    }).populate("owner")
+    const updatedPost = await Posts.findOneAndUpdate(postId, { $push: { comments: newComment._id } }, { new: true }).populate("owner")
 
     res.status(200).json({ newComment, updatedPost })
 })
