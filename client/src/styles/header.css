@@ -6,7 +6,8 @@
     left: 0;
     z-index: 11;
     box-shadow: 0 0 10px #ddd;
-    background:#f8f9fa
+    background:#f8f9fa;
+    border: 1px solid rgba(0,0,0,0.125)
 }
 
 .header .navbar{
@@ -123,6 +124,7 @@ font-size: 14px;
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
         z-index: 13;
         background:#f8f9fa;
+        border: 1px solid rgba(0,0,0,0.125)
     }
 
     .header .menu .navbar-nav{

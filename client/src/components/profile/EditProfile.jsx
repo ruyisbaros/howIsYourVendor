@@ -124,6 +124,7 @@ const EditProfile = ({ setEdit }) => {
                         name="story"
                         id="story"
                         placeholder="Story"
+                        resize="none"
                         value={story}
                         className="form-control"
                         disabled={story.length === 200}

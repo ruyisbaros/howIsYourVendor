@@ -22,7 +22,7 @@ import { postsFetchFail, postsFetchStart, postsFetchSuccess } from "./redux/post
 function App() {
 
   const { token, } = useSelector(store => store.currentUser)
-  const { status, posts } = useSelector(store => store.posts)
+  const { status } = useSelector(store => store.posts)
   const dispatch = useDispatch()
 
 
@@ -64,7 +64,7 @@ function App() {
 
   useEffect(() => {
     if (token) getPosts()
-  }, [dispatch, token])
+  }, [dispatch, token, status === false])
 
   return (
     <BrowserRouter>

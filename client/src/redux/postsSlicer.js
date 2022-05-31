@@ -9,6 +9,7 @@ const initialState = {
     status: false,
     errorMessage: "",
     onEdit: false,
+    targetOfUpdatePost: {}
 }
 
 const postsSlicer = createSlice({
@@ -49,17 +50,38 @@ const postsSlicer = createSlice({
         PostCreateSuccess: (state, action) => {
             state.status = false;
             state.profilePostFetching = false
-            state.posts = [...state.posts, action.payload];
+            state.posts = [action.payload, ...state.posts];
         },
         PostCreateFail: (state) => {
             state.status = false;
             state.profilePostFetching = false
             state.error = true
         },
+        postUpdate: (state, action) => {
+            const id = action.payload
+            state.targetOfUpdatePost = state.posts.find(pst => pst._id === id);
+            state.status = true;
+            state.onEdit = true;
+        },
+        postUpdateDone: (state, action) => {
+            state.status = false;
+            state.onEdit = false;
+        },
+        postLikeUpdate: (state, action) => {
+
+            let likedPost = action.payload
+
+            state.posts.forEach(pst => {  //Using Map has risks. forEach has only side effect!!
+                if (pst._id === likedPost._id) {
+                    pst.likes = likedPost.likes
+                }
+            })
+
+        }
     }
 })
 
 export const { postsFetchStart, postsFetchSuccess, postsFetchFail, PostCreateStart, PostCreateSuccess,
-    PostCreateFail, closeStatus, openStatus, PostCreateEnd } = postsSlicer.actions
+    PostCreateFail, closeStatus, openStatus, PostCreateEnd, postUpdate, postUpdateDone, postLikeUpdate } = postsSlicer.actions
 
 export default postsSlicer.reducer

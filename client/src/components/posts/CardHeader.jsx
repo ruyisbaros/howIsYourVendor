@@ -3,23 +3,26 @@ import { useSelector, useDispatch } from 'react-redux';
 import Avatar from '../Avatar'
 import { Link } from "react-router-dom"
 import moment from 'moment'
+import { postUpdate } from '../../redux/postsSlicer';
 
 const CardHeader = ({ post }) => {
     const { currentUser } = useSelector(store => store.currentUser)
+
     const dispatch = useDispatch()
 
-    const handleEditPost = (id) => {
-
+    const handleEditPost = () => {
+        //console.log(post);
+        dispatch(postUpdate(post._id))
     }
 
     return (
         <div className="card_header">
             <div className="d-flex">
-                <Avatar src={post.owner.avatar.url} size="big-avatar" />
+                <Avatar src={post?.owner.avatar?.url} size="big-avatar" />
                 <div className="card_name">
                     <h6 className="ml-2">
-                        <Link to={`/profile/${post.owner._id}`} className="text-dark">
-                            {post.owner.username.split("")[0].toUpperCase() + post.owner.username.slice(1)}
+                        <Link to={`/profile/${post?.owner?._id}`} className="text-dark">
+                            {post?.owner?.username.split("")[0].toUpperCase() + post.owner.username.slice(1)}
                         </Link>
                     </h6>
                     <small className="text-muted">
@@ -35,7 +38,7 @@ const CardHeader = ({ post }) => {
                     {
                         currentUser._id === post.owner._id &&
                         <>
-                            <div className="dropdown-item" onClick={() => handleEditPost(post._id)}>
+                            <div className="dropdown-item" onClick={handleEditPost}>
                                 <span className="material-icons mui" >
                                     create
                                 </span>

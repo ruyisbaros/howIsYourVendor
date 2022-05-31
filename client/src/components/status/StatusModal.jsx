@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { closeStatus, PostCreateEnd, PostCreateFail, PostCreateStart, PostCreateSuccess } from '../../redux/postsSlicer';
+import { closeStatus, PostCreateEnd, PostCreateFail, PostCreateStart, PostCreateSuccess, postUpdateDone } from '../../redux/postsSlicer';
 import { toast } from "react-toastify"
 import loadingImg from "../../images/loading-2.gif"
 import axios from 'axios';
 
 const StatusModal = () => {
     const { currentUser, token } = useSelector(store => store.currentUser)
-    const { profilePostFetching } = useSelector(store => store.posts)
+    const { profilePostFetching, onEdit, targetOfUpdatePost } = useSelector(store => store.posts)
     const dispatch = useDispatch()
     const videoRef = useRef()
     const canvasRef = useRef()
@@ -20,7 +20,8 @@ const StatusModal = () => {
     const [index, setIndex] = useState(0)
     const [activeImg, setActiveImg] = useState(images[index])
 
-
+    console.log('target', targetOfUpdatePost);
+    console.log(images);
     useEffect(() => {
         setActiveImg(images[index])
     }, [index, images])
@@ -36,7 +37,7 @@ const StatusModal = () => {
         setImages([...images, ...newImages])
         dispatch(PostCreateEnd())
     }
-    console.log(images);
+    //console.log(images);
     const handleImages = async (e) => {
         const files = [...e.target.files]
 
@@ -101,34 +102,50 @@ const StatusModal = () => {
             dispatch(PostCreateStart())
             if (images.length === 0) return toast.error("Please select-add images")
             if (content.length === 0) return toast.error("Please text your comments")
-            const { data } = await axios.post("/api/v1/posts/new", { content, images }, {
-                headers: { authorization: token }
-            })
-            //console.log(data);
-            dispatch(PostCreateSuccess(data))
-            toast.success("Your post has been created successfully")
-            setContent("")
-            setImages([])
-            if (tracks) tracks.stop();
+            if (onEdit) {
+                const { data } = await axios.patch(`/api/v1/posts/update/${targetOfUpdatePost._id}`, { content, images }, {
+                    headers: { authorization: token }
+                })
+                toast.success("Your post has been updated successfully")
+                dispatch(postUpdateDone())
+                setContent("")
+                setImages([])
+            } else {
+                const { data } = await axios.post("/api/v1/posts/new", { content, images }, {
+                    headers: { authorization: token }
+                })
+                //console.log(data);
+                dispatch(PostCreateSuccess(data))
+                toast.success("Your post has been created successfully")
+                setContent("")
+                setImages([])
+                if (tracks) tracks.stop();
+            }
         } catch (error) {
             toast.error("error.response.data.message")
             dispatch(PostCreateFail())
         }
     }
 
+    useEffect(() => {
+        if (onEdit) {
+            setContent(targetOfUpdatePost.content)
+            setImages(targetOfUpdatePost.images)
+        }
+    }, [onEdit, targetOfUpdatePost])
 
 
     return (
         <div className="status_modal">
             <form onSubmit={handleSubmit}>
                 <div className="status_header">
-                    <h5 className="m-0">Create a New Post</h5>
+                    <h5 className="m-0">{onEdit ? "Update selected Post" : "Create a New Post"}</h5>
                     <span onClick={() => dispatch(closeStatus())}>&times;</span>
                 </div>
                 <div className="status_body">
                     <textarea name="content"
                         placeholder={`${currentUser.username.toUpperCase()}, give a short explain about your Vendor `}
-                        value={content}
+                        value={content} resize="none"
                         onChange={e => setContent(e.target.value)}
                     />
                     <span>{content.length}/400</span>

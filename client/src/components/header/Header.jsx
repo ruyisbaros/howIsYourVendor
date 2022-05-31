@@ -10,7 +10,7 @@ const Header = () => {
         <div className="header bg-light">
             <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-between align-middle">
                 <Link className="logo" to="/">
-                    <h1 className="navbar-brand p-0 m-0">HowIsYourVendor</h1>
+                    <h1 className="navbar-brand p-0 m-0" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>HowIsYourVendor</h1>
                 </Link>
                 <Search />
                 <Menu />

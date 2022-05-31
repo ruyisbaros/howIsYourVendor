@@ -19,7 +19,7 @@ const Carousel = ({ images, id }) => {
             <div className="carousel-inner">
                 {
                     images.map((img, i) => (
-                        <div key={img._id} className={`carousel-item ${isActive(i)}`}>
+                        <div key={i} className={`carousel-item ${isActive(i)}`}>
                             <img className="d-block w-100" src={img.url} alt="First slide" />
                         </div>
                     ))

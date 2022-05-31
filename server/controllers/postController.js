@@ -20,3 +20,27 @@ exports.getAllPosts = asyncHandler(async (req, res) => {
 
     res.status(200).json({ posts, result: posts.length })
 })
+
+exports.updateAPost = asyncHandler(async (req, res) => {
+    const { content, images } = req.body
+    const { postId } = req.params
+    if (images.length === 0) return res.status(500).json({ message: "Please add images" })
+    const post = await Posts.findById(postId)
+    if (!post) return res.status(500).json({ message: "Post is not be found" })
+    const updateAPost = await Posts.findByIdAndUpdate(postId, { content, images }, { new: true })
+
+    res.status(200).json({ message: "Post has been updated successfully" })
+})
+
+exports.likeUnlike = asyncHandler(async (req, res) => {
+    const { postId } = req.params
+    let targetPost;
+    const post = await Posts.findById(postId)
+    if (!post.likes.includes(req.user._id)) {
+        targetPost = await Posts.findByIdAndUpdate(postId, { $push: { likes: req.user._id } }, { new: true }).populate("likes owner")
+    } else {
+        targetPost = await Posts.findByIdAndUpdate(postId, { $pull: { likes: req.user._id } }, { new: true }).populate("likes owner")
+    }
+
+    res.status(200).json(targetPost)
+})
