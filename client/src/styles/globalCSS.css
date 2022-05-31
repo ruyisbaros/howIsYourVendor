@@ -94,3 +94,7 @@ filter:invert(1)
 
 /* -----Posts */
 @import url("./posts.css");
+
+/*---------- Comments-------- */
+
+@import url("./comments.css");

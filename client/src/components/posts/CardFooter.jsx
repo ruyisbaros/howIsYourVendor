@@ -15,7 +15,7 @@ const CardFooter = ({ post }) => {
     const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser._id))
     const [loadLiked, setLoadLiked] = useState(false)
 
-    const likeHandler = async () => {
+    const likeHandler = async () => { //toggle. so like and unlike at a time ;))
         const { data } = await axios.patch(`/api/v1/posts/like_unlike/${post._id}`, null, {
             headers: { authorization: token }
         })
@@ -28,17 +28,17 @@ const CardFooter = ({ post }) => {
             <div className="card_icon_menu">
                 <div >
                     <span onClick={likeHandler}>
-                        {isLiked ? <i className="fa-solid fa-heart text-danger"></i> : <i className="fa-regular fa-heart"></i>}
+                        {isLiked ? <i class="fa-solid fa-thumbs-up"></i> : <i class="fa-regular fa-thumbs-up"></i>}
                     </span>
                     {/* <LikeButton isLiked={isLiked} setIsLiked={setIsLiked} /> */}
-                    <Link to={`/post/${post._id}`} className="text-dark"><i className="far fa-comment" /></Link>
+                    <Link to={`/post/${post._id}`} className="text-dark"><i class="fa-regular fa-comment-dots"></i></Link>
                     <img src={SendSVG} alt="Send" />
                 </div>
                 <i className="far fa-bookmark" />
             </div>
             <div className="d-flex justify-content-between">
 
-                <h6 style={{ padding: "0 28px", cursor: "pointer" }}>{post.likes.length} likes</h6>
+                <h6 style={{ padding: "0 20px", cursor: "pointer" }}>{post.likes.length} likes</h6>
 
                 <h6 style={{ padding: "0 25px", cursor: "pointer" }}>{post.comments.length} Comments</h6>
             </div>

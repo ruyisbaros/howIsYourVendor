@@ -13,22 +13,6 @@ const FollowBtn = ({ user }) => {
 
     const dispatch = useDispatch()
 
-    /* const [edit, setEdit] = useState(false)
-    const [follow, setFollow] = useState(currentUser.followings.includes(String(user._id))) */
-
-    //Follow UnFollow functions
-    /* const handleFollowUnFollow = async () => {
-        try {
-            const { data } = await axios.patch(`/api/v1/users/follow_unFollow/${profile._id}`, { id: currentUser._id })
-            dispatch(profileFollowUnFollowUpdates({ followings: data.targetUser.followings, followers: data.targetUser.followers }))
-            dispatch(updateCurrentSuccess(data.currentUser))
-            toast.success(data.message)
-            console.log(data.targetUser);
-        } catch (error) {
-            toast.error(error.response.data.message)
-            console.log(token);
-        }
-    } */
     const handleFollowUnFollow = async () => {
         try {
             const { data } = await axios.patch(`/api/v1/users/follow_unFollow/${user._id}`, null, {

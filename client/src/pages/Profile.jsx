@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import Info from '../components/profile/Info'
-import Posts from '../components/profile/ProfilePosts'
+import Info from '../components/profile/profileInfo/Info'
+import Posts from '../components/profile/profilePosts/ProfilePosts'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';

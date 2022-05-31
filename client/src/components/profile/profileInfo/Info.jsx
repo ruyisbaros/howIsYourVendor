@@ -1,12 +1,12 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import Avatar from '../Avatar'
-import EditProfile from './EditProfile'
+import Avatar from '../../Avatar'
+import EditProfile from '../profileInfo/EditProfile'
 import { toast } from "react-toastify"
-import FollowBtn from '../FollowBtn';
-import Followers from '../../pages/Followers';
-import Followings from '../../pages/Followings';
+import FollowBtn from '../../FollowBtn';
+import Followers from '../../../pages/Followers';
+import Followings from '../../../pages/Followings';
 
 const Info = () => {
     const { profile } = useSelector(store => store.profile)

@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { toast } from "react-toastify"
-import { updateCurrentFail, updateCurrentStart, updateCurrentSuccess } from '../../redux/authSlicer'
+import { updateCurrentFail, updateCurrentStart, updateCurrentSuccess } from '../../../redux/authSlicer'
 
 const EditProfile = ({ setEdit }) => {
 

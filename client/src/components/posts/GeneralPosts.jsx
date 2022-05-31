@@ -1,7 +1,5 @@
 import { useSelector } from 'react-redux';
-import CardHeader from './CardHeader';
-import CardBody from './CardBody';
-import CardFooter from './CardFooter';
+import PostCard from '../profile/profilePosts/PostCard'
 
 
 const GeneralPosts = () => {
@@ -10,11 +8,7 @@ const GeneralPosts = () => {
         <div className="posts">
             {
                 posts.map(post => (
-                    <div className="card my-3" key={post._id}>
-                        <CardHeader post={post} />
-                        <CardBody post={post} />
-                        <CardFooter post={post} />
-                    </div>
+                    <PostCard key={post._id} post={post} />
                 ))
             }
         </div>
@@ -22,3 +16,4 @@ const GeneralPosts = () => {
 }
 
 export default GeneralPosts
+
