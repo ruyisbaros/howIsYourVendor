@@ -17,7 +17,7 @@ const InputComments = ({ children, post }) => {
     const newComment = {
       content,
       likes: [],
-      reply: {},
+      /*  reply: {}, */
       postId: post._id,
       createdAt: new Date().toISOString()
     }
