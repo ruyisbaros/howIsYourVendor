@@ -3,11 +3,78 @@
     display: flex;
     gap: 20px;
     padding:0 20px;
+    
 }
-
+.comment_texts_box{
+    display: flex;
+}
+.comment_card .comment_content{
+    width: 100%;
+}
 .comment_card .comment_title{
     display: flex;
     align-items: center;
     gap: 20px;
     transform: translateY(-5px)
+}
+
+.comment_texts_box .comment_intent .readMore{
+    font-size: 12px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.comment_card .comment_content .input_box{
+    width: 100% !important;
+    height: 120px;
+}
+
+.comment_card .comment_content .input_box .comment_input{
+    height: 100%;
+}
+.comment_card .comment_content .input_box input{
+    width: 100%;
+    /* border: 1px solid; */
+    padding: 15px;
+    transform: translateY(-15px);
+    margin-bottom: 0;
+}
+.comment_card .comment_content .input_box .postBtn{
+font-size: 14px;
+margin-top: 0;
+}
+
+.comment_card .comment_content .input_box img{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+/* Inform */
+.comment-menu{
+    transform: translateY(-23px);
+}
+.comment-menu .dropdown-menu{
+    cursor: pointer;
+    position: absolute;
+    left:inherit !important;
+    right: 0;
+     background-color: #ddd;
+}
+
+.comment-menu .dropdown-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px 0;
+    transition: all 0.3s;
+   
+}
+.comment-menu .dropdown-item:hover{
+    background:blue;
+    color:#fff;
+    font-weight: bold;
+}
+.comment-menu .dropdown-item .mui{
+    font-size: 18px;
 }

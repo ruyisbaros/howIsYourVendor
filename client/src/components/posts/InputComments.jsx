@@ -5,6 +5,7 @@ import { createComment } from '../../redux/commentsSlicer';
 import { postCommentUpdate } from '../../redux/postsSlicer';
 import Avatar from '../Avatar';
 
+
 const InputComments = ({ children, post }) => {
 
   const { currentUser, token } = useSelector(store => store.currentUser)
@@ -19,7 +20,7 @@ const InputComments = ({ children, post }) => {
       likes: [],
       /*  reply: {}, */
       postId: post._id,
-      createdAt: new Date().toISOString()
+      /* createdAt: new Date().toISOString() */
     }
     const { data } = await axios.post("/api/v1/comments/new", { ...newComment }, {
       headers: { authorization: token }
@@ -27,6 +28,7 @@ const InputComments = ({ children, post }) => {
     console.log(data);
     dispatch(createComment({ newComment: data.newComment }))
     dispatch(postCommentUpdate({ updatedPost: data.updatedPost }))
+    setContent("")
     console.log(data);
 
   }

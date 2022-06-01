@@ -19,6 +19,8 @@ exports.createComment = asyncHandler(async (req, res) => {
                 select: "-password"
             }
         })
+        .sort({ createdAt: -1 })
 
     res.status(200).json({ newComment, updatedPost })
 })
+
