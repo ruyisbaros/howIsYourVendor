@@ -1,0 +1,13 @@
+.comment_card {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    padding:0 20px;
+}
+
+.comment_card .comment_title{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transform: translateY(-5px)
+}

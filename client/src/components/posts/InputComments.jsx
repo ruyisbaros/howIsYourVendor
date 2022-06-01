@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { createComment } from '../../../redux/commentsSlicer';
-import { postCommentUpdate } from '../../../redux/postsSlicer';
-import Avatar from '../../Avatar';
+import { createComment } from '../../redux/commentsSlicer';
+import { postCommentUpdate } from '../../redux/postsSlicer';
+import Avatar from '../Avatar';
 
 const InputComments = ({ children, post }) => {
 
@@ -17,7 +17,7 @@ const InputComments = ({ children, post }) => {
     const newComment = {
       content,
       likes: [],
-      reply: "",
+      reply: {},
       postId: post._id,
       createdAt: new Date().toISOString()
     }
