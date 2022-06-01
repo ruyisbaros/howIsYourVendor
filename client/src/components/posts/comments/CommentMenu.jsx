@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CommentMenu = ({ post, comment, user }) => {
+const CommentMenu = ({ post, comment, user, setOnEdit }) => {
     return (
         <div className="comment-menu">
             {
@@ -13,7 +13,7 @@ const CommentMenu = ({ post, comment, user }) => {
                         {
                             user._id === comment.owner._id ?
                                 <>
-                                    <div className="dropdown-item" /* onClick={handleEditPost} */>
+                                    <div onClick={() => setOnEdit(true)} className="dropdown-item" /* onClick={handleEditPost} */>
                                         <span className="material-icons mui" >
                                             create
                                         </span>

@@ -54,17 +54,3 @@ exports.likeUnlike = asyncHandler(async (req, res) => {
     res.status(200).json(targetPost)
 })
 
-exports.likeUnLikeComment = asyncHandler(async (req, res) => {
-    const { postId } = req.params
-    const { commentId } = req.body
-    let targetPost;
-    const post = await Posts.findById(postId)
-    const targetComment = post.comments.find(comment => comment._id === commentId)
-    if (!targetComment.likes.includes(req.user._id)) {
-        targetPost = await Posts.findByIdAndUpdate(postId, { $push: { comments: { targetComment: { likes: req.user._id } } } }, { new: true }).populate("likes owner")
-    } else {
-        targetPost = await Posts.findByIdAndUpdate(postId, { $pull: { likes: req.user._id } }, { new: true }).populate("likes owner")
-    }
-
-    res.status(200).json(targetPost)
-})

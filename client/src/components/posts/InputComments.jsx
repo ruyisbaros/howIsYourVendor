@@ -6,11 +6,12 @@ import { postCommentUpdate } from '../../redux/postsSlicer';
 import Avatar from '../Avatar';
 
 
-const InputComments = ({ children, post }) => {
+const InputComments = ({ children, post, reply, setReply }) => {
 
   const { currentUser, token } = useSelector(store => store.currentUser)
   const dispatch = useDispatch()
   const [content, setContent] = useState("")
+
 
   const submitHandler = async (e) => {
     e.preventDefault();

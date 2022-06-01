@@ -50,9 +50,13 @@ margin-top: 0;
     border-radius: 50%;
 }
 
-/* Inform */
+/* Inform: edit delete */
 .comment-menu{
     transform: translateY(-23px);
+    opacity: 0;
+}
+.comment_card:hover .comment-menu{
+    opacity: 1;
 }
 .comment-menu .dropdown-menu{
     cursor: pointer;
@@ -77,4 +81,14 @@ margin-top: 0;
 }
 .comment-menu .dropdown-item .mui{
     font-size: 18px;
+}
+
+/* ---update comment */
+
+.comment_texts_box .on_edit_text{
+    width: 100%;
+    border:none;
+    border-bottom: 1px dotted lightgray;
+    outline: none;
+    background:#fff;
 }
