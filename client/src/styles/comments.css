@@ -1,7 +1,17 @@
-
+.input_box{
+    display: flex;
+    align-items: center;
+    gap:20px;
+    background: #f7f7f7;
+    padding: 15px 20px;
+}
 .comment_input{
+    flex: 1;
     display: flex;
     flex-direction: column;
+     background: #f7f7f7;
+     border:none;
+     transform: translateY(15px)
 }
 .comment_input input{
     background: #f7f7f7;

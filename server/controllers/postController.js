@@ -16,7 +16,16 @@ exports.createPost = asyncHandler(async (req, res) => {
 
 exports.getAllPosts = asyncHandler(async (req, res) => {
 
-    const posts = await Posts.find({ owner: [...req.user.followings, req.user._id] }).populate("owner", "-password").sort({ createdAt: -1 })
+    const posts = await Posts.find({ owner: [...req.user.followings, req.user._id] })
+        .sort({ createdAt: -1 })
+        .populate("owner", "-password")
+        .populate({
+            path: "comments",
+            populate: {
+                path: "owner likes",
+                select: "-password"
+            }
+        })
 
     res.status(200).json({ posts, result: posts.length })
 })

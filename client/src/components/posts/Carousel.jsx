@@ -16,7 +16,7 @@ const Carousel = ({ images, id }) => {
                 }
 
             </ol>
-            <div className="carousel-inner">
+            <div className="carousel-inner crl_height">
                 {
                     images.map((img, i) => (
                         <div key={i} className={`carousel-item ${isActive(i)}`}>

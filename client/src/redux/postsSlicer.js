@@ -80,6 +80,7 @@ const postsSlicer = createSlice({
         postCommentUpdate: (state, action) => {
 
             let commentedPost = action.payload.updatedPost
+            //console.log(commentedPost);
 
             state.posts.forEach(pst => {  //Using Map has risks. forEach has only side effect!!
                 if (pst._id === commentedPost._id) {

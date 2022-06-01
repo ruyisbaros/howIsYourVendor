@@ -41,7 +41,12 @@
 }
 
 /* Card Body */
-
+.card_body .crl_height{
+    height: 600px;
+}
+.card_body .crl_height img{
+    object-fit: cover;
+}
 .card_body_content{
     padding: 0 25px;
     margin-bottom: 10px;

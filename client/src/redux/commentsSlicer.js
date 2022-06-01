@@ -10,15 +10,20 @@ const initialState = {
 }
 
 const commentSlicer = createSlice({
-    name: "comment",
+    name: "comments",
     initialState,
     reducers: {
+        getComments: (state, action) => {
+            state.comments = [action.payload.newComment, ...state.comments];
+        },
         createComment: (state, action) => {
-            state.comments = [action.payload, ...state.comments];
-        }
+            state.comments = [...state.comments, action.payload.newComment];
+        },
+
+
     }
 })
 
-const { } = commentSlicer.actions
+export const { createComment } = commentSlicer.actions
 
 export default commentSlicer.reducer

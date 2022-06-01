@@ -10,6 +10,11 @@
     height: 50px;
     border-radius: 50%;
 }
+.xbig-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
 
 .medium-avatar {
     width: 30px;
