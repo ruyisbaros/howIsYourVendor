@@ -73,7 +73,7 @@ const postsSlicer = createSlice({
 
             state.posts.forEach(pst => {  //Using Map has risks. forEach has only side effect!!
                 if (pst._id === likedPost._id) {
-                    pst.likes = likedPost.likes
+                    pst.likes = [...likedPost.likes]
                 }
             })
         },
