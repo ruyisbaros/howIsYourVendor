@@ -67,6 +67,17 @@ const postsSlicer = createSlice({
             state.status = false;
             state.onEdit = false;
         },
+        postCommentCreate: (state, action) => {
+
+            let updatedComment = action.payload.updatedPost
+            //console.log(commentedPost);
+            state.posts.forEach(pst => {  //Using Map has risks. forEach has only side effect!!
+                if (pst._id === updatedComment._id) {
+                    pst.comments = [...updatedComment.comments]
+                }
+            })
+
+        },
         postLikeUpdate: (state, action) => {
 
             let likedPost = action.payload
@@ -90,6 +101,18 @@ const postsSlicer = createSlice({
             })
 
         },
+        postCommentDelete: (state, action) => {
+
+            let updatedComment = action.payload
+            //console.log(commentedPost);
+            state.posts.forEach(pst => {  //Using Map has risks. forEach has only side effect!!
+                if (pst._id === updatedComment._id) {
+                    pst.comments = [...updatedComment.comments]
+                }
+            })
+
+        },
+
         postCommentLikeUpdate: (state, action) => {
 
             let updatedComment = action.payload
@@ -109,7 +132,7 @@ const postsSlicer = createSlice({
 
 export const { postsFetchStart, postsFetchSuccess, postsFetchFail, PostCreateStart, PostCreateSuccess,
     PostCreateFail, closeStatus, openStatus, PostCreateEnd, postUpdate, postUpdateDone, postLikeUpdate,
-    postCommentUpdate, postCommentLikeUpdate
+    postCommentUpdate, postCommentLikeUpdate, postCommentDelete, postCommentCreate
 } = postsSlicer.actions
 
 export default postsSlicer.reducer

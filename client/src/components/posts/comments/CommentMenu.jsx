@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CommentMenu = ({ post, comment, user, setOnEdit }) => {
+const CommentMenu = ({ post, comment, user, setOnEdit, handleCommentDelete }) => {
     return (
         <div className="comment-menu">
             {
@@ -19,7 +19,7 @@ const CommentMenu = ({ post, comment, user, setOnEdit }) => {
                                         </span>
                                         Edit
                                     </div>
-                                    <div className="dropdown-item">
+                                    <div className="dropdown-item" onClick={handleCommentDelete}>
                                         <span className="material-icons mui" >
                                             delete_outline
                                         </span>

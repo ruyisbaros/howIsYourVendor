@@ -32,6 +32,23 @@ exports.updateAComment = asyncHandler(async (req, res) => {
 
     res.status(200).json(updatedComment)
 })
+exports.deleteAComment = asyncHandler(async (req, res) => {
+    const { commentId } = req.params
+    const { postId } = req.body
+    const deletedComment = await Comment.findById(commentId)
+    const updatedPost = await Posts.findByIdAndUpdate(postId, { $pull: { comments: deletedComment._id } }, { new: true })
+        .populate("owner", "-password")
+        .populate({
+            path: "comments",
+            populate: {
+                path: "owner likes",
+                select: "-password"
+            }
+        })
+        .sort({ createdAt: -1 })
+
+    res.status(200).json(updatedPost)
+})
 exports.likeUnLikeComment = asyncHandler(async (req, res) => {
 
     const { commentId } = req.params

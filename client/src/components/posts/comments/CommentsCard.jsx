@@ -3,7 +3,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import Avatar from '../../Avatar'
 import { useSelector, useDispatch } from 'react-redux'
-import { postCommentLikeUpdate, postCommentUpdate } from "../../../redux/postsSlicer"
+import { postCommentDelete, postCommentLikeUpdate, postCommentUpdate } from "../../../redux/postsSlicer"
 import CommentMenu from './CommentMenu'
 import axios from 'axios'
 
@@ -23,7 +23,7 @@ const CommentsCard = ({ post, comment }) => {
   useEffect(() => {
     setContent(comment.content)
   }, [comment])
-  console.log(content);
+  //console.log(content);
 
   const likeCommentHandler = async () => {
 
@@ -37,6 +37,15 @@ const CommentsCard = ({ post, comment }) => {
 
   const replyHandler = async (e) => {
     e.preventDefault()
+  }
+
+  const handleCommentDelete = async (e) => {
+    e.preventDefault()
+    const { data } = await axios.patch(`/api/v1/comments/del/${comment._id}`, { postId: post._id }, {
+      headers: { authorization: token }
+    })
+    console.log(data);
+    dispatch(postCommentDelete(data))
   }
 
   const handleCommentUpdate = async (e) => {
@@ -104,7 +113,7 @@ const CommentsCard = ({ post, comment }) => {
               }
             </div>
           </div>
-          <CommentMenu post={post} comment={comment} user={currentUser} setOnEdit={setOnEdit} />
+          <CommentMenu handleCommentDelete={handleCommentDelete} post={post} comment={comment} user={currentUser} setOnEdit={setOnEdit} />
 
         </div>
         {

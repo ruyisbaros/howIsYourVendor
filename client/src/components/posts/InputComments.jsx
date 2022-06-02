@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { createComment } from '../../redux/commentsSlicer';
-import { postCommentUpdate } from '../../redux/postsSlicer';
+import { postCommentCreate, postCommentUpdate } from '../../redux/postsSlicer';
 import Avatar from '../Avatar';
 
 
@@ -28,7 +28,7 @@ const InputComments = ({ children, post, reply, setReply }) => {
     })
     console.log(data);
     dispatch(createComment({ newComment: data.newComment }))
-    dispatch(postCommentUpdate({ updatedPost: data.updatedPost }))
+    dispatch(postCommentCreate({ updatedPost: data.updatedPost }))
     setContent("")
     console.log(data);
 
