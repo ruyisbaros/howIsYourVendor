@@ -44,7 +44,7 @@ const CommentsCard = ({ post, comment }) => {
     const { data } = await axios.patch(`/api/v1/comments/del/${comment._id}`, { postId: post._id }, {
       headers: { authorization: token }
     })
-    console.log(data);
+    //console.log(data);
     dispatch(postCommentDelete(data))
   }
 

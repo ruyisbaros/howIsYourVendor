@@ -36,6 +36,7 @@ const Register = () => {
                 localStorage.setItem("firstLogin", true)
                 toast.success(data.message)
                 dispatch(authSuccess({ user: data.fulledUser, token: data.accessToken, message: data.message }))
+                window.location.reload()
             } catch (error) {
                 toast.error(error.response.data.message)
                 dispatch(authFailure(error.response.data.message))
