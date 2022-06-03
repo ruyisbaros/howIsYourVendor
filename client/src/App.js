@@ -46,7 +46,7 @@ function App() {
       }, 13 * 24 * 60 * 60 * 1000) //13 days
     }
 
-  }, []);
+  }, [token]);
 
   const getPosts = async () => {
     try {

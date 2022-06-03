@@ -53,17 +53,18 @@ margin-top: 0;
 /* Inform: edit delete */
 .comment-menu{
     transform: translateY(-23px);
-    opacity: 0;
+    /* opacity: 0; */
 }
-.comment_card:hover .comment-menu{
+/* .comment_card:hover .comment-menu{
     opacity: 1;
-}
+} */
 .comment-menu .dropdown-menu{
     cursor: pointer;
     position: absolute;
     left:inherit !important;
     right: 0;
      background-color: #ddd;
+     z-index:100
 }
 
 .comment-menu .dropdown-item{
@@ -92,3 +93,27 @@ margin-top: 0;
     outline: none;
     background:#fff;
 }
+
+/* Replay message */
+.comment_buttons{
+     transition: all 0.4s;
+     
+}
+/* .replay-message{
+     background: #f1f1f1;
+    align-self: flex-end; 
+     margin-left: 42px;
+}
+
+.replay-message .comment-menu .dropdown-menu{
+    cursor: pointer;
+    position: absolute;
+    left:inherit !important;
+    right: 0;
+     background-color: #ddd;
+     z-index:100
+}
+
+#moreLink{
+    z-index:100
+} */

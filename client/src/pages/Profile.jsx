@@ -5,7 +5,8 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { profileFailure, profileStart, profileSuccess } from '../redux/profileSlicer';
-import { updateCurrentSuccess } from '../redux/authSlicer';
+import { profilePostsFetchStart, profilePostsFetchSuccess, profilePostsFetchFail } from "../redux/postsSlicer"
+//import { updateCurrentSuccess } from '../redux/authSlicer';
 
 const Profile = () => {
 
@@ -31,6 +32,24 @@ const Profile = () => {
             }
         }
         getProfile();
+
+    }, [id, dispatch, token]);
+
+    useEffect(() => {
+        const getProfilePosts = async () => {
+            try {
+                dispatch(profilePostsFetchStart())
+                const { data } = await axios.get(`/api/v1/posts/user/${id}`, {
+                    headers: { authorization: token }
+                })
+                //dispatch(updateCurrentSuccess(data))
+                dispatch(profilePostsFetchSuccess(data))
+            }
+            catch (error) {
+                dispatch(profilePostsFetchFail(error.response.data.message))
+            }
+        }
+        getProfilePosts();
 
     }, [id, dispatch, token]);
 

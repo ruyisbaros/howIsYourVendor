@@ -8,6 +8,8 @@ const Comments = ({ post }) => {
     const [comments, setComments] = useState([])
     const [showComments, setShowComments] = useState([])
 
+    const [commentReplies, setCommentReplies] = useState([])
+
     const [next, setNext] = useState(2)
 
     useEffect(() => {
@@ -16,24 +18,30 @@ const Comments = ({ post }) => {
         setShowComments(newComment.slice(newComment.length - next))
     }, [post.comments, next])
 
+    useEffect(() => {
+        const replayComments = post.comments.filter(comment => comment.reply)
+        setCommentReplies(replayComments)
+    }, [post.comments])
+
     return (
         <div className="comments">
             {
-                showComments.map(comment => (
-                    <CommentsDisplay key={comment._id} comment={comment} post={post} />
+                comments.map(comment => (
+                    <CommentsDisplay key={comment._id} comment={comment} post={post}
+                        commentReplies={commentReplies.filter(item => item.postId === comment.postId)} />
                 ))
             }
             {
 
 
-                comments.length - next > 0 ?
+                /* comments.length - next > 0 ?
                     <div className="p-2 border-top" style={{ cursor: "pointer" }} onClick={() => setNext(next + 2)}>
                         More...
                     </div>
                     :
                     <div onClick={() => setNext(2)} className="p-2 border-top" style={{ cursor: "pointer" }}>
                         Hide...
-                    </div>
+                    </div> */
 
 
 

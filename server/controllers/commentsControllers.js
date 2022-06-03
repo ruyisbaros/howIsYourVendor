@@ -4,11 +4,12 @@ const asyncHandler = require("express-async-handler")
 
 exports.createComment = asyncHandler(async (req, res) => {
 
-    const { postId, content, tag, reply } = req.body
+    const { postId, content, tag, reply, postUserId } = req.body
     const _comment = await Comment.create({
         owner: req.user._id,
-        postId, content, tag, reply
+        postId, content, tag, reply, postUserId
     })
+    //console.log("tag:", tag, "reply:", reply);
     const newComment = await Comment.findById(_comment._id).populate("owner", "-password")
     const updatedPost = await Posts.findByIdAndUpdate(postId, { $push: { comments: newComment._id } }, { new: true })
         .populate("owner", "-password")
@@ -46,7 +47,7 @@ exports.deleteAComment = asyncHandler(async (req, res) => {
             }
         })
         .sort({ createdAt: -1 })
-
+    await Comment.findByIdAndDelete(commentId)
     res.status(200).json(updatedPost)
 })
 exports.likeUnLikeComment = asyncHandler(async (req, res) => {

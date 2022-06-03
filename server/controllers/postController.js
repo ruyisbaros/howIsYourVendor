@@ -54,3 +54,17 @@ exports.likeUnlike = asyncHandler(async (req, res) => {
     res.status(200).json(targetPost)
 })
 
+exports.getAUserPosts = asyncHandler(async (req, res) => {
+    const { userId } = req.params
+
+    const posts = await Posts.find({ owner: userId }).sort("-createdAt").populate("owner", "-password")
+        .populate({
+            path: "comments",
+            populate: {
+                path: "owner likes",
+                select: "-password"
+            }
+        })
+
+    res.status(200).json(posts)
+})

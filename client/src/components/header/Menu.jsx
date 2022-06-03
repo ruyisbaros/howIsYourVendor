@@ -23,7 +23,7 @@ const Menu = () => {
         { label: "Home", icon: "home", path: "/" },
         { label: "Messages", icon: "forum", path: "/messages" },
         { label: "Discover", icon: "explore", path: "/discover" },
-        { label: "Notify", icon: "favorite", path: "/notify" },
+        { label: "Notify", icon: "notifications", path: "/notify" },
     ]
     const [mode, setMode] = useState(false)
 
@@ -64,7 +64,7 @@ const Menu = () => {
                         >
                             Profile
                         </Link>
-                        <label className="dropdown-item" htmlFor="theme" onClick={() => setMode(!mode)}> {mode ? "Light Mode" : "Dark Mode"}</label>
+                        <label className="dropdown-item" /* htmlFor="theme" onClick={() => setMode(!mode)} */> Last Activities</label>
 
                         <div className="dropdown-divider"></div>
                         <Link className="dropdown-item" to="/login" onClick={handleLogout}>

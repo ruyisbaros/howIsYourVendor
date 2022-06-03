@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     posts: [],
+    profilePosts: [],
     profilePostFetching: false,
     page: 2,
     result: 0,
@@ -27,6 +28,21 @@ const postsSlicer = createSlice({
         },
 
         postsFetchFail: (state, action) => {
+            state.profilePostFetching = false;
+            state.error = true
+            state.errorMessage = action.payload;
+        },
+        profilePostsFetchStart: (state) => {
+            state.profilePostFetching = true;
+        },
+
+        profilePostsFetchSuccess: (state, action) => {
+            state.profilePostFetching = false;
+            state.profilePosts = [...action.payload]
+            state.result = action.payload.result
+        },
+
+        profilePostsFetchFail: (state, action) => {
             state.profilePostFetching = false;
             state.error = true
             state.errorMessage = action.payload;
@@ -69,11 +85,11 @@ const postsSlicer = createSlice({
         },
         postCommentCreate: (state, action) => {
 
-            let updatedComment = action.payload.updatedPost
-            //console.log(commentedPost);
+            let updatedPost = action.payload.updatedPost
+            //console.log(PostedPost);
             state.posts.forEach(pst => {  //Using Map has risks. forEach has only side effect!!
-                if (pst._id === updatedComment._id) {
-                    pst.comments = [...updatedComment.comments]
+                if (pst._id === updatedPost._id) {
+                    pst.comments = [...updatedPost.comments]
                 }
             })
 
@@ -132,7 +148,8 @@ const postsSlicer = createSlice({
 
 export const { postsFetchStart, postsFetchSuccess, postsFetchFail, PostCreateStart, PostCreateSuccess,
     PostCreateFail, closeStatus, openStatus, PostCreateEnd, postUpdate, postUpdateDone, postLikeUpdate,
-    postCommentUpdate, postCommentLikeUpdate, postCommentDelete, postCommentCreate
+    postCommentUpdate, postCommentLikeUpdate, postCommentDelete, postCommentCreate, profilePostsFetchStart,
+    profilePostsFetchSuccess, profilePostsFetchFail
 } = postsSlicer.actions
 
 export default postsSlicer.reducer

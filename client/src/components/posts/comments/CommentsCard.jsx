@@ -3,11 +3,12 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import Avatar from '../../Avatar'
 import { useSelector, useDispatch } from 'react-redux'
-import { postCommentDelete, postCommentLikeUpdate, postCommentUpdate } from "../../../redux/postsSlicer"
+import { postCommentCreate, postCommentDelete, postCommentLikeUpdate, postCommentUpdate } from "../../../redux/postsSlicer"
 import CommentMenu from './CommentMenu'
 import axios from 'axios'
+import { createComment } from '../../../redux/commentsSlicer'
 
-const CommentsCard = ({ post, comment }) => {
+const CommentsCard = ({ post, comment, children, item, showReplies, setShowReplies }) => {
   const { currentUser, token } = useSelector(store => store.currentUser)
 
   const [content, setContent] = useState("")
@@ -16,13 +17,16 @@ const CommentsCard = ({ post, comment }) => {
   const [isLiked, setIsLiked] = useState(comment.likes.find(lk => lk.username === currentUser.username))
 
   const [onEdit, setOnEdit] = useState(false)
-  const [reply, setReply] = useState("")
+  const [comReply, setReply] = useState("")
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     setContent(comment.content)
   }, [comment])
+  /* useEffect(() => {
+    setReply(`@${comment.owner.username}:`)
+  }, [isReply, comment]) */
   //console.log(content);
 
   const likeCommentHandler = async () => {
@@ -37,8 +41,30 @@ const CommentsCard = ({ post, comment }) => {
 
   const replyHandler = async (e) => {
     e.preventDefault()
-  }
+    //console.log(comment._id);
+    if (isReply) {
+      const replyComment = {
+        content: comReply,
+        likes: [],
+        reply: comment._id,
+        postId: post._id,
+        tag: comment.owner,
+        postUserId: post.owner._id
+      }
+      //console.log(replyComment);
+      const { data } = await axios.post("/api/v1/comments/new", { ...replyComment }, {
+        headers: { authorization: token }
+      })
+      console.log(data);
+      dispatch(createComment({ newComment: data.newComment }))
+      dispatch(postCommentCreate({ updatedPost: data.updatedPost }))
+      setIsReply(false)
+      console.log(data);
+    }
 
+
+  }
+  //console.log(reply);
   const handleCommentDelete = async (e) => {
     e.preventDefault()
     const { data } = await axios.patch(`/api/v1/comments/del/${comment._id}`, { postId: post._id }, {
@@ -60,6 +86,12 @@ const CommentsCard = ({ post, comment }) => {
       setOnEdit(false)
     }
   }
+  /* const spliter = (cnt) => {
+    if (cnt.split("")[0] === "@") {
+      let temp1 = cnt.split(" ")[0]
+      return temp1.split("@")[0]
+    }
+  } */
 
   return (
     <div className="comment_card mt-3">
@@ -74,13 +106,19 @@ const CommentsCard = ({ post, comment }) => {
           </small>
         </div>
         <div className="comment_texts_box">
-          <div className="flex-fill">
+          <div className="flex-fill replay-mother">
             {
               onEdit ? <textarea className="on_edit_text" resize="false" rows="3"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
               />
                 : <div className="comment_intent">
+                  {
+                    comment.tag && comment.tag._id !== comment.owner._id &&
+                    <Link to={`/profile/${comment.tag._id}`} className="mr-1">
+                      @{comment.tag.username}
+                    </Link>
+                  }
                   <span >
                     {
                       content.length < 100 ? content : readMore ? content :
@@ -106,27 +144,37 @@ const CommentsCard = ({ post, comment }) => {
                     <small style={{ textTransform: "uppercase" }} className="font-weight-bold mx-2"
                       onClick={() => setOnEdit(false)}
                     >cancel</small>
+
                   </>
-                  : <small style={{ textTransform: "uppercase" }} className="font-weight-bold mx-2"
-                    onClick={() => setIsReply(!isReply)}
-                  >{isReply ? "cancel" : "reply"}</small>
+                  : <>
+                    <small style={{ textTransform: "uppercase" }} className="font-weight-bold mx-2"
+                      onClick={() => setIsReply(!isReply)}
+                    >{isReply ? "cancel" : "reply"}</small>
+                    {
+                      item && <small style={{ textTransform: "uppercase", color: showReplies ? "red" : "blue" }} className="font-weight-bold mx-2"
+                        onClick={() => setShowReplies(!showReplies)}
+                      >{showReplies ? "hide" : "replies..."}</small>
+                    }
+                  </>
               }
+
             </div>
           </div>
           <CommentMenu handleCommentDelete={handleCommentDelete} post={post} comment={comment} user={currentUser} setOnEdit={setOnEdit} />
 
         </div>
+        {children}
         {
           isReply && <div className="input_box">
             <Avatar src={currentUser.avatar.url} size="xbig-avatar" />
             <form onSubmit={replyHandler} className="card-footer comment_input">
 
-              <input type="text" placeholder="Add your comments..." value={reply}
+              <input type="text" placeholder="Add your comments..." value={comReply}
                 onChange={(e) => setReply(e.target.value)} />
 
               <div className="btn_box">
                 <button onClick={() => setReply("")} className="postBtn">Cancel</button>
-                <button type="submit" style={{ background: reply ? "blue" : "#ddd", color: reply ? "white" : "#0008" }} className="postBtn send">reply</button>
+                <button type="submit" style={{ background: comReply ? "blue" : "#ddd", color: comReply ? "white" : "#0008" }} className="postBtn send">reply</button>
               </div>
 
             </form>

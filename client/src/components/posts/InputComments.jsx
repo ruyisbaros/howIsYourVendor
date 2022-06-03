@@ -21,6 +21,7 @@ const InputComments = ({ children, post, reply, setReply }) => {
       likes: [],
       /*  reply: {}, */
       postId: post._id,
+      postUserId: post.owner._id
       /* createdAt: new Date().toISOString() */
     }
     const { data } = await axios.post("/api/v1/comments/new", { ...newComment }, {
