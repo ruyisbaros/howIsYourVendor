@@ -102,7 +102,7 @@ const StatusModal = () => {
             dispatch(PostCreateStart())
             if (images.length === 0) return toast.error("Please select-add images")
             if (content.length === 0) return toast.error("Please text your comments")
-            if (onEdit) {
+            if (onEdit) { //Update post
                 const { data } = await axios.patch(`/api/v1/posts/update/${targetOfUpdatePost._id}`, { content, images }, {
                     headers: { authorization: token }
                 })
@@ -110,7 +110,7 @@ const StatusModal = () => {
                 dispatch(postUpdateDone())
                 setContent("")
                 setImages([])
-            } else {
+            } else { //Create Post
                 const { data } = await axios.post("/api/v1/posts/new", { content, images }, {
                     headers: { authorization: token }
                 })

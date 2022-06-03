@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import PostThumb from './PostThumb'
 
-const Posts = () => {
+const Posts = ({ profilePosts }) => {
+
+    //const { token, currentUser } = useSelector(store => store.currentUser)
+
+
     return (
         <div>
-            Posts
+            <PostThumb posts={profilePosts} />
         </div>
     )
 }

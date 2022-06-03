@@ -66,5 +66,5 @@ exports.getAUserPosts = asyncHandler(async (req, res) => {
             }
         })
 
-    res.status(200).json(posts)
+    res.status(200).json({ posts, result: posts.length })
 })

@@ -101,3 +101,6 @@ filter:invert(1)
 
 /* Comments Text -----*/
 @import url("./commentText.css");
+
+/* Post Thumb-------- */
+@import url("./postThumb.css");

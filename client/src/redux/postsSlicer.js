@@ -38,7 +38,7 @@ const postsSlicer = createSlice({
 
         profilePostsFetchSuccess: (state, action) => {
             state.profilePostFetching = false;
-            state.profilePosts = [...action.payload]
+            state.profilePosts = [...action.payload.posts]
             state.result = action.payload.result
         },
 

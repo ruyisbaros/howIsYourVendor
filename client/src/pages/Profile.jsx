@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Info from '../components/profile/profileInfo/Info'
-import Posts from '../components/profile/profilePosts/ProfilePosts'
+import ProfilePosts from '../components/profile/profilePosts/ProfilePosts'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -11,7 +11,7 @@ import { profilePostsFetchStart, profilePostsFetchSuccess, profilePostsFetchFail
 const Profile = () => {
 
     const { token } = useSelector(store => store.currentUser)
-    /*  const { profile } = useSelector(store => store.profile) */
+    const { profilePosts } = useSelector(store => store.posts)
     const { id } = useParams()
     const dispatch = useDispatch()
     console.log(id);
@@ -43,7 +43,7 @@ const Profile = () => {
                     headers: { authorization: token }
                 })
                 //dispatch(updateCurrentSuccess(data))
-                dispatch(profilePostsFetchSuccess(data))
+                dispatch(profilePostsFetchSuccess({ posts: data.posts, result: data.result }))
             }
             catch (error) {
                 dispatch(profilePostsFetchFail(error.response.data.message))
@@ -57,7 +57,7 @@ const Profile = () => {
     return (
         <div className="profile">
             <Info />
-            <Posts />
+            <ProfilePosts profilePosts={profilePosts} />
         </div>
     )
 }
