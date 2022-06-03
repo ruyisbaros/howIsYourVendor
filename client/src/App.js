@@ -17,6 +17,7 @@ import Notifies from "./pages/Notifies";
 import Profile from "./pages/Profile";
 import StatusModal from "./components/status/StatusModal.jsx"
 import { postsFetchFail, postsFetchStart, postsFetchSuccess } from "./redux/postsSlicer";
+import SingleProfilePost from "./pages/SingleProfilePost";
 
 
 function App() {
@@ -81,7 +82,7 @@ function App() {
             <Route path="/discover" element={token ? <Discover /> : <Login />} />
             <Route path="/notify" element={token ? <Notifies /> : <Login />} />
             <Route path="/profile/:id" element={token ? <Profile /> : <Login />} />
-            <Route path="/post/:id" element={token ? <Profile /> : <Login />} />
+            <Route path="/post/:id" element={token ? <SingleProfilePost /> : <Login />} />
             <Route path="/register" element={token ? <Home /> : <Register />} />
             <Route path="/login" element={token ? <Home /> : <Login />} />
 

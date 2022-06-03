@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     posts: [],
     profilePosts: [],
+    singlePost: {},
     profilePostFetching: false,
     page: 2,
     result: 0,
@@ -23,11 +24,26 @@ const postsSlicer = createSlice({
 
         postsFetchSuccess: (state, action) => {
             state.profilePostFetching = false;
-            state.posts = action.payload.posts
+            state.posts = [...action.payload.posts]
             state.result = action.payload.result
         },
 
         postsFetchFail: (state, action) => {
+            state.profilePostFetching = false;
+            state.error = true
+            state.errorMessage = action.payload;
+        },
+        singlePostFetchStart: (state) => {
+            state.profilePostFetching = true;
+        },
+
+        singlePostFetchSuccess: (state, action) => {
+            state.profilePostFetching = false;
+            state.singlePost = { ...action.payload }
+
+        },
+
+        singlePostFetchFail: (state, action) => {
             state.profilePostFetching = false;
             state.error = true
             state.errorMessage = action.payload;
@@ -149,7 +165,8 @@ const postsSlicer = createSlice({
 export const { postsFetchStart, postsFetchSuccess, postsFetchFail, PostCreateStart, PostCreateSuccess,
     PostCreateFail, closeStatus, openStatus, PostCreateEnd, postUpdate, postUpdateDone, postLikeUpdate,
     postCommentUpdate, postCommentLikeUpdate, postCommentDelete, postCommentCreate, profilePostsFetchStart,
-    profilePostsFetchSuccess, profilePostsFetchFail
+    profilePostsFetchSuccess, profilePostsFetchFail, singlePostFetchStart, singlePostFetchSuccess, singlePostFetchFail,
+
 } = postsSlicer.actions
 
 export default postsSlicer.reducer

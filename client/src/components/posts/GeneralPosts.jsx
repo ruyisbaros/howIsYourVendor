@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import PostCard from '../profile/profilePosts/PostCard'
+import PostCard from './PostCard'
 
 
 const GeneralPosts = () => {

@@ -68,3 +68,18 @@ exports.getAUserPosts = asyncHandler(async (req, res) => {
 
     res.status(200).json({ posts, result: posts.length })
 })
+
+exports.getSinglePost = asyncHandler(async (req, res) => {
+    const { postId } = req.params
+
+    const post = await Posts.findById(postId).populate("owner", "-password")
+        .populate({
+            path: "comments",
+            populate: {
+                path: "owner likes",
+                select: "-password"
+            }
+        })
+
+    res.status(200).json(post)
+})

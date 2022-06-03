@@ -1,9 +1,9 @@
 import React from 'react'
-import CardHeader from '../../posts/CardHeader';
-import CardBody from '../../posts/CardBody';
-import CardFooter from '../../posts/CardFooter';
-import Comments from '../../posts/Comments';
-import InputComments from '../../posts/InputComments';
+import CardHeader from './CardHeader';
+import CardBody from './CardBody';
+import CardFooter from './CardFooter';
+import Comments from './Comments';
+import InputComments from './InputComments';
 
 const PostCard = ({ post }) => {
     return (

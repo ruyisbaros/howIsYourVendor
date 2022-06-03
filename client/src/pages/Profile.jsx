@@ -11,7 +11,7 @@ import { profilePostsFetchStart, profilePostsFetchSuccess, profilePostsFetchFail
 const Profile = () => {
 
     const { token } = useSelector(store => store.currentUser)
-    const { profilePosts } = useSelector(store => store.posts)
+    const { profilePosts, result } = useSelector(store => store.posts)
     const { id } = useParams()
     const dispatch = useDispatch()
     console.log(id);
@@ -57,7 +57,7 @@ const Profile = () => {
     return (
         <div className="profile">
             <Info />
-            <ProfilePosts profilePosts={profilePosts} />
+            <ProfilePosts profilePosts={profilePosts} results={result} />
         </div>
     )
 }
