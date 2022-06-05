@@ -5,11 +5,13 @@ import { Link } from "react-router-dom"
 import moment from 'moment'
 import { deleteAPost, postUpdate } from '../../redux/postsSlicer';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom"
 
 const CardHeader = ({ post }) => {
     const { currentUser, token } = useSelector(store => store.currentUser)
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleEditPost = () => {
         //console.log(post);
@@ -18,7 +20,6 @@ const CardHeader = ({ post }) => {
 
     const handleDeletePost = async () => {
 
-
         const { data2 } = await axios.delete(`/api/v1/posts/delete/${post._id}`, {
             headers: { authorization: token }
         })
@@ -26,7 +27,7 @@ const CardHeader = ({ post }) => {
         console.log(data2);
     }
 
-    //Delete from cloudinary
+    //Delete images of post from cloudinary
     const handleDeletePhotos = async () => {
         const { data } = await axios.post(`/api/v1/uploads/${post._id}/delete_all`, null, {
             headers: { authorization: token }
@@ -66,6 +67,7 @@ const CardHeader = ({ post }) => {
                             <div className="dropdown-item" onClick={() => {
                                 handleDeletePhotos()
                                 handleDeletePost()
+                                navigate("/")
                             }}>
                                 <span className="material-icons mui" >
                                     delete_outline

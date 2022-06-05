@@ -12,8 +12,16 @@ const CardFooter = ({ post }) => {
 
     const dispatch = useDispatch()
 
-    const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser._id))
+    const [isLiked, setIsLiked] = useState(false)
     const [loadLiked, setLoadLiked] = useState(false)
+
+    useEffect(() => {
+        post.likes.forEach(like => {
+            if (like === currentUser._id) {
+                setIsLiked(true)
+            }
+        })
+    }, [post.likes, currentUser._id])
 
     const likeHandler = async () => { //toggle. so like and unlike at a time ;))
         const { data } = await axios.patch(`/api/v1/posts/like_unlike/${post._id}`, null, {
@@ -28,7 +36,7 @@ const CardFooter = ({ post }) => {
             <div className="card_icon_menu">
                 <div >
                     <span onClick={likeHandler}>
-                        {!isLiked ? <i className="fa-solid fa-thumbs-up"></i> : <i className="fa-regular fa-thumbs-up"></i>}
+                        {isLiked ? <i className="fa-solid fa-thumbs-up"></i> : <i className="fa-regular fa-thumbs-up"></i>}
                     </span>
                     {/* <LikeButton isLiked={isLiked} setIsLiked={setIsLiked} /> */}
                     <Link to={`/post/${post._id}`} className="text-dark"><i class="fa-regular fa-comment-dots"></i></Link>
