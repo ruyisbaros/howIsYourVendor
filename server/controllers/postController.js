@@ -1,6 +1,8 @@
 const Posts = require("../models/postModel")
 const User = require("../models/userModel")
-const asyncHandler = require("express-async-handler")
+const Comment = require("../models/commentModel")
+const asyncHandler = require("express-async-handler");
+const { deleteImagesWithPost } = require("./uploadControllers");
 
 class APIfeatures {
     constructor(query, queryString) {
@@ -8,8 +10,8 @@ class APIfeatures {
         this.queryString = queryString;
     }
     pagination() {
-        const page = this.queryString * 1 || 1
-        const limit = this.queryString * 1 || 9
+        const page = this.queryString.page * 1 || 1
+        const limit = this.queryString.limit * 3 || 3
         const skip = (page - 1) * limit
         this.query = this.query.skip(skip).limit(limit)
 
@@ -31,18 +33,17 @@ exports.createPost = asyncHandler(async (req, res) => {
 
 exports.getAllPosts = asyncHandler(async (req, res) => {
 
-    const features = new APIfeatures(Posts.find({ owner: [...req.user.followings, req.user._id] }), req.query).pagination()
+    //const features = new APIfeatures(Posts.find({ owner: [...req.user.followings, req.user._id] }), req.query).pagination()
 
-    const posts = await
-        features.query.sort({ createdAt: -1 })
-            .populate("owner likes", "-password")
-            .populate({
-                path: "comments",
-                populate: {
-                    path: "owner likes",
-                    select: "-password"
-                }
-            })
+    const posts = await Posts.find({ owner: [...req.user.followings, req.user._id] }).sort({ createdAt: -1 })
+        .populate("owner likes", "-password")
+        .populate({
+            path: "comments",
+            populate: {
+                path: "owner likes",
+                select: "-password"
+            }
+        })
 
     res.status(200).json({ posts, result: posts.length })
 })
@@ -126,4 +127,15 @@ exports.getPostDiscover = asyncHandler(async (req, res) => {
             })
 
     res.status(200).json({ posts, result: posts.length })
+})
+
+exports.deleteAPost = asyncHandler(async (req, res) => {
+    const { postId } = req.params
+    //deleteImagesWithPost()
+    const targetPost = await Posts.findById(postId)
+    await Comment.deleteMany({ _id: { $in: targetPost.comments } })
+    await Posts.findByIdAndDelete(targetPost._id)
+
+    res.status(200).json({ message: 'Post and related contents deleted successfully' })
+
 })

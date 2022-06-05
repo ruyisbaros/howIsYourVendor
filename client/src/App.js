@@ -47,7 +47,7 @@ function App() {
       }, 13 * 24 * 60 * 60 * 1000) //13 days
     }
 
-  }, [token]);
+  }, [token, localStorage.getItem("firstLogin")]);
 
   const getPosts = async () => {
     try {

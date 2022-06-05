@@ -3,16 +3,35 @@ import { useSelector, useDispatch } from 'react-redux';
 import Avatar from '../Avatar'
 import { Link } from "react-router-dom"
 import moment from 'moment'
-import { postUpdate } from '../../redux/postsSlicer';
+import { deleteAPost, postUpdate } from '../../redux/postsSlicer';
+import axios from 'axios';
 
 const CardHeader = ({ post }) => {
-    const { currentUser } = useSelector(store => store.currentUser)
+    const { currentUser, token } = useSelector(store => store.currentUser)
 
     const dispatch = useDispatch()
 
     const handleEditPost = () => {
         //console.log(post);
         dispatch(postUpdate(post._id))
+    }
+
+    const handleDeletePost = async () => {
+
+
+        const { data2 } = await axios.delete(`/api/v1/posts/delete/${post._id}`, {
+            headers: { authorization: token }
+        })
+        dispatch(deleteAPost(post._id))
+        console.log(data2);
+    }
+
+    //Delete from cloudinary
+    const handleDeletePhotos = async () => {
+        const { data } = await axios.post(`/api/v1/uploads/${post._id}/delete_all`, null, {
+            headers: { authorization: token }
+        })
+        console.log(data);
     }
 
     return (
@@ -44,7 +63,10 @@ const CardHeader = ({ post }) => {
                                 </span>
                                 Edit Post
                             </div>
-                            <div className="dropdown-item">
+                            <div className="dropdown-item" onClick={() => {
+                                handleDeletePhotos()
+                                handleDeletePost()
+                            }}>
                                 <span className="material-icons mui" >
                                     delete_outline
                                 </span>

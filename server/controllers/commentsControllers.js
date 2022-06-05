@@ -5,6 +5,7 @@ const asyncHandler = require("express-async-handler")
 exports.createComment = asyncHandler(async (req, res) => {
 
     const { postId, content, tag, reply, postUserId } = req.body
+
     const _comment = await Comment.create({
         owner: req.user._id,
         postId, content, tag, reply, postUserId

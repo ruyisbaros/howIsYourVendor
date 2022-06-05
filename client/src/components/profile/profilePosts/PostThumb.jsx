@@ -12,13 +12,13 @@ const PostThumb = ({ posts }) => {
         profilePostFetching ? <img className="thumb-img" src={Loading} alt="" /> :
             <div className="post-thumb">
                 {
-                    posts.map(post => (
-                        <Link key={post._id} to={`/post/${post._id}`}>
+                    posts?.map(post => (
+                        <Link key={post._id} to={`/post/${post?._id}`}>
                             <div className="post-thumb-display">
-                                <img src={post.images[0].url} alt="single post" />
+                                <img src={post?.images[0]?.url} alt="single post" />
                                 <div className="post-thumb-menu">
-                                    <i className="fa-regular fa-thumbs-up">{post.likes.length}</i>
-                                    <i class="fa-regular fa-comment-dots">{post.comments.length}</i>
+                                    <i className="fa-regular fa-thumbs-up">{post?.likes.length}</i>
+                                    <i class="fa-regular fa-comment-dots">{post?.comments.length}</i>
                                 </div>
                             </div>
                         </Link>

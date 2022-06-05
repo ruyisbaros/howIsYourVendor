@@ -44,6 +44,9 @@
 .card_body .crl_height{
     height: 600px;
 }
+.card_body .obj-fit{
+    object-fit: cover;
+}
 .card_body .crl_height img{
     object-fit: cover;
 }

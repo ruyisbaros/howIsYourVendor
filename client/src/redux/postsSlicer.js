@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     posts: [],
     profilePosts: [],
+    discoverPosts: [],
     singlePost: "",
     profilePostFetching: false,
     page: 2,
@@ -149,6 +150,21 @@ const postsSlicer = createSlice({
             })
 
         },
+        getPostDiscover: (state, action) => {
+
+            state.discoverPosts = action.payload.posts;
+            state.result = action.payload.result
+        },
+        getPostPageUpdate: (state, action) => {
+
+            //state.discoverPosts = action.payload.posts;
+            //state.result = action.payload.result
+            state.page = state.page + 1
+        },
+        deleteAPost: (state, action) => {
+            const newPostsArray = state.posts.filter(pst => pst._id !== action.payload)
+            state.posts = newPostsArray
+        }
 
     }
 })
@@ -156,7 +172,8 @@ const postsSlicer = createSlice({
 export const { postsFetchStart, postsFetchSuccess, postsFetchFail, PostCreateStart, PostCreateSuccess,
     PostCreateFail, closeStatus, openStatus, PostCreateEnd, postUpdate, postUpdateDone, postLikeUpdate,
     postCommentUpdate, postCommentLikeUpdate, postCommentDelete, postCommentCreate, profilePostsFetchStart,
-    profilePostsFetchSuccess, profilePostsFetchFail, singlePostFetchSuccess,
+    profilePostsFetchSuccess, profilePostsFetchFail, singlePostFetchSuccess, getPostDiscover, getPostPageUpdate,
+    deleteAPost
 
 } = postsSlicer.actions
 

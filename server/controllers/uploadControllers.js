@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler")
 const cloudinary = require("cloudinary")
+const Posts = require("../models/postModel")
 const fs = require("fs")
 
 cloudinary.config({
@@ -47,4 +48,18 @@ exports.deleteImage = asyncHandler(async (req, res) => {
         if (err) throw err;
         res.status(200).json({ message: "Image deleted successfully" })
     })
+})
+
+exports.deleteImagesWithPost = asyncHandler(async (req, res) => {
+    const { postId } = req.params
+    const targetPost = await Posts.findById(postId)
+
+    targetPost.images.forEach(obj => (
+        cloudinary.v2.uploader.destroy(obj.public_id, (err, result) => {
+            if (err) throw err;
+
+        })
+    ))
+    res.status(200).json({ message: "Image deleted successfully" })
+
 })

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import LoadImg from "../images/loading-2.gif"
 
 const Home = () => {
-    const { posts, result, profilePostFetching } = useSelector(store => store.posts)
+    const { result, profilePostFetching } = useSelector(store => store.posts)
     return (
         <div className="home ">
             <div className="">
