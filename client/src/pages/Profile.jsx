@@ -14,7 +14,7 @@ const Profile = () => {
     const { profilePosts, result } = useSelector(store => store.posts)
     const { id } = useParams()
     const dispatch = useDispatch()
-    console.log(id);
+    //console.log(id);
 
 
     useEffect(() => {

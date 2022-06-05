@@ -77,7 +77,7 @@ function App() {
           {token && <Header />}
           {status && <StatusModal />}
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={token ? <Home /> : <Login />} />
             <Route path="/messages" element={token ? <Messages /> : <Login />} />
             <Route path="/discover" element={token ? <Discover /> : <Login />} />
             <Route path="/notify" element={token ? <Notifies /> : <Login />} />

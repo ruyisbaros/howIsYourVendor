@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     posts: [],
     profilePosts: [],
-    singlePost: {},
+    singlePost: "",
     profilePostFetching: false,
     page: 2,
     result: 0,
@@ -33,20 +33,11 @@ const postsSlicer = createSlice({
             state.error = true
             state.errorMessage = action.payload;
         },
-        singlePostFetchStart: (state) => {
-            state.profilePostFetching = true;
-        },
 
         singlePostFetchSuccess: (state, action) => {
             state.profilePostFetching = false;
-            state.singlePost = { ...action.payload }
+            state.singlePost = action.payload
 
-        },
-
-        singlePostFetchFail: (state, action) => {
-            state.profilePostFetching = false;
-            state.error = true
-            state.errorMessage = action.payload;
         },
         profilePostsFetchStart: (state) => {
             state.profilePostFetching = true;
@@ -165,7 +156,7 @@ const postsSlicer = createSlice({
 export const { postsFetchStart, postsFetchSuccess, postsFetchFail, PostCreateStart, PostCreateSuccess,
     PostCreateFail, closeStatus, openStatus, PostCreateEnd, postUpdate, postUpdateDone, postLikeUpdate,
     postCommentUpdate, postCommentLikeUpdate, postCommentDelete, postCommentCreate, profilePostsFetchStart,
-    profilePostsFetchSuccess, profilePostsFetchFail, singlePostFetchStart, singlePostFetchSuccess, singlePostFetchFail,
+    profilePostsFetchSuccess, profilePostsFetchFail, singlePostFetchSuccess,
 
 } = postsSlicer.actions
 
