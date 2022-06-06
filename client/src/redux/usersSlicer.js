@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     users: [],
+    suggestions: [],
     usersFetching: false,
     error: false,
     message: "",
@@ -24,9 +25,12 @@ const usersSlicer = createSlice({
             state.usersFetching = false;
             state.error = true;
         },
+        fetchSuggestions: (state, action) => {
+            state.suggestions = action.payload.users
+        }
     }
 })
 
-export const { usersFetchStart, usersFetchSuccess, usersFetchFail } = usersSlicer.actions
+export const { usersFetchStart, usersFetchSuccess, usersFetchFail, fetchSuggestions } = usersSlicer.actions
 
 export default usersSlicer.reducer

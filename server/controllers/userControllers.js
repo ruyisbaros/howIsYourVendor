@@ -8,7 +8,7 @@ exports.searchUsers = asyncHandler(async (req, res) => {
 
 exports.getAUser = asyncHandler(async (req, res) => {
 
-    const user = await User.findById(req.params.id).populate("followers followings", "-password").select("-password")
+    const user = await User.findById(req.params.id).populate("followers followings", "-password")
     if (!user) return res.status(500).json({ message: "User could not be found" })
     res.status(200).json(user)
 
@@ -22,24 +22,6 @@ exports.updateProfile = asyncHandler(async (req, res) => {
     }, { new: true }).select("-password")
     res.status(200).json({ updatedUser, message: "Profile has been updated successfully" })
 })
-
-/* Follow un follow */
-
-/* exports.followingsOps = asyncHandler(async (req, res) => {
-
-    let targetUser, currentUser;
-    const t_user = await User.findById(req.params.id)
-    //const currentUser = await User.findById(req.body.id)
-
-    if (!t_user.followers.includes(req.body.id)) {
-        targetUser = await User.findByIdAndUpdate(req.params.id, { $push: { followers: req.body.id } }, { new: true })
-        currentUser = await User.findByIdAndUpdate(req.body.id, { $push: { followings: req.params.id } }, { new: true })
-    } else {
-        targetUser = await User.findByIdAndUpdate(req.params.id, { $pull: { followers: req.body.id } }, { new: true })
-        currentUser = await User.findByIdAndUpdate(req.body.id, { $pull: { followings: req.params.id } }, { new: true })
-    }
-    res.status(200).json({ currentUser, targetUser, message: "Follow operations updated successfully" })
-}) */
 
 //With Protect middleware
 exports.followingsOps = asyncHandler(async (req, res) => {
@@ -60,4 +42,27 @@ exports.followingsOps = asyncHandler(async (req, res) => {
         currentUser = await User.findByIdAndUpdate(req.user._id, { $pull: { followings: req.params.id } }, { new: true }).populate("followers followings")
     }
     res.status(200).json({ currentUser, targetUser, message: "Follow operations updated successfully" })
+})
+
+exports.userSuggestions = asyncHandler(async (req, res) => {
+
+    const newArr = [...req.user.followings, req.user._id]
+    const num = req.query.num || 10
+
+    const users = await User.aggregate([
+        {
+            $match: { _id: { $nin: newArr } }
+        },
+        {
+            $sample: { size: num }
+        },
+        {
+            $lookup: { from: "users", localField: "followers", foreignField: "_id", as: "followers" }
+        },
+        {
+            $lookup: { from: "users", localField: "followings", foreignField: "_id", as: "followings" }
+        }
+    ]).project("-password")
+
+    res.status(200).json({ users, result: users.length })
 })

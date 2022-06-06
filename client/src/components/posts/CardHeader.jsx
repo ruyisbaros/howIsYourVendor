@@ -19,12 +19,14 @@ const CardHeader = ({ post }) => {
     }
 
     const handleDeletePost = async () => {
+        if (window.confirm("Are you sure you want to delete this post?")) {
+            const { data2 } = await axios.delete(`/api/v1/posts/delete/${post._id}`, {
+                headers: { authorization: token }
+            })
+            dispatch(deleteAPost(post._id))
+            console.log(data2);
+        }
 
-        const { data2 } = await axios.delete(`/api/v1/posts/delete/${post._id}`, {
-            headers: { authorization: token }
-        })
-        dispatch(deleteAPost(post._id))
-        console.log(data2);
     }
 
     //Delete images of post from cloudinary
@@ -33,6 +35,10 @@ const CardHeader = ({ post }) => {
             headers: { authorization: token }
         })
         console.log(data);
+    }
+
+    const handleCopyLink = async () => {
+        navigator.clipboard.writeText(`http://localhost:3000/post/${post._id}`)
     }
 
     return (
@@ -76,7 +82,7 @@ const CardHeader = ({ post }) => {
                             </div>
                         </>
                     }
-                    <div className="dropdown-item">
+                    <div className="dropdown-item" onClick={handleCopyLink}>
                         <span className="material-icons mui" >
                             content_copy
                         </span>

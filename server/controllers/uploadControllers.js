@@ -50,7 +50,7 @@ exports.deleteImage = asyncHandler(async (req, res) => {
     })
 })
 
-exports.deleteImagesWithPost = asyncHandler(async (req, res) => {
+exports.deleteImagesOfPost = asyncHandler(async (req, res) => {
     const { postId } = req.params
     const targetPost = await Posts.findById(postId)
 
