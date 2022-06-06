@@ -39,3 +39,30 @@
 .status .statusBtn:hover{
     background:crimson;
 }
+
+/* ----Right Sidebar ---- */
+
+.home .sidebar_container{
+    position: relative;
+}
+.home .sidebar_container .info_box{
+    position: absolute;
+    top: 25px;
+    left: 0px;
+    z-index:10;
+}
+.home .sidebar_container .info_box div{
+    position: relative;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 5px;
+    background: #ddd;
+    border-radius: 3px;
+}
+
+.sidebar_container .info_box span{
+    position: absolute;
+    right: 2px;
+    top: -6px;
+    font-size: 25px;
+    cursor: pointer;
+}

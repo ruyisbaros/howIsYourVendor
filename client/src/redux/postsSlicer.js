@@ -164,7 +164,8 @@ const postsSlicer = createSlice({
         deleteAPost: (state, action) => {
             const newPostsArray = state.posts.filter(pst => pst._id !== action.payload)
             state.posts = newPostsArray
-        }
+        },
+
 
     }
 })

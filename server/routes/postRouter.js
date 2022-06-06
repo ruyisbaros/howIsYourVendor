@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const { createPost, getAllPosts, updateAPost, likeUnlike, getAUserPosts, getSinglePost, getPostDiscover,
-    deleteAPost } = require('../controllers/postController')
+    deleteAPost, savedPost } = require('../controllers/postController')
 const { protect } = require('../middleWares/authMiddleWare')
 
 
@@ -12,5 +12,6 @@ router.get('/user/:userId', protect, getAUserPosts)
 router.patch('/update/:postId', protect, updateAPost)
 router.patch('/like_unlike/:postId', protect, likeUnlike)
 router.delete('/delete/:postId', protect, deleteAPost)
+router.patch('/saved_post/:postId', protect, savedPost)
 
 module.exports = router

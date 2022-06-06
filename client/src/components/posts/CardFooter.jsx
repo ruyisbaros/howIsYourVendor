@@ -6,23 +6,34 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { postLikeUpdate } from '../../redux/postsSlicer';
 import ShareModal from './ShareModal';
+import { savePost } from '../../redux/authSlicer';
 
 const CardFooter = ({ post }) => {
 
-    const { token, currentUser } = useSelector(store => store.currentUser)
+    const { token, currentUser, savedPosts } = useSelector(store => store.currentUser)
+
 
     const dispatch = useDispatch()
 
     const [isLiked, setIsLiked] = useState(false)
     const [isShare, setIsShare] = useState(false)
+    const [saved, setSaved] = useState(false)
 
     useEffect(() => {
         post.likes.forEach(like => {
-            if (like === currentUser._id) {
+            if (like._id === currentUser._id) {
                 setIsLiked(true)
             }
         })
     }, [post.likes, currentUser._id])
+
+    useEffect(() => {
+        currentUser.savedPosts.forEach(id => {
+            if (id === post._id) {
+                setSaved(true)
+            }
+        })
+    }, [currentUser.savedPosts, savedPosts, savedPosts.length, post._id])
 
     const likeHandler = async () => { //toggle. so like and unlike at a time ;))
         const { data } = await axios.patch(`/api/v1/posts/like_unlike/${post._id}`, null, {
@@ -32,6 +43,15 @@ const CardFooter = ({ post }) => {
         //console.log(data);
         dispatch(postLikeUpdate(data))
     }
+    const handleSavedPost = async () => {
+        const { data } = await axios.patch(`/api/v1/posts/saved_post/${post._id}`, null, {
+            headers: { authorization: token }
+        })
+        setSaved(!saved)
+        //console.log(data);
+        dispatch(savePost(data.savedPosts))
+    }
+
     return (
         <div className="card-footer">
             <div className="card_icon_menu">
@@ -42,7 +62,14 @@ const CardFooter = ({ post }) => {
                     <Link to={`/post/${post._id}`} className="text-dark"><i class="fa-regular fa-comment-dots"></i></Link>
                     <i className="fa-solid fa-share" onClick={() => setIsShare(!isShare)}></i>
                 </div>
-                <i className="far fa-bookmark" />
+
+                <span onClick={handleSavedPost}>
+                    {saved
+                        ?
+                        <i style={{ cursor: "pointer" }} className="fas fa-bookmark text-info" />
+                        : <i style={{ cursor: "pointer" }} className="far fa-bookmark" />}
+                </span>
+
             </div>
             <div className="d-flex justify-content-between">
 

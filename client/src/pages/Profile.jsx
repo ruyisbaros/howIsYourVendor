@@ -10,12 +10,15 @@ import { profilePostsFetchStart, profilePostsFetchSuccess, profilePostsFetchFail
 
 const Profile = () => {
 
-    const { token } = useSelector(store => store.currentUser)
+    const { token, currentUser } = useSelector(store => store.currentUser)
+    const { profile } = useSelector(store => store.profile)
+
     const { profilePosts, result, page } = useSelector(store => store.posts)
     const { id } = useParams()
     const dispatch = useDispatch()
     //console.log(id);
     const [loadingAlt, setLoadingAlt] = useState(false)
+    const [saveTab, setSaveTab] = useState(false)
 
     useEffect(() => {
         const getProfile = async () => {
@@ -67,6 +70,13 @@ const Profile = () => {
     return (
         <div className="profile">
             <Info />
+            {
+                currentUser._id === profile?._id &&
+                <div>
+                    <button className={saveTab ? "" : "active"} onClick={() => setSaveTab(false)}>Posts</button>
+                    <button className={saveTab ? "active" : ""} onClick={() => setSaveTab(false)}>Saved</button>
+                </div>
+            }
             <ProfilePosts page={page} profilePosts={profilePosts} result={result} loadingAlt={loadingAlt} handlePage={handlePage} />
         </div>
     )

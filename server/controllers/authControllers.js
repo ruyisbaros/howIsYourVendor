@@ -40,7 +40,7 @@ exports.register = asyncHandler(async (req, res) => {
 
     })
 
-    const fulledUser = await User.findById(newUser._id).populate("followers followings", "-password").select("-password")
+    const fulledUser = await User.findById(newUser._id).populate("followers followings savedPosts", "-password").select("-password")
 
     res.status(200).json({ accessToken, fulledUser, message: "You Registered successfully" })
 })
@@ -67,7 +67,7 @@ exports.login = asyncHandler(async (req, res) => {
 
     })
 
-    const fulledUser = await User.findById(user._id).populate("followers followings", "-password").select("-password")
+    const fulledUser = await User.findById(user._id).populate("followers followings savedPosts", "-password").select("-password")
 
     res.status(200).json({ accessToken, fulledUser, message: "You logged successfully" })
 

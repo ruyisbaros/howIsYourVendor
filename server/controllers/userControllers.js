@@ -54,7 +54,7 @@ exports.userSuggestions = asyncHandler(async (req, res) => {
             $match: { _id: { $nin: newArr } }
         },
         {
-            $sample: { size: num }
+            $sample: { size: Number(num) }
         },
         {
             $lookup: { from: "users", localField: "followers", foreignField: "_id", as: "followers" }

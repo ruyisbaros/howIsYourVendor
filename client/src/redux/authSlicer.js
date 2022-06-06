@@ -1,7 +1,8 @@
-import { createSlice, createAsyncThunk, rejectWithValue } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     currentUser: "",
+    savedPosts: [],
     authFetching: false,
     error: false,
     message: "",
@@ -51,12 +52,15 @@ const currentUserSlicer = createSlice({
         updateCurrentFail: (state) => {
             state.authFetching = false;
             state.error = true
+        },
+        savePost: (state, action) => {
+            state.savedPosts = [...action.payload]
         }
     }
 })
 
 export const { authStart, authSuccess, authFailure, refreshToken, refreshTokenFail, authLogout,
-    updateCurrentStart,
+    updateCurrentStart, savePost,
     updateCurrentSuccess, updateCurrentFail
 } = currentUserSlicer.actions
 
