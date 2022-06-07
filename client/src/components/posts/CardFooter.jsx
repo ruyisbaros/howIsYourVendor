@@ -63,12 +63,15 @@ const CardFooter = ({ post }) => {
                     <i className="fa-solid fa-share" onClick={() => setIsShare(!isShare)}></i>
                 </div>
 
-                <span onClick={handleSavedPost}>
-                    {saved
-                        ?
-                        <i style={{ cursor: "pointer" }} className="fas fa-bookmark text-info" />
-                        : <i style={{ cursor: "pointer" }} className="far fa-bookmark" />}
-                </span>
+                {
+                    post.owner._id !== currentUser._id &&
+                    <span onClick={handleSavedPost}>
+                        {saved
+                            ?
+                            <i style={{ cursor: "pointer" }} className="fas fa-bookmark text-info" />
+                            : <i style={{ cursor: "pointer" }} className="far fa-bookmark" />}
+                    </span>
+                }
 
             </div>
             <div className="d-flex justify-content-between">

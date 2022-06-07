@@ -1,5 +1,7 @@
 /* Info */
-
+.profile{
+    width: 100%;
+}
 .info {
     width: 100%;
     max-width: 800px;
@@ -54,3 +56,31 @@ text-decoration: underline;
     cursor: pointer;
 }
 
+/* -----Tab Buttons */
+
+.profile-tab{
+   width: 100%;
+   display: flex;
+   justify-content: center; 
+   border-top: 1px solid #eee;
+   border-bottom: 1px solid #eee;
+}
+
+.profile-tab button {
+    outline: none;
+    border:none;
+    text-transform: uppercase;
+    background:white;
+    font-weight: bold;
+    padding: 5px 20px;
+    margin: 0 25px;
+    opacity: 0.5;
+    transition: all 0.3s;
+}
+
+.profile-tab button.active{
+    color:crimson;
+    
+    border-bottom: 1px solid crimson;
+    opacity: 1;
+}

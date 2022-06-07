@@ -7,6 +7,9 @@ import axios from 'axios';
 import { profileFailure, profileStart, profileSuccess } from '../redux/profileSlicer';
 import { profilePostsFetchStart, profilePostsFetchSuccess, profilePostsFetchFail, getPostPageUpdate } from "../redux/postsSlicer"
 //import { updateCurrentSuccess } from '../redux/authSlicer';
+import App from '../App';
+import SavedPosts from '../components/profile/profilePosts/SavedPosts';
+import { savePost } from '../redux/authSlicer';
 
 const Profile = () => {
 
@@ -65,19 +68,35 @@ const Profile = () => {
         dispatch(getPostPageUpdate())
         setLoadingAlt(false)
     }
+    useEffect(() => {
 
+        const getSavedPosts = async () => {
+            const { data } = await axios.get(`/api/v1/posts/saved_posts`, {
+                headers: { authorization: token }
+            })
+            console.log(data);
+            dispatch(savePost({ posts: data.posts, result: data.result }))
+
+        }
+        getSavedPosts()
+    }, [token, dispatch, saveTab])
 
     return (
         <div className="profile">
             <Info />
             {
                 currentUser._id === profile?._id &&
-                <div>
-                    <button className={saveTab ? "" : "active"} onClick={() => setSaveTab(false)}>Posts</button>
-                    <button className={saveTab ? "active" : ""} onClick={() => setSaveTab(false)}>Saved</button>
+                <div className="profile-tab">
+                    <button className={saveTab ? "" : "active"} onClick={() => setSaveTab(!saveTab)}>Posts</button>
+                    <button className={saveTab ? "active" : ""} onClick={() => setSaveTab(!saveTab)}>Saved</button>
                 </div>
             }
-            <ProfilePosts page={page} profilePosts={profilePosts} result={result} loadingAlt={loadingAlt} handlePage={handlePage} />
+            <>
+                {saveTab
+                    ? <SavedPosts saveTab={saveTab} />
+                    : <ProfilePosts page={page} profilePosts={profilePosts} result={result} loadingAlt={loadingAlt} handlePage={handlePage} />
+                }
+            </>
         </div>
     )
 }

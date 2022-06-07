@@ -1,7 +1,10 @@
 .home{
     width: 100%;
+    min-height: 100vh;
     display: flex;
+    
 }
+
 /* Status------- */
 
 .status{
@@ -44,6 +47,7 @@
 
 .home .sidebar_container{
     position: relative;
+    margin-bottom: 100px;
 }
 .home .sidebar_container .info_box{
     position: absolute;
@@ -65,4 +69,14 @@
     top: -6px;
     font-size: 25px;
     cursor: pointer;
+}
+
+@media (max-width:768px) {
+    .home{
+        flex-wrap: wrap;
+    }
+    .home .sidebar_container{
+    
+    margin-bottom: 100px;
+}
 }

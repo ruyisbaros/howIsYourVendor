@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+
 import PostThumb from './PostThumb'
 import LoadingImg from '../../../images/loading-2.gif'
 import LoadMoreBtn from '../../LoadMoreBtn';

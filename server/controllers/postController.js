@@ -144,10 +144,20 @@ exports.savedPost = asyncHandler(async (req, res) => {
     let targetUser;
     const user = await User.findById(req.user._id)
     if (!user.savedPosts.includes(postId)) {
-        targetUser = await User.findByIdAndUpdate(req.user._id, { $push: { savedPosts: postId } }, { new: true }).populate("savedPosts", "-password")
+        targetUser = await User.findByIdAndUpdate(req.user._id, { $push: { savedPosts: postId } }, { new: true })
+            .populate("savedPosts", "-password")
     } else {
-        targetUser = await User.findByIdAndUpdate(req.user._id, { $pull: { savedPosts: postId } }, { new: true }).populate("savedPosts", "-password")
+        targetUser = await User.findByIdAndUpdate(req.user._id, { $pull: { savedPosts: postId } }, { new: true })
+            .populate("savedPosts", "-password")
     }
 
     res.status(200).json(targetUser)
+})
+
+exports.getSavedPosts = asyncHandler(async (req, res) => {
+    console.log("hello");
+
+    const posts = await Posts.find({ _id: { $in: req.user.savedPosts } })
+
+    res.status(200).json({ posts, result: posts.length })
 })

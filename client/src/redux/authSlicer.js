@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     currentUser: "",
     savedPosts: [],
+    result: 0,
     authFetching: false,
     error: false,
     message: "",
@@ -54,7 +55,8 @@ const currentUserSlicer = createSlice({
             state.error = true
         },
         savePost: (state, action) => {
-            state.savedPosts = [...action.payload]
+            state.savedPosts = [...action.payload.posts]
+            state.result = action.payload.result
         }
     }
 })
