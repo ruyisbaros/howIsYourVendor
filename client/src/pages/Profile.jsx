@@ -7,7 +7,7 @@ import axios from 'axios';
 import { profileFailure, profileStart, profileSuccess } from '../redux/profileSlicer';
 import { profilePostsFetchStart, profilePostsFetchSuccess, profilePostsFetchFail, getPostPageUpdate } from "../redux/postsSlicer"
 //import { updateCurrentSuccess } from '../redux/authSlicer';
-import App from '../App';
+
 import SavedPosts from '../components/profile/profilePosts/SavedPosts';
 import { savePost } from '../redux/authSlicer';
 
@@ -22,6 +22,8 @@ const Profile = () => {
     //console.log(id);
     const [loadingAlt, setLoadingAlt] = useState(false)
     const [saveTab, setSaveTab] = useState(false)
+    const [showSavedPosts, setShowSavedPosts] = useState(false)
+
 
     useEffect(() => {
         const getProfile = async () => {
@@ -71,12 +73,13 @@ const Profile = () => {
     useEffect(() => {
 
         const getSavedPosts = async () => {
+            setShowSavedPosts(true)
             const { data } = await axios.get(`/api/v1/posts/saved_posts`, {
                 headers: { authorization: token }
             })
-            console.log(data);
+            //console.log(data);
+            setShowSavedPosts(false)
             dispatch(savePost({ posts: data.posts, result: data.result }))
-
         }
         getSavedPosts()
     }, [token, dispatch, saveTab])
@@ -93,7 +96,8 @@ const Profile = () => {
             }
             <>
                 {saveTab
-                    ? <SavedPosts saveTab={saveTab} />
+                    ?
+                    <SavedPosts showSavedPosts={showSavedPosts} />
                     : <ProfilePosts page={page} profilePosts={profilePosts} result={result} loadingAlt={loadingAlt} handlePage={handlePage} />
                 }
             </>

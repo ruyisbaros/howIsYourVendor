@@ -7,12 +7,14 @@ import postsSlicer from "./postsSlicer"
 import commentsSlicer from "./commentsSlicer"
 
 
+
 export const store = configureStore({
     reducer: {
         currentUser: currentUserSlicer,
         profile: profileSlicer,
         users: usersSlicer,
         posts: postsSlicer,
-        comments: commentsSlicer
+        comments: commentsSlicer,
+
     }
 })

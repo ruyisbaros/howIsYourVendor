@@ -8,16 +8,19 @@ import Home from "./pages/Home";
 import Notify from "./components/notify/Notify";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { refreshToken, refreshTokenFail } from "./redux/authSlicer";
-import axios from "axios";
 import Header from "./components/header/Header";
 import Messages from "./pages/Messages";
 import Discover from "./pages/Discover";
 import Notifies from "./pages/Notifies";
 import Profile from "./pages/Profile";
 import StatusModal from "./components/status/StatusModal.jsx"
-import { postsFetchFail, postsFetchStart, postsFetchSuccess } from "./redux/postsSlicer";
 import SingleProfilePost from "./pages/SingleProfilePost";
+import { refreshToken, refreshTokenFail } from "./redux/authSlicer";
+import { postsFetchFail, postsFetchStart, postsFetchSuccess } from "./redux/postsSlicer";
+import axios from "axios";
+import io from "socket.io-client"
+import { getSocket } from "./redux/authSlicer";
+import SocketClient from "./SocketClient";
 
 
 function App() {
@@ -31,7 +34,6 @@ function App() {
     try {
       const { data } = await axios.get("/api/v1/auth/refresh_token")
       dispatch(refreshToken({ token: data.accessToken, currentUser: data.current_user }))
-
     } catch (error) {
       dispatch(refreshTokenFail(error.response.data.message))
       alert(error.response.data.message)
@@ -48,6 +50,13 @@ function App() {
     }
 
   }, [token, localStorage.getItem("firstLogin")]);
+
+  //SOCKET API
+  useEffect(() => {
+    const socket = io()
+    dispatch(getSocket(socket))
+    return () => socket.close()
+  }, [dispatch, token])
 
   const getPosts = async () => {
     try {
@@ -75,6 +84,7 @@ function App() {
       <div className="App">
         <div className="main">
           {token && <Header />}
+          {token && <SocketClient />}
           {status && <StatusModal />}
           <Routes>
             <Route path="/" element={localStorage.getItem("firstLogin") ? <Home /> : <Login />} />

@@ -5,7 +5,18 @@ const cors = require("cors")
 const morgan = require("morgan")
 const fileUpload = require("express-fileupload")
 const cookieParser = require("cookie-parser")
+const socketServer = require("./socketServer")
 const app = express()
+
+//Socket connection
+const http = require("http").createServer(app)
+const io = require("socket.io")(http)
+
+
+
+io.on('connection', socket => {
+    socketServer(socket)
+})
 
 //Import Routes
 const userRouter = require("./routes/userRouter")
@@ -51,6 +62,6 @@ app.get("/", (req, res) => {
 
 const port = process.env.PORT || 8080
 
-const server = app.listen(port, () => {
+const server = http.listen(port, () => {
     console.log(`Server is running at port: ${port}...`);
 })

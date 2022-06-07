@@ -44,6 +44,13 @@ exports.getAllPosts = asyncHandler(async (req, res) => {
                 select: "-password"
             }
         })
+    /*  .populate({
+         path: "owner",
+         populate: {
+             path: "owner likes",
+             select: "-password"
+         }
+     }) */
 
     res.status(200).json({ posts, result: posts.length })
 })
@@ -71,9 +78,9 @@ exports.likeUnlike = asyncHandler(async (req, res) => {
     let targetPost;
     const post = await Posts.findById(postId)
     if (!post.likes.includes(req.user._id)) {
-        targetPost = await Posts.findByIdAndUpdate(postId, { $push: { likes: req.user._id } }, { new: true }).populate("likes owner")
+        targetPost = await Posts.findByIdAndUpdate(postId, { $push: { likes: req.user._id } }, { new: true }).populate("likes owner", "-password")
     } else {
-        targetPost = await Posts.findByIdAndUpdate(postId, { $pull: { likes: req.user._id } }, { new: true }).populate("likes owner")
+        targetPost = await Posts.findByIdAndUpdate(postId, { $pull: { likes: req.user._id } }, { new: true }).populate("likes owner", "-password")
     }
 
     res.status(200).json(targetPost)
@@ -155,7 +162,6 @@ exports.savedPost = asyncHandler(async (req, res) => {
 })
 
 exports.getSavedPosts = asyncHandler(async (req, res) => {
-    console.log("hello");
 
     const posts = await Posts.find({ _id: { $in: req.user.savedPosts } })
 

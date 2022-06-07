@@ -10,7 +10,8 @@ import { savePost } from '../../redux/authSlicer';
 
 const CardFooter = ({ post }) => {
 
-    const { token, currentUser, savedPosts } = useSelector(store => store.currentUser)
+    const { token, currentUser, savedPosts, socket } = useSelector(store => store.currentUser)
+    //const { socket } = useSelector(store => store.socket)
 
 
     const dispatch = useDispatch()
@@ -42,6 +43,7 @@ const CardFooter = ({ post }) => {
         setIsLiked(!isLiked)
         //console.log(data);
         dispatch(postLikeUpdate(data))
+        socket.emit("likePost", data)
     }
     const handleSavedPost = async () => {
         const { data } = await axios.patch(`/api/v1/posts/saved_post/${post._id}`, null, {
