@@ -5,7 +5,7 @@ import profileSlicer from "./profileSlicer"
 import usersSlicer from "./usersSlicer"
 import postsSlicer from "./postsSlicer"
 import commentsSlicer from "./commentsSlicer"
-
+import notifiesSlicer from "./notifySlicer"
 
 
 export const store = configureStore({
@@ -15,6 +15,7 @@ export const store = configureStore({
         users: usersSlicer,
         posts: postsSlicer,
         comments: commentsSlicer,
+        notifies: notifiesSlicer,
 
     }
 })

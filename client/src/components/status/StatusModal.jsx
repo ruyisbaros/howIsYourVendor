@@ -4,9 +4,10 @@ import { closeStatus, PostCreateEnd, PostCreateFail, PostCreateStart, PostCreate
 import { toast } from "react-toastify"
 import loadingImg from "../../images/loading-2.gif"
 import axios from 'axios';
+import { createNewNotification } from '../../redux/notifySlicer';
 
 const StatusModal = () => {
-    const { currentUser, token } = useSelector(store => store.currentUser)
+    const { currentUser, token, socket } = useSelector(store => store.currentUser)
     const { profilePostFetching, onEdit, targetOfUpdatePost } = useSelector(store => store.posts)
     const dispatch = useDispatch()
     const videoRef = useRef()
@@ -20,8 +21,9 @@ const StatusModal = () => {
     const [index, setIndex] = useState(0)
     const [activeImg, setActiveImg] = useState(images[index])
 
-    console.log('target', targetOfUpdatePost);
-    console.log(images);
+
+    //console.log('target', targetOfUpdatePost);
+    //console.log(images);
     useEffect(() => {
         setActiveImg(images[index])
     }, [index, images])
@@ -95,6 +97,18 @@ const StatusModal = () => {
         setStream(false)
     }
 
+    //NOTIFIES
+
+    const createNotify = async (ntfy) => {
+        const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
+            headers: { authorization: token }
+        })
+        dispatch(createNewNotification(data))
+
+        //socket
+        socket.emit("createNotify", data)
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -120,6 +134,18 @@ const StatusModal = () => {
                 setContent("")
                 setImages([])
                 if (tracks) tracks.stop();
+
+                //for Notifies
+
+                const notify = {
+                    id: data._id,
+                    text: `${data.owner.username} added a new post`,
+                    recipients: data.owner.followers,
+                    content: data.content,
+                    url: `/post/${data._id}`,
+                    image: data.images[0].url
+                }
+                createNotify(notify)
             }
         } catch (error) {
             toast.error("error.response.data.message")
