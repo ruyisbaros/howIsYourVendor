@@ -3,10 +3,7 @@ const mongoose = require("mongoose")
 const NotificationSchema = new mongoose.Schema({
     id: mongoose.Types.ObjectId,
     owner: { type: mongoose.Types.ObjectId, ref: 'User' },
-    content: {
-        type: String,
-        required: true
-    },
+    content: String,
     text: String,
     url: String,
     image: String,

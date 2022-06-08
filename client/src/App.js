@@ -21,6 +21,7 @@ import axios from "axios";
 import io from "socket.io-client"
 import { getSocket } from "./redux/authSlicer";
 import SocketClient from "./SocketClient";
+import { fetchAllNotifications } from "./redux/notifySlicer";
 
 
 function App() {
@@ -75,6 +76,18 @@ function App() {
   useEffect(() => {
     if (token) getPosts()
   }, [dispatch, token, status === false, currentUser.followings])
+
+  useEffect(() => {
+    const getNotifies = async () => {
+      const { data } = await axios.get("/api/v1/notifications/all", {
+        headers: { authorization: token }
+      })
+      console.log(data);
+
+      dispatch(fetchAllNotifications(data))
+    }
+    getNotifies()
+  }, [token, dispatch])
 
   return (
     <BrowserRouter>

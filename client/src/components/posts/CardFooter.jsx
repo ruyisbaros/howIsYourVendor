@@ -7,6 +7,7 @@ import axios from 'axios';
 import { postLikeUpdate } from '../../redux/postsSlicer';
 import ShareModal from './ShareModal';
 import { savePost } from '../../redux/authSlicer';
+import { createNewNotification } from '../../redux/notifySlicer';
 
 const CardFooter = ({ post }) => {
 
@@ -36,6 +37,16 @@ const CardFooter = ({ post }) => {
         })
     }, [currentUser.savedPosts, savedPosts, savedPosts.length, post._id])
 
+    const createNotify = async (ntfy) => {
+        const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
+            headers: { authorization: token }
+        })
+        dispatch(createNewNotification(data))
+
+        //socket
+        socket.emit("createNotify", data)
+    }
+
     const likeHandler = async () => { //toggle. so like and unlike at a time ;))
         const { data } = await axios.patch(`/api/v1/posts/like_unlike/${post._id}`, null, {
             headers: { authorization: token }
@@ -44,8 +55,20 @@ const CardFooter = ({ post }) => {
         //console.log(data);
         dispatch(postLikeUpdate(data))
 
+        const notify = {
+            id: currentUser._id,
+            text: `${currentUser.username}, liked ${post.owner.username}'s post `,
+            recipients: data.owner.followers,
+            //content: data.content,
+            url: `/post/${data._id}`,
+            image: data.images[0].url
+        }
+        console.log(isLiked);
+        (currentUser.username !== post.owner.username && isLiked === false) && createNotify(notify)
+
         //------Socket-----------
         socket.emit("likePost", data)
+        socket.emit("createNotify", data)
     }
     const handleSavedPost = async () => {
         const { data } = await axios.patch(`/api/v1/posts/saved_post/${post._id}`, null, {

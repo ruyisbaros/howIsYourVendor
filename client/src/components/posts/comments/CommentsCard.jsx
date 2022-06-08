@@ -7,6 +7,7 @@ import { postCommentCreate, postCommentDelete, postCommentLikeUpdate, postCommen
 import CommentMenu from './CommentMenu'
 import axios from 'axios'
 import { createComment } from '../../../redux/commentsSlicer'
+import { createNewNotification } from '../../../redux/notifySlicer'
 
 const CommentsCard = ({ post, comment, children, item, showReplies, setShowReplies }) => {
   const { currentUser, token, socket } = useSelector(store => store.currentUser)
@@ -29,16 +30,37 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
   }, [isReply, comment]) */
   //console.log(content);
 
+  const createNotify = async (ntfy) => {
+    const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
+      headers: { authorization: token }
+    })
+    dispatch(createNewNotification(data))
+
+    //socket
+    socket.emit("createNotify", data)
+  }
+
   const likeCommentHandler = async () => {
 
     const { data } = await axios.patch(`/api/v1/comments/like/${comment._id}`, null, {
       headers: { authorization: token }
     })
+
+    setIsLiked(!isLiked)
+    const notify = {
+      id: currentUser._id,
+      text: `${currentUser.username}, liked ${data.owner.username}'s comment `,
+      recipients: data.owner.followers,
+      content: "",
+      url: `/post/${data._id}`,
+      image: data.images[0].url
+    }
+    createNotify(notify)
     dispatch(postCommentLikeUpdate(data))
 
     //Socket
     socket.emit("likeComment", data)
-    setIsLiked(!isLiked)
+    socket.emit("createNotify", data)
 
   }
 
@@ -62,6 +84,16 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
       dispatch(createComment({ newComment: data.newComment }))
       dispatch(postCommentCreate({ updatedPost: data.updatedPost }))
       setIsReply(false)
+
+      const notify = {
+        id: currentUser._id,
+        text: `${currentUser.username}, replied ${comment.owner.username}'s comment `,
+        recipients: data.updatedPost.owner.followers,
+        content: data.newComment.content,
+        url: `/post/${data.updatedPost._id}`,
+        image: data.updatedPost.images[0].url
+      }
+      createNotify(notify)
 
       //Socket
       socket.emit("replyComment", data.updatedPost)

@@ -113,6 +113,33 @@ font-size: 14px;
     margin-top: 3px;
 }
 
+.header .menu .notify{
+        display: inline-block;
+        transform: translateY(-3px);
+        font-size: 25px;
+        position: relative;
+       /*  background: #000; */
+    }
+.header .menu .notify span{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    align-content:center;
+    justify-content: center;
+    position: absolute;
+    top: 7px;
+    right: 3px;
+}
+
+
+
+
 /* Set Responsive */
 
 @media (max-width:768px) {

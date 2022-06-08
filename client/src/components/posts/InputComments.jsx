@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { createComment } from '../../redux/commentsSlicer';
+import { createNewNotification } from '../../redux/notifySlicer';
 import { postCommentCreate, postCommentUpdate } from '../../redux/postsSlicer';
 import Avatar from '../Avatar';
 
@@ -11,6 +12,16 @@ const InputComments = ({ children, post, reply, setReply }) => {
   const { currentUser, token, socket } = useSelector(store => store.currentUser)
   const dispatch = useDispatch()
   const [content, setContent] = useState("")
+
+  const createNotify = async (ntfy) => {
+    const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
+      headers: { authorization: token }
+    })
+    dispatch(createNewNotification(data))
+
+    //socket
+    socket.emit("createNotify", data)
+  }
 
 
   const submitHandler = async (e) => {
@@ -30,6 +41,16 @@ const InputComments = ({ children, post, reply, setReply }) => {
     console.log(data);
     dispatch(createComment({ newComment: data.newComment }))
     dispatch(postCommentCreate({ updatedPost: data.updatedPost }))
+
+    const notify = {
+      id: currentUser._id,
+      text: `${currentUser.username}, commented ${data.updatedPost.owner.username}'s post `,
+      recipients: data.updatedPost.owner.followers,
+      content: data.newComment.content,
+      url: `/post/${data.updatedPost._id}`,
+      image: data.updatedPost.images[0].url
+    }
+    createNotify(notify)
     //Socket
     socket.emit("createComment", data.updatedPost)
     setContent("")

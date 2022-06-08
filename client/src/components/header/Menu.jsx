@@ -10,7 +10,10 @@ import Avatar from '../Avatar';
 
 const Menu = () => {
     const { currentUser } = useSelector(store => store.currentUser)
+    const { notifies } = useSelector(store => store.notifies)
     /* const { token } = useSelector(store => store.currentUser) */
+
+    const [clicked, setClicked] = useState(false)
 
     const dispatch = useDispatch()
     const { pathname } = useLocation()
@@ -23,7 +26,7 @@ const Menu = () => {
         { label: "Home", icon: "home", path: "/" },
         { label: "Messages", icon: "forum", path: "/messages" },
         { label: "Discover", icon: "explore", path: "/discover" },
-        { label: "Notify", icon: "notifications", path: "/notify" },
+
     ]
     const [mode, setMode] = useState(false)
 
@@ -52,6 +55,15 @@ const Menu = () => {
                         </li>
                     ))
                 }
+                {/*  { label: "Notify", icon: "notifications", path: "/notify" }, */}
+                <li /* style={{ fontSize: "25px" }} */ className="nav-item px-2 notify" onClick={() => setClicked(!clicked)}>
+                    <Link className="nav-link " to="/notify">
+                        {clicked ?
+                            <i className="fa-solid fa-bell"></i>
+                            : <i className="fa-regular fa-bell"></i>}
+                    </Link>
+                    <span>{notifies.length}</span>
+                </li>
 
                 <li className="nav-item dropdown op-high">
                     <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
