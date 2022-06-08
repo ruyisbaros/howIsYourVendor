@@ -61,12 +61,15 @@ const currentUserSlicer = createSlice({
         },
         getSocket: (state, action) => {
             state.socket = action.payload
-        }
+        },
+        currentUserFollowUnFollowUpdates: (state, action) => {
+            state.currentUser = { ...state.currentUser, followings: action.payload.followings, followers: action.payload.followers };
+        },
     }
 })
 
 export const { authStart, authSuccess, authFailure, refreshToken, refreshTokenFail, authLogout,
-    updateCurrentStart, savePost, getSocket,
+    updateCurrentStart, savePost, getSocket, currentUserFollowUnFollowUpdates,
     updateCurrentSuccess, updateCurrentFail
 } = currentUserSlicer.actions
 

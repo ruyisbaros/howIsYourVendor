@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
+import { currentUserFollowUnFollowUpdates } from './redux/authSlicer';
 import { postCommentCreate, postCommentDelete, postCommentLikeUpdate, postCommentUpdate, postLikeUpdate } from './redux/postsSlicer';
 import { profileFollowUnFollowUpdates } from './redux/profileSlicer';
 
@@ -71,8 +72,8 @@ const SocketClient = () => {
     //receive emitted Follow UnFollow event
     useEffect(() => {
         socket.on("followUnFollowToClient", newUser => {
-            console.log(newUser);
-            dispatch(profileFollowUnFollowUpdates({ followers: newUser.followers, followings: newUser.followings }))
+            //console.log(newUser);
+            dispatch(currentUserFollowUnFollowUpdates({ followers: newUser.followers, followings: newUser.followings }))
         })
         return () => socket.off("followUnFollowToClient")
     }, [socket, dispatch])

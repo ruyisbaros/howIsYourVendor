@@ -100,17 +100,8 @@ const socketServer = (socket) => {
     //Follow UnFollow a user 
     socket.on("followUnFollow", (newUser) => {
         const user = users.find(user => user.id === newUser._id)
-        /* console.log(newUser);
-        let IDs = [...newUser.followers, ...newUser.followings, newUser._id]
-        let clients = users.filter(user => IDs.includes(user.id))
-        //console.log(clients);
-        if (clients.length > 0) {
-            clients.forEach(client => {
-                socket.to(`${client.socketId}`).emit('followUnFollowToClient', newUser)
 
-            })
-        } */
-        socket.to(`${user.socketId}`).emit('followUnFollowToClient', user)
+        socket.to(`${user.socketId}`).emit('followUnFollowToClient', newUser)
     })
 }
 
