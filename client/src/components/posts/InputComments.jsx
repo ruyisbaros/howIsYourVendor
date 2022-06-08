@@ -8,7 +8,7 @@ import Avatar from '../Avatar';
 
 const InputComments = ({ children, post, reply, setReply }) => {
 
-  const { currentUser, token } = useSelector(store => store.currentUser)
+  const { currentUser, token, socket } = useSelector(store => store.currentUser)
   const dispatch = useDispatch()
   const [content, setContent] = useState("")
 
@@ -30,8 +30,10 @@ const InputComments = ({ children, post, reply, setReply }) => {
     console.log(data);
     dispatch(createComment({ newComment: data.newComment }))
     dispatch(postCommentCreate({ updatedPost: data.updatedPost }))
+    //Socket
+    socket.emit("createComment", data.updatedPost)
     setContent("")
-    console.log(data);
+    //console.log(data);
 
   }
 

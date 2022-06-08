@@ -94,6 +94,7 @@ const postsSlicer = createSlice({
         postCommentCreate: (state, action) => {
 
             let updatedPost = action.payload.updatedPost
+            //let noreply = updatedPost.comments.filter(com => !com.reply)
             //console.log(PostedPost);
             state.posts.forEach(pst => {  //Using Map has risks. forEach has only side effect!!
                 if (pst._id === updatedPost._id) {

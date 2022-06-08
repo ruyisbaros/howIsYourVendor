@@ -28,7 +28,7 @@ const Comments = ({ post }) => {
             {
                 comments.map(comment => (
                     <CommentsDisplay key={comment._id} comment={comment} post={post}
-                        commentReplies={commentReplies.filter(item => item.postId === comment.postId)} />
+                        commentReplies={commentReplies.filter(item => item.reply === comment._id)} />
                 ))
             }
             {

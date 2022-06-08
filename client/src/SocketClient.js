@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { postLikeUpdate } from './redux/postsSlicer';
+import { postCommentCreate, postCommentDelete, postCommentLikeUpdate, postCommentUpdate, postLikeUpdate } from './redux/postsSlicer';
+import { profileFollowUnFollowUpdates } from './redux/profileSlicer';
 
 const SocketClient = () => {
     const { currentUser, socket } = useSelector(store => store.currentUser)
@@ -20,6 +21,63 @@ const SocketClient = () => {
 
         return () => socket.off("likeToClient")
     }, [socket, dispatch])
+
+    //receive emitted createComment event
+
+    useEffect(() => {
+        socket.on("createCommentToClient", updatedPost => {
+            console.log(updatedPost);
+            dispatch(postCommentCreate({ updatedPost }))
+        })
+        return () => socket.off("createCommentToClient")
+    }, [socket, dispatch])
+
+    //receive emitted deleteComment event
+    useEffect(() => {
+        socket.on("deleteCommentToClient", updatedPost => {
+            console.log(updatedPost);
+            dispatch(postCommentDelete(updatedPost))
+        })
+        return () => socket.off("deleteCommentToClient")
+    }, [socket, dispatch])
+
+    //receive emitted likeComment event
+    useEffect(() => {
+        socket.on("likeCommentToClient", updatedPost => {
+            console.log(updatedPost);
+            dispatch(postCommentLikeUpdate(updatedPost))
+        })
+        return () => socket.off("likeCommentToClient")
+    }, [socket, dispatch])
+
+    //receive emitted replyComment event
+    useEffect(() => {
+        socket.on("replyCommentToClient", updatedPost => {
+            console.log(updatedPost);
+            dispatch(postCommentCreate({ updatedPost }))
+        })
+        return () => socket.off("replyCommentToClient")
+    }, [socket, dispatch])
+
+    //receive emitted updateComment event
+    useEffect(() => {
+        socket.on("updateCommentToClient", updatedPost => {
+            console.log(updatedPost);
+            dispatch(postCommentUpdate(updatedPost))
+        })
+        return () => socket.off("updateCommentToClient")
+    }, [socket, dispatch])
+
+    //receive emitted Follow UnFollow event
+    useEffect(() => {
+        socket.on("followUnFollowToClient", newUser => {
+            console.log(newUser);
+            dispatch(profileFollowUnFollowUpdates({ followers: newUser.followers, followings: newUser.followings }))
+        })
+        return () => socket.off("followUnFollowToClient")
+    }, [socket, dispatch])
+
+
 
     return (
         <>

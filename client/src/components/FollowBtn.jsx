@@ -8,7 +8,7 @@ import { profileFollowUnFollowUpdates, profileSuccess } from '../redux/profileSl
 
 const FollowBtn = ({ user }) => {
     //const { profile } = useSelector(store => store.profile)
-    const { currentUser } = useSelector(store => store.currentUser)
+    const { currentUser, socket } = useSelector(store => store.currentUser)
     const { token } = useSelector(store => store.currentUser)
 
     const dispatch = useDispatch()
@@ -22,6 +22,9 @@ const FollowBtn = ({ user }) => {
             dispatch(updateCurrentSuccess(data.currentUser))
             toast.success(data.message)
             //console.log(data.targetUser);
+
+            //Socket
+            socket.emit("followUnFollow", data.targetUser)
         } catch (error) {
             toast.error(error.response.data.message)
             console.log(token);

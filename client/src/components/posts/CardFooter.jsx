@@ -43,6 +43,8 @@ const CardFooter = ({ post }) => {
         setIsLiked(!isLiked)
         //console.log(data);
         dispatch(postLikeUpdate(data))
+
+        //------Socket-----------
         socket.emit("likePost", data)
     }
     const handleSavedPost = async () => {

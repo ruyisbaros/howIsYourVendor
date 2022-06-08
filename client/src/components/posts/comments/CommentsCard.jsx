@@ -9,7 +9,7 @@ import axios from 'axios'
 import { createComment } from '../../../redux/commentsSlicer'
 
 const CommentsCard = ({ post, comment, children, item, showReplies, setShowReplies }) => {
-  const { currentUser, token } = useSelector(store => store.currentUser)
+  const { currentUser, token, socket } = useSelector(store => store.currentUser)
 
   const [content, setContent] = useState("")
   const [isReply, setIsReply] = useState(false)
@@ -35,6 +35,9 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
       headers: { authorization: token }
     })
     dispatch(postCommentLikeUpdate(data))
+
+    //Socket
+    socket.emit("likeComment", data)
     setIsLiked(!isLiked)
 
   }
@@ -59,6 +62,9 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
       dispatch(createComment({ newComment: data.newComment }))
       dispatch(postCommentCreate({ updatedPost: data.updatedPost }))
       setIsReply(false)
+
+      //Socket
+      socket.emit("replyComment", data.updatedPost)
       console.log(data);
     }
 
@@ -72,6 +78,9 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
     })
     //console.log(data);
     dispatch(postCommentDelete(data))
+
+    //Socket
+    socket.emit("deleteComment", data)
   }
 
   const handleCommentUpdate = async (e) => {
@@ -81,6 +90,8 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
         headers: { authorization: token }
       })
       dispatch(postCommentUpdate(data))
+      //Socket
+      socket.emit("updateComment", data)
       setOnEdit(false)
     } else {
       setOnEdit(false)
