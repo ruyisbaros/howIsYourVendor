@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { currentUserFollowUnFollowUpdates } from './redux/authSlicer';
+import { createNewNotification } from './redux/notifySlicer';
 import { postCommentCreate, postCommentDelete, postCommentLikeUpdate, postCommentUpdate, postLikeUpdate } from './redux/postsSlicer';
 import { profileFollowUnFollowUpdates } from './redux/profileSlicer';
 
@@ -13,14 +14,14 @@ const SocketClient = () => {
         socket.emit("joinUser", currentUser._id)
     }, [socket, currentUser])
 
-    //receive emitted LIKE event
+    //receive emitted LIKE POST event
     useEffect(() => {
-        socket.on("likeToClient", (newPost) => {
-            console.log(newPost);
+        socket.on("likePostToClient", (newPost) => {
+            //console.log(newPost);
             dispatch(postLikeUpdate(newPost))
         })
 
-        return () => socket.off("likeToClient")
+        return () => socket.off("likePostToClient")
     }, [socket, dispatch])
 
     //receive emitted createComment event
@@ -78,6 +79,56 @@ const SocketClient = () => {
         return () => socket.off("followUnFollowToClient")
     }, [socket, dispatch])
 
+    /*------------ NOTIFICATIONS-------- */
+
+    //receive emitted new post create notification
+    useEffect(() => {
+        socket.on("createPostNotifyToClient", postNotify => {
+            //console.log(newUser);
+            dispatch(createNewNotification(postNotify))
+        })
+        return () => socket.off("createPostNotifyToClient")
+    }, [socket, dispatch])
+
+    //receive emitted LIKE POST notification
+    useEffect(() => {
+        socket.on("createNotifyPostLikeToClient", newPost => {
+            //console.log(newPost);
+            dispatch(createNewNotification(newPost))
+        })
+
+        return () => socket.off("createNotifyPostLikeToClient")
+    }, [socket, dispatch])
+
+    //receive emitted Comment Reply notification
+    useEffect(() => {
+        socket.on("createNotifyReplyCommentToClient", newPost => {
+            //console.log(newPost);
+            dispatch(createNewNotification(newPost))
+        })
+
+        return () => socket.off("createNotifyReplyCommentToClient")
+    }, [socket, dispatch])
+
+    //receive emitted Comment POST notification
+    useEffect(() => {
+        socket.on("createNotifyPostCommentToClient", newPost => {
+            //console.log(newPost);
+            dispatch(createNewNotification(newPost))
+        })
+
+        return () => socket.off("createNotifyPostCommentToClient")
+    }, [socket, dispatch])
+
+    //receive emitted Comment Like notification
+    useEffect(() => {
+        socket.on("createNotifyLikeCommentToClient", newPost => {
+            //console.log(newPost);
+            dispatch(createNewNotification(newPost))
+        })
+
+        return () => socket.off("createNotifyLikeCommentToClient")
+    }, [socket, dispatch])
 
 
     return (

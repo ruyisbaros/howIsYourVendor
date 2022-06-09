@@ -18,7 +18,8 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
   const [isLiked, setIsLiked] = useState(comment.likes.find(lk => lk.username === currentUser.username))
 
   const [onEdit, setOnEdit] = useState(false)
-  const [comReply, setReply] = useState("")
+  const [comReply, setComReply] = useState("")
+  const [likeField, setLikeField] = useState("")
 
   const dispatch = useDispatch()
 
@@ -31,36 +32,46 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
   //console.log(content);
 
   const createNotify = async (ntfy) => {
-    const { data } = await axios.post("api/v1/notifications/new", { ...ntfy }, {
+    const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
       headers: { authorization: token }
     })
     dispatch(createNewNotification(data))
 
     //socket
-    socket.emit("createNotify", data)
+    socket.emit("createNotifyReplyComment", { ...data })
+  }
+
+  const createNotifyLike = async (ntfy) => {
+    const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
+      headers: { authorization: token }
+    })
+    dispatch(createNewNotification(data))
+    console.log('hello');
+
+    //socket
+    socket.emit("createNotifyLikeComment", { ...data })
   }
 
   const likeCommentHandler = async () => {
 
-    const { data } = await axios.patch(`api/v1/comments/like/${comment._id}`, null, {
+    const { data } = await axios.patch(`/api/v1/comments/like/${comment._id}`, null, {
       headers: { authorization: token }
     })
-
+    dispatch(postCommentLikeUpdate(data))
+    socket.emit("likeComment", data)
+    //Socket
     setIsLiked(!isLiked)
+
     const notify = {
       id: currentUser._id,
       text: `${currentUser.username}, liked ${data.owner.username}'s comment `,
       recipients: data.owner.followers,
       content: "",
-      url: `/post/${data._id}`,
-      image: data.images[0].url
+      url: `/post/${post._id}`,
+      image: post.images[0].url
     }
-    createNotify(notify)
-    dispatch(postCommentLikeUpdate(data))
 
-    //Socket
-    socket.emit("likeComment", data)
-    //socket.emit("createNotify", data)
+    currentUser._id !== data.owner._id && isLiked === false && createNotifyLike(notify)
 
   }
 
@@ -77,7 +88,7 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
         postUserId: post.owner._id
       }
       //console.log(replyComment);
-      const { data } = await axios.post("api/v1/comments/new", { ...replyComment }, {
+      const { data } = await axios.post("/api/v1/comments/new", { ...replyComment }, {
         headers: { authorization: token }
       })
       console.log(data);
@@ -93,11 +104,11 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
         url: `/post/${data.updatedPost._id}`,
         image: data.updatedPost.images[0].url
       }
-      currentUser._id !== comment.owner._id && createNotify(notify)
 
       //Socket
       socket.emit("replyComment", data.updatedPost)
-      console.log(data);
+      currentUser._id !== comment.owner._id && createNotify(notify)
+      //console.log(data);
     }
 
 
@@ -129,12 +140,6 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
       setOnEdit(false)
     }
   }
-  /* const spliter = (cnt) => {
-    if (cnt.split("")[0] === "@") {
-      let temp1 = cnt.split(" ")[0]
-      return temp1.split("@")[0]
-    }
-  } */
 
   return (
     <div className="comment_card mt-3">
@@ -213,10 +218,10 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
             <form onSubmit={replyHandler} className="card-footer comment_input">
 
               <input type="text" placeholder="Add your comments..." value={comReply}
-                onChange={(e) => setReply(e.target.value)} />
+                onChange={(e) => setComReply(e.target.value)} />
 
               <div className="btn_box">
-                <button onClick={() => setReply("")} className="postBtn">Cancel</button>
+                <button onClick={() => setComReply("")} className="postBtn">Cancel</button>
                 <button type="submit" style={{ background: comReply ? "blue" : "#ddd", color: comReply ? "white" : "#0008" }} className="postBtn send">reply</button>
               </div>
 

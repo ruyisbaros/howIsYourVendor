@@ -106,7 +106,7 @@ const StatusModal = () => {
         dispatch(createNewNotification(data))
 
         //socket
-        //socket.emit("createNotify", data)
+        socket.emit("createPostNotify", { ...data })
     }
 
     const handleSubmit = async (e) => {

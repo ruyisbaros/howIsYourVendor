@@ -18,8 +18,8 @@ const notifySlicer = createSlice({
             state.notifies = [action.payload, ...state.notifies]
         },
         deleteANotification: (state, action) => {
-            const { _id } = action.payload
-            const newNots = state.notifies.filter(not => not._id !== _id)
+            const id = action.payload
+            const newNots = state.notifies.filter(not => not._id !== id)
             state.notifies = newNots
         },
         fetchAllNotifications: (state, action) => {

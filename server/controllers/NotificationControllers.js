@@ -10,7 +10,7 @@ exports.createNewNotification = asyncHandler(async (req, res) => {
         id, recipients, url, text, content, image,
         owner: req.user._id,
     })
-    const notification = await Notification.findById(_notification._id).populate("owner", "avatar username")
+    const notification = await Notification.findById(_notification._id).populate("owner", "followers avatar username")
 
     res.status(200).json(notification)
 })

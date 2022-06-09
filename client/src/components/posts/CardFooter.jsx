@@ -37,14 +37,14 @@ const CardFooter = ({ post }) => {
         })
     }, [currentUser.savedPosts, savedPosts, savedPosts.length, post._id])
 
-    const createNotify = async (ntfy) => {
+    const createNotify = async (ntfy, id) => {
         const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
             headers: { authorization: token }
         })
         dispatch(createNewNotification(data))
 
         //socket
-        //socket.emit("createNotify", data)
+        socket.emit("createNotifyPostLike", { ...data })
     }
 
     const likeHandler = async () => { //toggle. so like and unlike at a time ;))
@@ -52,23 +52,23 @@ const CardFooter = ({ post }) => {
             headers: { authorization: token }
         })
         setIsLiked(!isLiked)
-        //console.log(data);
+        console.log(data);
         dispatch(postLikeUpdate(data))
 
         const notify = {
             id: currentUser._id,
-            text: `${currentUser.username}, liked ${post.owner.username}'s post `,
+            text: `${currentUser.username}, liked ${data.owner.username === currentUser.username ? "your" : data.owner.username}'s post `,
             recipients: data.owner.followers,
             //content: data.content,
             url: `/post/${data._id}`,
             image: data.images[0].url
         }
         console.log(isLiked);
-        (currentUser.username !== post.owner.username && isLiked === false) && createNotify(notify)
+        (currentUser.username !== post.owner.username && isLiked === false) && createNotify(notify, data.owner._id)
 
         //------Socket-----------
         socket.emit("likePost", data)
-        socket.emit("createNotify", data)
+
     }
     const handleSavedPost = async () => {
         const { data } = await axios.patch(`/api/v1/posts/saved_post/${post._id}`, null, {

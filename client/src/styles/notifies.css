@@ -51,9 +51,22 @@
     transition: all 0.3s;
     padding-top: 15px;
     padding-bottom: 15px;
+    
 }
 .notifications .notifications_content:hover{
     background-color: #eee;
+}
+.notifications_cover{
+position: relative;
+}
+.notifications_cover .del_not{
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: bold;
 }
 .notifications .notifications_content .content-in{
     flex: 1
