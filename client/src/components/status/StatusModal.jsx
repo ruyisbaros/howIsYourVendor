@@ -31,7 +31,7 @@ const StatusModal = () => {
     let newImages = []
     const imageUpload = async (dt) => {
         dispatch(PostCreateStart())
-        const { data } = await axios.post("/api/v1/uploads", dt, {
+        const { data } = await axios.post("api/v1/uploads", dt, {
             headers: { "content-type": "multipart/form-data", authorization: token }
         })
         newImages.push(data)
@@ -100,13 +100,13 @@ const StatusModal = () => {
     //NOTIFIES
 
     const createNotify = async (ntfy) => {
-        const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
+        const { data } = await axios.post("api/v1/notifications/new", { ...ntfy }, {
             headers: { authorization: token }
         })
         dispatch(createNewNotification(data))
 
         //socket
-        socket.emit("createNotify", data)
+        //socket.emit("createNotify", data)
     }
 
     const handleSubmit = async (e) => {

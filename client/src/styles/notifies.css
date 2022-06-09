@@ -1,0 +1,62 @@
+.notifications{
+    border: 2px solid #eee;
+    width: 700px;
+    
+    min-height: 100vh;
+    background-color: #fff;
+    position: absolute;
+    right: 28%;
+    top: 0px;
+    z-index: 100;
+}
+
+.notifications .notifications_header{
+    height: 100px;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #eee;
+    position: sticky;
+    z-index: 100;
+}
+
+.notifications .notifications_container{
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.notifications .notifications_content{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+    padding-right: 20px;
+    padding-left: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.notifications .notifications_content:hover{
+    background-color: #eee;
+}
+.notifications .notifications_content .content-in{
+    flex: 1
+}
+.notifications .notifications_content .content-in div{
+    display: flex;
+    flex-wrap: wrap;
+   
+}
+
+.notifications .notifications_content .notify_avatar{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.notifications .notifications_content .notify_post{
+    width: 150px;
+    height: 100px;
+    
+}

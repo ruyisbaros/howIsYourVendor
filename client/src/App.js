@@ -21,13 +21,14 @@ import axios from "axios";
 import io from "socket.io-client"
 import { getSocket } from "./redux/authSlicer";
 import SocketClient from "./SocketClient";
-import { fetchAllNotifications } from "./redux/notifySlicer";
+import { createNewNotification, fetchAllNotifications } from "./redux/notifySlicer";
 
 
 function App() {
 
   const { token, currentUser } = useSelector(store => store.currentUser)
   const { status } = useSelector(store => store.posts)
+  const { statusNot, notifies } = useSelector(store => store.notifies)
   const dispatch = useDispatch()
 
 
@@ -77,16 +78,17 @@ function App() {
     if (token) getPosts()
   }, [dispatch, token, status === false, currentUser.followings])
 
-  useEffect(() => {
-    const getNotifies = async () => {
-      const { data } = await axios.get("/api/v1/notifications/all", {
-        headers: { authorization: token }
-      })
-      console.log(data);
+  const getNotifies = async () => {
+    const { data } = await axios.get("/api/v1/notifications/all", {
+      headers: { authorization: token }
+    })
+    console.log(data);
 
-      dispatch(fetchAllNotifications(data))
-    }
-    getNotifies()
+    dispatch(fetchAllNotifications(data))
+  }
+
+  useEffect(() => {
+    if (token) getNotifies()
   }, [token, dispatch])
 
   return (
@@ -99,11 +101,12 @@ function App() {
           {token && <Header />}
           {token && <SocketClient />}
           {status && <StatusModal />}
+          {statusNot && <Notifies />}
           <Routes>
             <Route path="/" element={localStorage.getItem("firstLogin") ? <Home /> : <Login />} />
             <Route path="/messages" element={token ? <Messages /> : <Login />} />
             <Route path="/discover" element={token ? <Discover /> : <Login />} />
-            <Route path="/notify" element={token ? <Notifies /> : <Login />} />
+            {/*  <Route path="/notify" element={token ? <Notifies /> : <Login />} /> */}
             <Route path="/profile/:id" element={token ? <Profile /> : <Login />} />
             <Route path="/post/:id" element={token ? <SingleProfilePost /> : <Login />} />
             <Route path="/register" element={token ? <Home /> : <Register />} />

@@ -7,6 +7,7 @@ const initialState = {
     error: false,
     message: "",
     statusNot: false,
+    sound: false,
 }
 
 const notifySlicer = createSlice({
@@ -14,7 +15,7 @@ const notifySlicer = createSlice({
     initialState,
     reducers: {
         createNewNotification: (state, action) => {
-            state.notifies = [...state.notifies, action.payload]
+            state.notifies = [action.payload, ...state.notifies]
         },
         deleteANotification: (state, action) => {
             const { _id } = action.payload

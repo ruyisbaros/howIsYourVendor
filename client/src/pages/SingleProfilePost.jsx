@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import PostCard from '../components/posts/PostCard'
-import { singlePostFetchSuccess } from '../redux/postsSlicer'
+import { deleteAPost, singlePostFetchSuccess } from '../redux/postsSlicer'
 import Loading from '../images/loading-2.gif'
 import { toast } from "react-toastify"
 

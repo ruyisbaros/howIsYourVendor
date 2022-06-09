@@ -104,3 +104,6 @@ filter:invert(1)
 
 /* Post Thumb-------- */
 @import url("./postThumb.css");
+
+/*---------- Notifies ------- */
+@import url("./notifies.css");

@@ -44,7 +44,7 @@ const CardFooter = ({ post }) => {
         dispatch(createNewNotification(data))
 
         //socket
-        socket.emit("createNotify", data)
+        //socket.emit("createNotify", data)
     }
 
     const likeHandler = async () => { //toggle. so like and unlike at a time ;))

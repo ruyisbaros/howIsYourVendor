@@ -31,7 +31,7 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
   //console.log(content);
 
   const createNotify = async (ntfy) => {
-    const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
+    const { data } = await axios.post("api/v1/notifications/new", { ...ntfy }, {
       headers: { authorization: token }
     })
     dispatch(createNewNotification(data))
@@ -42,7 +42,7 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
 
   const likeCommentHandler = async () => {
 
-    const { data } = await axios.patch(`/api/v1/comments/like/${comment._id}`, null, {
+    const { data } = await axios.patch(`api/v1/comments/like/${comment._id}`, null, {
       headers: { authorization: token }
     })
 
@@ -60,7 +60,7 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
 
     //Socket
     socket.emit("likeComment", data)
-    socket.emit("createNotify", data)
+    //socket.emit("createNotify", data)
 
   }
 
@@ -77,7 +77,7 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
         postUserId: post.owner._id
       }
       //console.log(replyComment);
-      const { data } = await axios.post("/api/v1/comments/new", { ...replyComment }, {
+      const { data } = await axios.post("api/v1/comments/new", { ...replyComment }, {
         headers: { authorization: token }
       })
       console.log(data);
@@ -93,7 +93,7 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
         url: `/post/${data.updatedPost._id}`,
         image: data.updatedPost.images[0].url
       }
-      createNotify(notify)
+      currentUser._id !== comment.owner._id && createNotify(notify)
 
       //Socket
       socket.emit("replyComment", data.updatedPost)

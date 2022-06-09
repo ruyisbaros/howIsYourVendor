@@ -20,7 +20,7 @@ const InputComments = ({ children, post, reply, setReply }) => {
     dispatch(createNewNotification(data))
 
     //socket
-    socket.emit("createNotify", data)
+    //socket.emit("createNotify", data)
   }
 
 
