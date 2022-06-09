@@ -31,10 +31,13 @@ const notifySlicer = createSlice({
         closeNotifyStatus: (state) => {
             state.statusNot = false
         },
+        deleteAllANotifications: (state, action) => {
+            state.notifies = []
+        }
 
     }
 })
 
-export const { createNewNotification, deleteANotification, fetchAllNotifications, openNotifyStatus, closeNotifyStatus } = notifySlicer.actions
+export const { createNewNotification, deleteANotification, fetchAllNotifications, openNotifyStatus, closeNotifyStatus, deleteAllANotifications } = notifySlicer.actions
 
 export default notifySlicer.reducer

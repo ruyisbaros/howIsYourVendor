@@ -24,7 +24,22 @@
     height: 100vh;
     overflow-y: auto;
 }
-
+.notifications_container .del_all{
+    width: 100%;
+    height: 40px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.notifications_container .del_all:hover{
+    letter-spacing: 1px;
+}
+.notifications_container .fa-circle{
+    font-size: 10px;
+}
 .notifications .notifications_content{
     display: flex;
     align-items: center;

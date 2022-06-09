@@ -80,7 +80,7 @@ const Menu = () => {
                             <i className="fa-solid fa-bell"></i>
                             : <i className="fa-regular fa-bell"></i>}
                     </li>
-                    {notifies.length > 0 && <span>{notifies.length > 9 ? "9+" : notifies.length}</span>}
+                    {notifies.length > 0 && <span style={{ fontWeight: "bold" }}>{notifies.length > 9 ? "9+" : notifies.length}</span>}
                 </li>
 
                 <li className="nav-item dropdown op-high">
