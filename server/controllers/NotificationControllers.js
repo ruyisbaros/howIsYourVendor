@@ -18,17 +18,16 @@ exports.createNewNotification = asyncHandler(async (req, res) => {
 exports.deleteANotification = asyncHandler(async (req, res) => {
 
     const { notifyId } = req.params
-    const _ntfy = await Notification.findById(notifyId)
+    const _ntfy = await Notification.findByIdAndUpdate(notifyId, { $pull: { recipients: req.user._id } }, { new: true })
 
-    await Notification.findByIdAndDelete(notifyId)
 
     res.status(200).json(_ntfy)
 })
 
 exports.getNotifications = asyncHandler(async (req, res) => {
 
-    const notifies = await Notification.find({ $in: { recipients: req.user._id } }).sort("-createdAt")
-        .populate("owner", "avatar username")
+    const notifies = await Notification.find({ recipients: req.user._id }).sort("-createdAt")
+        .populate("owner", "followers avatar username")
 
     res.status(200).json(notifies)
 })

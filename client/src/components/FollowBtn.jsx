@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { toast } from "react-toastify"
 import { updateCurrentSuccess } from '../redux/authSlicer'
+import { createNewNotification } from '../redux/notifySlicer'
 import { profileFollowUnFollowUpdates, profileSuccess } from '../redux/profileSlicer'
 
 
@@ -13,6 +14,16 @@ const FollowBtn = ({ user }) => {
 
     const dispatch = useDispatch()
 
+    const createNotify = async (ntfy) => {
+        const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
+            headers: { authorization: token }
+        })
+        //dispatch(createNewNotification(data))
+
+        //socket
+        socket.emit("createNotifyAddFollow", { ...data })
+    }
+
     const handleFollowUnFollow = async () => {
         try {
             const { data } = await axios.patch(`/api/v1/users/follow_unFollow/${user._id}`, null, {
@@ -22,7 +33,15 @@ const FollowBtn = ({ user }) => {
             dispatch(updateCurrentSuccess(data.currentUser))
             toast.success(data.message)
             //console.log(data.targetUser);
-
+            const notify = {
+                id: currentUser._id,
+                text: `${currentUser.username}, added you his follow list `,
+                recipients: data.targetUser,
+                content: "",
+                url: `/profile/${currentUser._id}`,
+                image: ""
+            }
+            createNotify(notify)
             //Socket
             socket.emit("followUnFollow", data.targetUser)
         } catch (error) {

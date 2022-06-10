@@ -82,7 +82,7 @@ function App() {
     const { data } = await axios.get("/api/v1/notifications/all", {
       headers: { authorization: token }
     })
-    console.log(data);
+    //console.log(data);
 
     dispatch(fetchAllNotifications(data))
   }

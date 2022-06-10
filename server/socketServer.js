@@ -171,13 +171,23 @@ const socketServer = (socket) => {
             })
         }
     })
-
+    //refactor
     //Create comment like Notify
     socket.on("createNotifyLikeComment", postNotify => {
-        console.log("postNotify");
-        let clients = users.filter(user => postNotify.owner.followers.includes(user.id))
-        //clients.push(postNotify.owner._id)
+        console.log("refactor:" + postNotify);
+        let user = users.filter(user => user.id === postNotify.recipients[0])
+        console.log(user);
         function removeDuplicateObjectFromArray(array, key) {
+            let check = new Set();
+            return array.filter(obj => !check.has(obj[key]) && check.add(obj[key]));
+        }
+
+        user = removeDuplicateObjectFromArray(user, 'id')
+        console.log(user);
+        socket.to(`${user[0].socketId}`).emit('createNotifyLikeCommentToClient', postNotify)
+
+        //clients.push(postNotify.owner._id)
+        /* function removeDuplicateObjectFromArray(array, key) {
             let check = new Set();
             return array.filter(obj => !check.has(obj[key]) && check.add(obj[key]));
         }
@@ -190,7 +200,15 @@ const socketServer = (socket) => {
                 socket.to(`${client.socketId}`).emit('createNotifyLikeCommentToClient', postNotify)
 
             })
-        }
+        } */
+    })
+
+    // Follow UnFollow Notify
+    socket.on("createNotifyAddFollow", (newUser) => {
+        //console.log(newUser);
+        const user = users.find(user => user.id === newUser.recipients[0])
+        //console.log(user);
+        socket.to(`${user.socketId}`).emit('createNotifyAddFollowToClient', newUser)
     })
 }
 

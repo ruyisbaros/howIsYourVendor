@@ -12,9 +12,10 @@ const Notifies = () => {
     const dispatch = useDispatch()
 
     const notDeleteHandler = async (id) => {
-        const { data } = axios.delete(`/api/v1/notifications/delete/${id}`, {
+        const { data } = await axios.patch(`/api/v1/notifications/delete/${id}`, null, {
             headers: { authorization: token }
         })
+        console.log(data);
         dispatch(deleteANotification(id))
 
     }
@@ -37,7 +38,7 @@ const Notifies = () => {
                             <div className="notifications_cover">
                                 <div className="notifications_content" onClick={goToNotify}>
                                     <span>{!not.isRead && <i className="fas fa-circle text-primary" />}</span>
-                                    <img src={not?.owner?.avatar?.url} alt="" className="notify_avatar" />
+                                    <img src={not.owner.avatar.url} alt="" className="notify_avatar" />
                                     <div className="content-in">
                                         <div>
                                             <p>{not.text}</p>
@@ -47,7 +48,7 @@ const Notifies = () => {
                                             {moment(not.createdAt).fromNow()}
                                         </small>
                                     </div>
-                                    <img src={not.image} alt="" className="notify_post" />
+                                    {not.image && <img src={not.image} alt="" className="notify_post" />}
 
                                 </div>
                                 <span onClick={() => notDeleteHandler(not._id)} className="text-danger del_not">remove</span>

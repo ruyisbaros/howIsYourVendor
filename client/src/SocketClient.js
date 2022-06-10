@@ -130,6 +130,17 @@ const SocketClient = () => {
         return () => socket.off("createNotifyLikeCommentToClient")
     }, [socket, dispatch])
 
+    //receive emitted Add Follow notification
+    useEffect(() => {
+        socket.on("createNotifyAddFollowToClient", newPost => {
+            //console.log(newPost);
+            dispatch(createNewNotification(newPost))
+        })
+
+        return () => socket.off("createNotifyAddFollowToClient")
+    }, [socket, dispatch])
+
+
 
     return (
         <>

@@ -45,11 +45,11 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
     const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
       headers: { authorization: token }
     })
-    dispatch(createNewNotification(data))
-    console.log('hello');
+    //dispatch(createNewNotification(data))
 
+    console.log(data);
     //socket
-    socket.emit("createNotifyLikeComment", { ...data })
+    socket.emit("createNotifyLikeComment", data)
   }
 
   const likeCommentHandler = async () => {
@@ -57,6 +57,7 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
     const { data } = await axios.patch(`/api/v1/comments/like/${comment._id}`, null, {
       headers: { authorization: token }
     })
+    console.log(data);
     dispatch(postCommentLikeUpdate(data))
     socket.emit("likeComment", data)
     //Socket
@@ -64,9 +65,9 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
 
     const notify = {
       id: currentUser._id,
-      text: `${currentUser.username}, liked ${data.owner.username}'s comment `,
-      recipients: data.owner.followers,
-      content: "",
+      text: `${currentUser.username}, liked your comment `,
+      recipients: data.owner._id,
+      content: data.content,
       url: `/post/${post._id}`,
       image: post.images[0].url
     }
