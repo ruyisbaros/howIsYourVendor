@@ -103,7 +103,7 @@ const StatusModal = () => {
         const { data } = await axios.post("api/v1/notifications/new", { ...ntfy }, {
             headers: { authorization: token }
         })
-        dispatch(createNewNotification(data))
+        //dispatch(createNewNotification(data))
 
         //socket
         socket.emit("createPostNotify", { ...data })

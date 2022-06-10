@@ -17,7 +17,7 @@ const InputComments = ({ children, post, reply, setReply }) => {
     const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
       headers: { authorization: token }
     })
-    dispatch(createNewNotification(data))
+    //dispatch(createNewNotification(data))
 
     //socket
     socket.emit("createNotifyPostComment", { ...data })
@@ -44,13 +44,13 @@ const InputComments = ({ children, post, reply, setReply }) => {
 
     const notify = {
       id: currentUser._id,
-      text: `${currentUser.username}, commented ${data.updatedPost.owner.username}'s post `,
-      recipients: data.updatedPost.owner.followers,
+      text: `${currentUser.username}, commented your post `,
+      recipients: data.updatedPost.owner._id,
       content: data.newComment.content,
       url: `/post/${data.updatedPost._id}`,
       image: data.updatedPost.images[0].url
     }
-    createNotify(notify)
+    currentUser.username !== data.updatedPost.owner.username && createNotify(notify)
     //Socket
     socket.emit("createComment", data.updatedPost)
     setContent("")

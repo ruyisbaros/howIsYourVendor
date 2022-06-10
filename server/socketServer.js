@@ -109,7 +109,13 @@ const socketServer = (socket) => {
     //Create new Post Notify
     socket.on("createPostNotify", postNotify => {
         //console.log(postNotify);
-        const clients = users.filter(user => postNotify.recipients.includes(user.id))
+        let clients = users.filter(user => postNotify.recipients.includes(user.id))
+        function removeDuplicateObjectFromArray(array, key) {
+            let check = new Set();
+            return array.filter(obj => !check.has(obj[key]) && check.add(obj[key]));
+        }
+
+        clients = removeDuplicateObjectFromArray(clients, 'id')
         if (clients.length > 0) {
             clients.forEach(client => {
                 socket.to(`${client.socketId}`).emit('createPostNotifyToClient', postNotify)
@@ -117,63 +123,9 @@ const socketServer = (socket) => {
             })
         }
     })
+    //refactor
     //Create Post Like Notify
     socket.on("createNotifyPostLike", postNotify => {
-        //console.log(postNotify);
-        let clients = users.filter(user => postNotify.owner.followers.includes(user.id))
-        function removeDuplicateObjectFromArray(array, key) {
-            let check = new Set();
-            return array.filter(obj => !check.has(obj[key]) && check.add(obj[key]));
-        }
-
-        clients = removeDuplicateObjectFromArray(clients, 'id')
-        if (clients.length > 0) {
-            clients.forEach(client => {
-                socket.to(`${client.socketId}`).emit('createNotifyPostLikeToClient', postNotify)
-
-            })
-        }
-    })
-
-    //Create comment reply Notify
-    socket.on("createNotifyReplyComment", postNotify => {
-        //console.log(postNotify);
-        let clients = users.filter(user => postNotify.owner.followers.includes(user.id))
-        function removeDuplicateObjectFromArray(array, key) {
-            let check = new Set();
-            return array.filter(obj => !check.has(obj[key]) && check.add(obj[key]));
-        }
-
-        clients = removeDuplicateObjectFromArray(clients, 'id')
-        console.log(clients);
-        if (clients.length > 0) {
-            clients.forEach(client => {
-                socket.to(`${client.socketId}`).emit('createNotifyReplyCommentToClient', postNotify)
-
-            })
-        }
-    })
-
-    //Create Post comment Notify
-    socket.on("createNotifyPostComment", postNotify => {
-        //console.log(postNotify);
-        let clients = users.filter(user => postNotify.owner.followers.includes(user.id))
-        function removeDuplicateObjectFromArray(array, key) {
-            let check = new Set();
-            return array.filter(obj => !check.has(obj[key]) && check.add(obj[key]));
-        }
-
-        clients = removeDuplicateObjectFromArray(clients, 'id')
-        if (clients.length > 0) {
-            clients.forEach(client => {
-                socket.to(`${client.socketId}`).emit('createNotifyPostCommentToClient', postNotify)
-
-            })
-        }
-    })
-    //refactor
-    //Create comment like Notify
-    socket.on("createNotifyLikeComment", postNotify => {
         console.log("refactor:" + postNotify);
         let user = users.filter(user => user.id === postNotify.recipients[0])
         console.log(user);
@@ -185,24 +137,53 @@ const socketServer = (socket) => {
         user = removeDuplicateObjectFromArray(user, 'id')
         console.log(user);
         socket.to(`${user[0].socketId}`).emit('createNotifyLikeCommentToClient', postNotify)
-
-        //clients.push(postNotify.owner._id)
-        /* function removeDuplicateObjectFromArray(array, key) {
+    })
+    //refactor
+    //Create comment reply Notify
+    socket.on("createNotifyReplyComment", postNotify => {
+        //console.log("refactor:" + postNotify);
+        let user = users.filter(user => user.id === postNotify.recipients[0])
+        //console.log(user);
+        function removeDuplicateObjectFromArray(array, key) {
             let check = new Set();
             return array.filter(obj => !check.has(obj[key]) && check.add(obj[key]));
         }
 
-        clients = removeDuplicateObjectFromArray(clients, 'id')
-        //clients = [...new Set(clients)];
-        console.log(clients);
-        if (clients.length > 0) {
-            clients.forEach(client => {
-                socket.to(`${client.socketId}`).emit('createNotifyLikeCommentToClient', postNotify)
-
-            })
-        } */
+        user = removeDuplicateObjectFromArray(user, 'id')
+        //console.log(user);
+        socket.to(`${user[0].socketId}`).emit('createNotifyLikeCommentToClient', postNotify)
     })
+    //refactor
+    //Create Post comment Notify
+    socket.on("createNotifyPostComment", postNotify => {
+        console.log("refactor:" + postNotify);
+        let user = users.filter(user => user.id === postNotify.recipients[0])
+        console.log(user);
+        function removeDuplicateObjectFromArray(array, key) {
+            let check = new Set();
+            return array.filter(obj => !check.has(obj[key]) && check.add(obj[key]));
+        }
 
+        user = removeDuplicateObjectFromArray(user, 'id')
+        console.log(user);
+        socket.to(`${user[0].socketId}`).emit('createNotifyLikeCommentToClient', postNotify)
+    })
+    //refactor
+    //Create comment like Notify
+    socket.on("createNotifyLikeComment", postNotify => {
+        //console.log("refactor:" + postNotify);
+        let user = users.filter(user => user.id === postNotify.recipients[0])
+        //console.log(user);
+        function removeDuplicateObjectFromArray(array, key) {
+            let check = new Set();
+            return array.filter(obj => !check.has(obj[key]) && check.add(obj[key]));
+        }
+
+        user = removeDuplicateObjectFromArray(user, 'id')
+        //console.log(user);
+        socket.to(`${user[0].socketId}`).emit('createNotifyLikeCommentToClient', postNotify)
+    })
+    //refactor
     // Follow UnFollow Notify
     socket.on("createNotifyAddFollow", (newUser) => {
         //console.log(newUser);

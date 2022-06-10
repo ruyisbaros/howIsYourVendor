@@ -35,7 +35,7 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
     const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
       headers: { authorization: token }
     })
-    dispatch(createNewNotification(data))
+    //dispatch(createNewNotification(data))
 
     //socket
     socket.emit("createNotifyReplyComment", { ...data })
@@ -99,8 +99,8 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
 
       const notify = {
         id: currentUser._id,
-        text: `${currentUser.username}, replied ${comment.owner.username}'s comment `,
-        recipients: data.updatedPost.owner.followers,
+        text: `${currentUser.username}, replied your comment `,
+        recipients: data.updatedPost.owner._id,
         content: data.newComment.content,
         url: `/post/${data.updatedPost._id}`,
         image: data.updatedPost.images[0].url

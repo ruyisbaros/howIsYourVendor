@@ -41,7 +41,7 @@ const CardFooter = ({ post }) => {
         const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
             headers: { authorization: token }
         })
-        dispatch(createNewNotification(data))
+        //dispatch(createNewNotification(data))
 
         //socket
         socket.emit("createNotifyPostLike", { ...data })
@@ -57,14 +57,14 @@ const CardFooter = ({ post }) => {
 
         const notify = {
             id: currentUser._id,
-            text: `${currentUser.username}, liked ${data.owner.username === currentUser.username ? "your" : data.owner.username}'s post `,
-            recipients: data.owner.followers,
+            text: `${currentUser.username}, liked your post `,
+            recipients: data.owner._id,
             //content: data.content,
             url: `/post/${data._id}`,
             image: data.images[0].url
         }
         console.log(isLiked);
-        (currentUser.username !== post.owner.username && isLiked === false) && createNotify(notify, data.owner._id)
+        (currentUser.username !== post.owner.username && isLiked === false) && createNotify(notify)
 
         //------Socket-----------
         socket.emit("likePost", data)
