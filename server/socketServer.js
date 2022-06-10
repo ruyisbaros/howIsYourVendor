@@ -35,7 +35,7 @@ const socketServer = (socket) => {
         //console.log(clients);
         if (clients.length > 0) {
             clients.forEach(client => {
-                socket.to(`${client.socketId}`).emit('createCommentToClient', updatedPost)
+                socket.to(`${client.socketId}`).emit('createCommentToClient', (updatedPost))
 
             })
         }

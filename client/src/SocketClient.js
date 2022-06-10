@@ -1,15 +1,29 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { currentUserFollowUnFollowUpdates } from './redux/authSlicer';
-import { createNewNotification } from './redux/notifySlicer';
+import { createNewNotification, openAlert } from './redux/notifySlicer';
 import { postCommentCreate, postCommentDelete, postCommentLikeUpdate, postCommentUpdate, postLikeUpdate } from './redux/postsSlicer';
 import { profileFollowUnFollowUpdates } from './redux/profileSlicer';
+import AlertPage from './utils/AlertPage';
+
+const alertNotify = (body, icon, url, title) => {
+    let options = {
+        body, icon
+    }
+
+    let not = new Notification(title, options)
+
+    not.onclick = (e) => {
+        e.preventDefault();
+        window.open(url, "_blank")
+    }
+}
 
 const SocketClient = () => {
     const { currentUser, socket } = useSelector(store => store.currentUser)
-    //const { socket } = useSelector(store => store.socket)
+    const { alert } = useSelector(store => store.notifies)
     const dispatch = useDispatch()
-
+    const [showAlert, setShowAlert] = useState(false)
     useEffect(() => {
         socket.emit("joinUser", currentUser._id)
     }, [socket, currentUser])
@@ -19,6 +33,7 @@ const SocketClient = () => {
         socket.on("likePostToClient", (newPost) => {
             //console.log(newPost);
             dispatch(postLikeUpdate(newPost))
+            //alert(`${newPost.owner.username} liked your post`)
         })
 
         return () => socket.off("likePostToClient")
@@ -27,9 +42,10 @@ const SocketClient = () => {
     //receive emitted createComment event
 
     useEffect(() => {
-        socket.on("createCommentToClient", updatedPost => {
+        socket.on("createCommentToClient", (updatedPost) => {
             console.log(updatedPost);
             dispatch(postCommentCreate({ updatedPost }))
+            // alert(updatedPost.owner.username)
         })
         return () => socket.off("createCommentToClient")
     }, [socket, dispatch])
@@ -86,6 +102,12 @@ const SocketClient = () => {
         socket.on("createPostNotifyToClient", postNotify => {
             //console.log(newUser);
             dispatch(createNewNotification(postNotify))
+            alertNotify(
+                postNotify.owner.username + " " + postNotify.text,
+                postNotify.owner.avatar,
+                postNotify.url,
+                "@Ahmet 2022"
+            )
         })
         return () => socket.off("createPostNotifyToClient")
     }, [socket, dispatch])
@@ -94,11 +116,15 @@ const SocketClient = () => {
     useEffect(() => {
         socket.on("createNotifyPostLikeToClient", newPost => {
             //console.log(newPost);
+            dispatch(openAlert())
             dispatch(createNewNotification(newPost))
+
+            console.log(alert);
+            alert && <AlertPage newPost={newPost} />
         })
 
-        return () => socket.off("createNotifyPostLikeToClient")
-    }, [socket, dispatch])
+        //return () => socket.off("createNotifyPostLikeToClient")
+    }, [socket, dispatch, alert])
 
     //receive emitted Comment Reply notification
     useEffect(() => {

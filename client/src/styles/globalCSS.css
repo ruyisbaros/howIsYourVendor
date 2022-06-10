@@ -107,3 +107,6 @@ filter:invert(1)
 
 /*---------- Notifies ------- */
 @import url("./notifies.css");
+
+/* --------Alert Page */
+@import url("./alertPage.css");

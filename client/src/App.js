@@ -22,13 +22,14 @@ import io from "socket.io-client"
 import { getSocket } from "./redux/authSlicer";
 import SocketClient from "./SocketClient";
 import { createNewNotification, fetchAllNotifications } from "./redux/notifySlicer";
+import AlertPage from "./utils/AlertPage";
 
 
 function App() {
 
   const { token, currentUser } = useSelector(store => store.currentUser)
   const { status } = useSelector(store => store.posts)
-  const { statusNot, notifies } = useSelector(store => store.notifies)
+  const { statusNot, alert } = useSelector(store => store.notifies)
   const dispatch = useDispatch()
 
 
@@ -91,17 +92,41 @@ function App() {
     if (token) getNotifies()
   }, [token, dispatch])
 
+  //NOTIFY API
+  useEffect(() => {
+    // Let's check if the browser supports notifications
+    if (!("Notification" in window)) {
+      alert("This browser does not support desktop notification");
+    }
+    else if (Notification.permission === "granted") {
+
+    }
+    else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then(function (permission) {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+
+        }
+      });
+    }
+  }, [])
+
+
+
+
   return (
     <BrowserRouter>
       <ToastContainer position="bottom-center" limit={1} />
       <Notify />
       <input type="checkbox" id="theme" />
       <div className="App">
+        {alert && <AlertPage />}
         <div className="main">
           {token && <Header />}
           {token && <SocketClient />}
           {status && <StatusModal />}
           {statusNot && <Notifies />}
+
           <Routes>
             <Route path="/" element={localStorage.getItem("firstLogin") ? <Home /> : <Login />} />
             <Route path="/messages" element={token ? <Messages /> : <Login />} />

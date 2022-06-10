@@ -2,12 +2,10 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     notifies: [],
-    result: 0,
     notifyFetching: false,
     error: false,
-    message: "",
     statusNot: false,
-    sound: false,
+    alert: false,
 }
 
 const notifySlicer = createSlice({
@@ -33,11 +31,27 @@ const notifySlicer = createSlice({
         },
         deleteAllANotifications: (state, action) => {
             state.notifies = []
+        },
+        isReadUpdate: (state, action) => {
+            const updatedNotify = action.payload
+            state.notifies.forEach(not => {
+                if (not._id === updatedNotify._id) {
+                    not.isRead = true
+                }
+            })
+        },
+        openAlert: (state, action) => {
+            state.alert = true
+        },
+        closeAlert: (state, action) => {
+            state.alert = false;
         }
 
     }
 })
 
-export const { createNewNotification, deleteANotification, fetchAllNotifications, openNotifyStatus, closeNotifyStatus, deleteAllANotifications } = notifySlicer.actions
+export const { createNewNotification, deleteANotification, fetchAllNotifications, openNotifyStatus, closeNotifyStatus, deleteAllANotifications,
+    isReadUpdate, openAlert, closeAlert
+} = notifySlicer.actions
 
 export default notifySlicer.reducer

@@ -31,3 +31,18 @@ exports.getNotifications = asyncHandler(async (req, res) => {
 
     res.status(200).json(notifies)
 })
+
+exports.updateIsRead = asyncHandler(async (req, res) => {
+    const { notifyId } = req.params
+
+    const updatedNotify = await Notification.findByIdAndUpdate(notifyId, { isRead: true }, { new: true })
+
+    res.status(200).json(updatedNotify)
+})
+
+exports.deleteAllANotifications = asyncHandler(async (req, res) => {
+
+    await Notification.deleteMany({ recipients: req.user._id })
+
+    res.status(200).json({ message: "Notifications were deleted successfully" })
+})

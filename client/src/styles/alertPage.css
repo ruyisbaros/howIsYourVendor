@@ -1,0 +1,42 @@
+.alert-page{
+    width: 400px;
+    height: 100px;
+    margin: 0 auto;
+    background:red;
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    z-index:999;
+
+
+}
+
+.alert-cover{
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.alert-page .alert-cover img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    
+    
+}
+.alert-cover div{
+flex: 1;
+margin-left: 20px;
+}
+
+
+.alert-page .close_cover{
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
