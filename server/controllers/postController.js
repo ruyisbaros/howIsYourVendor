@@ -106,7 +106,7 @@ exports.getAUserPosts = asyncHandler(async (req, res) => {
 exports.getSinglePost = asyncHandler(async (req, res) => {
     const { postId } = req.params
 
-    const post = await Posts.findById(postId).populate("owner likes", "-password")
+    const post = await Posts.findById(postId).populate("owner", "avatar username fullName followers")
         .populate({
             path: "comments",
             populate: {

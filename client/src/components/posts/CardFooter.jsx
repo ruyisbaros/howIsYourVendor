@@ -86,7 +86,7 @@ const CardFooter = ({ post }) => {
                     <span onClick={likeHandler}>
                         {isLiked ? <i className="fa-solid fa-thumbs-up"></i> : <i className="fa-regular fa-thumbs-up"></i>}
                     </span>
-                    <Link to={`/post/${post._id}`} className="text-dark"><i class="fa-regular fa-comment-dots"></i></Link>
+                    <Link to={`/post/${post._id}`} className="text-dark"><i className="fa-regular fa-comment-dots"></i></Link>
                     <i className="fa-solid fa-share" onClick={() => setIsShare(!isShare)}></i>
                 </div>
 

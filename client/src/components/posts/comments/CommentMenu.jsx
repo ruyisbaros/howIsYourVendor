@@ -28,7 +28,7 @@ const CommentMenu = ({ post, comment, user, setOnEdit, handleCommentDelete }) =>
                                 </>
                                 :
                                 <div className="dropdown-item">
-                                    <i class="fa-regular fa-flag mui"></i>
+                                    <i className="fa-regular fa-flag mui"></i>
                                     Report
                                 </div>
                         }

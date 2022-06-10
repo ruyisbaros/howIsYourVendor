@@ -115,12 +115,12 @@ const SocketClient = () => {
     //receive emitted LIKE POST notification
     useEffect(() => {
         socket.on("createNotifyPostLikeToClient", newPost => {
-            //console.log(newPost);
-            dispatch(openAlert())
+            console.log(newPost);
             dispatch(createNewNotification(newPost))
 
+            /* dispatch(openAlert())
             console.log(alert);
-            alert && <AlertPage newPost={newPost} />
+            alert && <AlertPage newPost={newPost} /> */
         })
 
         //return () => socket.off("createNotifyPostLikeToClient")
@@ -131,6 +131,9 @@ const SocketClient = () => {
         socket.on("createNotifyReplyCommentToClient", newPost => {
             //console.log(newPost);
             dispatch(createNewNotification(newPost))
+            /* dispatch(openAlert())
+            console.log(alert);
+            alert && <AlertPage newPost={newPost} /> */
         })
 
         return () => socket.off("createNotifyReplyCommentToClient")
