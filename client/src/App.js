@@ -23,6 +23,7 @@ import { getSocket } from "./redux/authSlicer";
 import SocketClient from "./SocketClient";
 import { createNewNotification, fetchAllNotifications } from "./redux/notifySlicer";
 import AlertPage from "./utils/AlertPage";
+import Conversation from "./pages/Conversation";
 
 
 function App() {
@@ -130,6 +131,7 @@ function App() {
           <Routes>
             <Route path="/" element={localStorage.getItem("firstLogin") ? <Home /> : <Login />} />
             <Route path="/messages" element={token ? <Messages /> : <Login />} />
+            <Route path="/message/:id" element={token ? <Conversation /> : <Login />} />
             <Route path="/discover" element={token ? <Discover /> : <Login />} />
             {/*  <Route path="/notify" element={token ? <Notifies /> : <Login />} /> */}
             <Route path="/profile/:id" element={token ? <Profile /> : <Login />} />

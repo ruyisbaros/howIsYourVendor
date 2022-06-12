@@ -6,6 +6,7 @@ import usersSlicer from "./usersSlicer"
 import postsSlicer from "./postsSlicer"
 import commentsSlicer from "./commentsSlicer"
 import notifiesSlicer from "./notifySlicer"
+import messagesSlicer from "./messageSlicer"
 
 
 export const store = configureStore({
@@ -16,6 +17,7 @@ export const store = configureStore({
         posts: postsSlicer,
         comments: commentsSlicer,
         notifies: notifiesSlicer,
+        messages: messagesSlicer
 
     }
 })

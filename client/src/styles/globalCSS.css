@@ -110,3 +110,6 @@ filter:invert(1)
 
 /* --------Alert Page */
 @import url("./alertPage.css");
+
+/* -------Messages-------- */
+@import url("./messages.css");
