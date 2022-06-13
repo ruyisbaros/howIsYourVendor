@@ -13,7 +13,7 @@ import { savePost } from '../redux/authSlicer';
 
 const Profile = () => {
 
-    const { token, currentUser } = useSelector(store => store.currentUser)
+    const { token, currentUser, socket } = useSelector(store => store.currentUser)
     const { profile } = useSelector(store => store.profile)
 
     const { profilePosts, result, page } = useSelector(store => store.posts)
@@ -23,6 +23,17 @@ const Profile = () => {
     const [loadingAlt, setLoadingAlt] = useState(false)
     const [saveTab, setSaveTab] = useState(false)
     const [showSavedPosts, setShowSavedPosts] = useState(false)
+
+    const createNotify = async (ntfy) => {
+        const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
+            headers: { authorization: token }
+        })
+        //dispatch(createNewNotification(data))
+
+        //socket
+        socket.emit("createNotifyViewProfile", { ...data })
+    }
+
 
 
     useEffect(() => {
@@ -34,6 +45,16 @@ const Profile = () => {
                 })
                 //dispatch(updateCurrentSuccess(data))
                 dispatch(profileSuccess(data))
+                const notify = {
+                    id: currentUser._id,
+                    text: `${currentUser.username}, viewed your profile `,
+                    recipients: [profile._id],
+                    content: "",
+                    url: `/profile/${currentUser._id}`,
+                    image: currentUser.avatar.url
+                }
+                profile && createNotify(notify)
+
             }
             catch (error) {
                 dispatch(profileFailure())

@@ -8,6 +8,7 @@ import CommentMenu from './CommentMenu'
 import axios from 'axios'
 import { createComment } from '../../../redux/commentsSlicer'
 import { createNewNotification } from '../../../redux/notifySlicer'
+import Icons from '../Icons';
 
 const CommentsCard = ({ post, comment, children, item, showReplies, setShowReplies }) => {
   const { currentUser, token, socket } = useSelector(store => store.currentUser)
@@ -217,8 +218,8 @@ const CommentsCard = ({ post, comment, children, item, showReplies, setShowRepli
           isReply && <div className="input_box">
             <Avatar src={currentUser.avatar.url} size="xbig-avatar" />
             <form onSubmit={replyHandler} className="card-footer comment_input">
-
-              <input type="text" placeholder="Add your comments..." value={comReply}
+              <Icons content={comReply} setContent={setComReply} />
+              <input type="text" placeholder="Add your reply..." value={comReply}
                 onChange={(e) => setComReply(e.target.value)} />
 
               <div className="btn_box">

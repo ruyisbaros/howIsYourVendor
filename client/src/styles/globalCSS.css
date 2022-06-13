@@ -1,8 +1,9 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -17,89 +18,90 @@ code {
     monospace;
 }
 
-li{
+li {
   outline: none;
 }
 
-button, input{
+button,
+input {
   cursor: pointer;
 }
 
-button:disabled{
+button:disabled {
   cursor: not-allowed;
 }
 
-img{ 
+img {
   object-fit: cover;
 }
 
-.link_class{
+.link_class {
   text-decoration: none;
-  color:inherit;
+  color: inherit;
 }
 
-#theme{
+#theme {
   display: none;
 }
 
-#theme:checked ~ .App{
-filter:invert(1)
+#theme:checked~.App {
+  filter: invert(1)
 }
 
-.App{
+.App {
   width: 100%;
   min-height: 100vh;
-  background:white;
+  background: white;
 
 }
 
-.App .main{
+.App .main {
   max-width: 1000px;
   width: 100%;
-  margin:auto;
+  margin: auto;
 }
 
 /* Set Responsive */
 
 @media (max-width:768px) {
-    .header .menu{
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        z-index: 13;
-        background:#f8f9fa;
-        border: 1px solid rgba(0,0,0,0.125)
-    }
+  .header .menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 13;
+    background: #f8f9fa;
+    border: 1px solid rgba(0, 0, 0, 0.125)
+  }
 
-    .header .menu .navbar-nav{
-       display: flex;
-       align-items: center;
-       justify-content: space-around; 
-    }
+  .header .menu .navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
 
-    .header .menu .dropdown-menu{
-        bottom: 100%;
-        top: auto;
-    }
+  .header .menu .dropdown-menu {
+    bottom: 100%;
+    top: auto;
+  }
 
-    .header .search_form{
-        width: 100%;
-    }
+  .header .search_form {
+    width: 100%;
+  }
 
-    .header .logo{
-        margin:auto;
-    }
+  .header .logo {
+    margin: auto;
+  }
 
-    .header .logo h1{
-        font-size: 1.5rem;
-        margin-bottom: 5px;
-    }
+  .header .logo h1 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+  }
 
-    .message{
-      height:calc(100vh - 150px)
-    }
+  .message {
+    height: calc(100vh - 150px)
+  }
 }
 
 /* ----LOGIN------ */
@@ -155,3 +157,6 @@ filter:invert(1)
 
 /* -------Messages-------- */
 @import url("./messages.css");
+
+/* ---------Icons-------- */
+@import url("./icons.css");

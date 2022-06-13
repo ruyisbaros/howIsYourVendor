@@ -35,12 +35,13 @@ const FollowBtn = ({ user }) => {
             //console.log(data.targetUser);
             const notify = {
                 id: currentUser._id,
-                text: `${currentUser.username}, added you his follow list `,
-                recipients: data.targetUser,
+                text: `${currentUser.username}, started to follow you `,
+                recipients: [data.targetUser._id],
                 content: "",
                 url: `/profile/${currentUser._id}`,
                 image: ""
             }
+            console.log(data.targetUser);
             createNotify(notify)
             //Socket
             socket.emit("followUnFollow", data.targetUser)

@@ -130,6 +130,7 @@ const StatusModal = () => {
                 })
                 //console.log(data);
                 dispatch(PostCreateSuccess(data))
+                socket.emit("createANewPost", data)
                 toast.success("Your post has been created successfully")
                 setContent("")
                 setImages([])

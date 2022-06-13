@@ -15,7 +15,11 @@ const app = express()
 //"proxy": "http://127.0.0.1:5000",
 //Socket connection
 const http = require("http").createServer(app)
-const io = require("socket.io")(http)
+const io = require("socket.io")(http, {
+    cors: {
+        origin: "*"
+    }
+})
 
 
 

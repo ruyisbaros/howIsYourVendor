@@ -1,0 +1,15 @@
+.icon_container {
+    /*  position: absolute;
+    z-index: 120;
+    right: 0; */
+}
+
+.reactions {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, 30px);
+
+    text-align: center;
+    cursor: pointer;
+
+}

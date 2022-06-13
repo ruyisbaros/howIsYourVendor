@@ -2,11 +2,12 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { createComment } from '../../redux/commentsSlicer';
-import { createNewNotification } from '../../redux/notifySlicer';
+
 import { postCommentCreate, postCommentUpdate } from '../../redux/postsSlicer';
 import Avatar from '../Avatar';
-import Picker from "emoji-picker-react";
-import { BsEmojiSmileFill } from "react-icons/bs";
+import Icons from './Icons';
+
+
 
 
 const InputComments = ({ children, post, reply, setReply }) => {
@@ -79,15 +80,10 @@ const InputComments = ({ children, post, reply, setReply }) => {
       <Avatar src={currentUser.avatar.url} size="xbig-avatar" />
       <form onSubmit={submitHandler} className="card-footer comment_input">
         {children}
-        <div className="emoji">
-          <div className="emoji-cover">
-            <BsEmojiSmileFill onClick={handleEmojiPicker} />
-            {showEmojies && <Picker onEmojiClick={getSelectedEmoji} />}
-          </div>
-        </div>
+
+        <Icons content={content} setContent={setContent} />
         <input type="text" placeholder="Add your comments..." value={content}
           onChange={(e) => setContent(e.target.value)} />
-
         <div className="btn_box">
           <button onClick={() => setContent("")} className="postBtn">Cancel</button>
           <button type="submit" style={{ background: content ? "blue" : "#ddd", color: content ? "white" : "#0008" }} className="postBtn send">Post</button>
