@@ -1,4 +1,4 @@
-.header{
+.header {
     width: 100%;
     min-height: 70px;
     position: sticky;
@@ -6,47 +6,53 @@
     left: 0;
     z-index: 11;
     box-shadow: 0 0 10px #ddd;
-    background:#f8f9fa;
-    border: 1px solid rgba(0,0,0,0.125)
+    background-color: #404040;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    color: #fefefe;
 }
 
-.header .navbar{
+.header .navbar {
     width: 100%;
     height: 100%;
 
+
 }
 
-.header .navbar h1{
-font-size: 2rem;
+.header .navbar h1 {
+    font-size: 2rem;
 }
 
 /* Header Menu */
-.header .menu li{
+.header .menu li {
     opacity: 0.5;
+
 }
-.header .menu .op-high{
+
+.header .menu .op-high {
     opacity: 1;
 }
-.header .menu li.active{
-opacity: 1;
+
+.header .menu li.active {
+    opacity: 1;
 }
 
-.header .menu .material-icons{
+.header .menu .material-icons {
     font-size: 30px;
+    color: #fff;
 }
 
-.header .menu .dropdown-menu{
+.header .menu .dropdown-menu {
     position: absolute;
     left: inherit;
     right: -15px;
 }
 
-.header .menu label{
+.header .menu label {
     cursor: pointer;
 }
 
 .header .menu label:hover,
-.header .menu a:hover{
+.header .menu a:hover {
     background-color: #ddd;
     font-weight: 600;
 }
@@ -59,17 +65,22 @@ opacity: 1;
     /* background-color: #ddd; */
 }
 
-.header #search{
+.header #search {
     background-color: #fafafa;
     border: 1px solid #ddd;
     outline: none;
     min-width: 250px;
     width: 100%;
-    text-indent:5px;
+    text-indent: 5px;
     border-radius: 4px;
+
 }
 
-.header .search_form .search_icon{
+.header input#search::placeholder {
+    color: #333
+}
+
+.header .search_form .search_icon {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -80,21 +91,21 @@ opacity: 1;
     align-items: center;
 }
 
-.header .search_form .search_icon .material-icons{
-font-size: 14px;
+.header .search_form .search_icon .material-icons {
+    font-size: 14px;
 }
 
-.header .close_search{
+.header .close_search {
     position: absolute;
     top: 0;
     right: 5px;
     cursor: pointer;
     font-weight: 900;
-    color:red;
+    color: red;
     z-index: 20;
 }
 
-.header .search_form .loading{
+.header .search_form .loading {
     width: 15px;
     height: 15px;
     position: absolute;
@@ -103,8 +114,8 @@ font-size: 14px;
     transform: translateY(-50%);
 }
 
-.header .users{
-    position:absolute;
+.header .users {
+    position: absolute;
     min-width: 250px;
     width: 100%;
     background-color: #fafafa;
@@ -113,14 +124,25 @@ font-size: 14px;
     margin-top: 3px;
 }
 
-.header .menu .notify{
-        display: inline-block;
-        transform: translateY(-3px);
-        font-size: 25px;
-        position: relative;
-       /*  background: #000; */
-    }
-.header .menu .notify span{
+.header .menu .notify {
+    display: inline-block;
+    transform: translateY(-3px);
+    font-size: 25px;
+    position: relative;
+    opacity: 1;
+    color: #fff;
+    /*  background: #000; */
+}
+
+.header .menu .notify .fa-regular {
+    color: #fff;
+}
+
+.header .menu .notify .fa-solid {
+    color: #fff;
+}
+
+.header .menu .notify span {
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -130,51 +152,9 @@ font-size: 14px;
     color: white;
     font-size: 12px;
     display: flex;
-    align-content:center;
+    align-content: center;
     justify-content: center;
     position: absolute;
     top: 7px;
     right: 3px;
-}
-
-
-
-
-/* Set Responsive */
-
-@media (max-width:768px) {
-    .header .menu{
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        z-index: 13;
-        background:#f8f9fa;
-        border: 1px solid rgba(0,0,0,0.125)
-    }
-
-    .header .menu .navbar-nav{
-       display: flex;
-       align-items: center;
-       justify-content: space-around; 
-    }
-
-    .header .menu .dropdown-menu{
-        bottom: 100%;
-        top: auto;
-    }
-
-    .header .search_form{
-        width: 100%;
-    }
-
-    .header .logo{
-        margin:auto;
-    }
-
-    .header .logo h1{
-        font-size: 1.5rem;
-        margin-bottom: 5px;
-    }
 }

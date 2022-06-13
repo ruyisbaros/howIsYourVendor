@@ -1,19 +1,22 @@
-.input_box{
+.input_box {
     display: flex;
     align-items: center;
-    gap:20px;
+    gap: 20px;
     background: #f7f7f7;
     padding: 15px 20px;
 }
-.comment_input{
+
+.comment_input {
     flex: 1;
     display: flex;
     flex-direction: column;
-     background: #f7f7f7;
-     border:none;
-     transform: translateY(15px)
+    background: #f7f7f7;
+    border: none;
+    transform: translateY(15px);
+    position: relative;
 }
-.comment_input input{
+
+.comment_input input {
     background: #f7f7f7;
     border: none;
     border-bottom: 1px solid #ddd;
@@ -24,26 +27,79 @@
 }
 
 
-.comment_input input:focus{
-     border-bottom: 2px solid #0008;
+.comment_input input:focus {
+    border-bottom: 2px solid #0008;
 }
-.comment_input .btn_box{
+
+.comment_input .btn_box {
     display: flex;
     justify-content: flex-end;
 }
-.comment_input .btn_box button{
+
+.comment_input .btn_box button {
     margin-left: 30px;
-    border:none;
+    border: none;
     padding: 5px 40px;
     text-transform: uppercase;
     font-size: 20px;
     letter-spacing: 1px;
     outline: none;
-   visibility: hidden;
-   transition: all 0.3s;
-   border-radius: 5px;
+    visibility: hidden;
+    transition: all 0.3s;
+    border-radius: 5px;
 }
 
-.comment_input input:focus+.btn_box button{
-   visibility: visible;
+.comment_input input:focus+.btn_box button {
+    visibility: visible;
 }
+
+/* Emojies */
+
+/* .emoji {
+    position: absolute;
+    right: 10px;
+    top: -5px
+}
+
+.emoji .emoji-cover {
+    position: relative;
+}
+
+.emoji-cover svg {
+    font-size: 1.5rem;
+    color: #ddd;
+    cursor: pointer;
+}
+
+.emoji-picker-react {
+    position: absolute;
+    top: -350px;
+    background-color: #080420;
+    box-shadow: 0 5px 10px #9a86f3;
+    border-color: #9a86f3;
+
+}
+
+.emoji-picker-react .emoji-scroll-wrapper::-webkit-scrollbar {
+    background-color: #080420;
+    width: 5px;
+}
+
+.emoji-picker-react .emoji-scroll-wrapper::-thumb {
+    background-color: #9a86f3;
+}
+
+.emoji-picker-react .emoji-categories button {
+
+    filter: contrast(0);
+
+}
+
+.emoji-picker-react .emoji-search {
+    background-color: transparent;
+    border-color: #9a86f3;
+}
+
+.emoji-picker-react .emoji-group:before {
+    background-color: #080420;
+} */

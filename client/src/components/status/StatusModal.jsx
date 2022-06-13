@@ -47,8 +47,8 @@ const StatusModal = () => {
 
         await files.forEach(file => {
             if (!file) return alert("Please select an image")
-            if (file.size > 1024 * 1024) return alert("Your file is too large (max 1mb allowed)")
-            if (file.type !== "image/jpeg" && file.type !== "image/png") return alert("Only jpeg, jpg or PNG images are allowed")
+            if (file.size > 1024 * 1024 * 5) return alert("Your file is too large (max 1mb allowed)")
+            if (file.type !== "image/jpeg" && file.type !== "video/mp4" && file.type !== "image/png") return alert("Only jpeg, jpg or PNG images are allowed")
             let formData = new FormData();
             formData.append("file", file);
             imageUpload(formData)
@@ -213,7 +213,7 @@ const StatusModal = () => {
                                         <i className="fas fa-image"></i>
                                         <input type="file"
                                             name="file" id="file" multiple
-                                            accept="image/*"
+                                            accept="image/*,video/*"
                                             onChange={handleImages}
                                         />
                                     </div>

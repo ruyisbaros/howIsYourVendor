@@ -4,23 +4,24 @@ import { useParams } from "react-router-dom"
 import UserCard from '../user/UserCard';
 import MsgDisplay from './MsgDisplay';
 
-const RightSide = () => {
+const RightSide = ({ user }) => {
 
     const { currentUser } = useSelector(store => store.currentUser)
     const { chatUsers } = useSelector(store => store.messages)
     const dispatch = useDispatch()
 
-    const [user, setUser] = useState("")
+    //const [user, setUser] = useState("")
     const [chatMessage, setChatMessage] = useState("")
 
-    const { id } = useParams()
+    /* const { id } = useParams()
 
     useEffect(() => {
         const newUser = chatUsers.find(user => user._id === id)
         if (newUser) {
             setUser(newUser)
         }
-    }, [id, chatUsers])
+        console.log(newUser);
+    }, [id, chatUsers]) */
 
 
     return (
@@ -43,7 +44,7 @@ const RightSide = () => {
             </div>
 
             <form className="chat_input">
-                <input type="text" placeholder="Your message"
+                <input type="text" placeholder="Enter your message..."
                     value={chatMessage} onChange={(e) => setChatMessage(e.target.value)} />
                 <button className="material-icons" type="submit" disabled={!chatMessage}>
                     near_me

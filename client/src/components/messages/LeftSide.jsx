@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import UserCard from '../user/UserCard'
 import { useSelector, useDispatch } from 'react-redux';
 import { usersFetchFail, usersFetchSuccess } from '../../redux/usersSlicer';
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import axios from 'axios';
 import { createChat } from '../../redux/messageSlicer';
 
@@ -12,8 +12,10 @@ const LeftSide = () => {
     const { chatUsers } = useSelector(store => store.messages)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const { id } = useParams()
     const [search, setSearch] = useState("")
     const [load, setLoad] = useState(false)
+
     const [searchUsers, setSearchUsers] = useState([])
 
     useEffect(() => {
@@ -47,6 +49,12 @@ const LeftSide = () => {
         navigate(`/message/${user._id}`)
     }
 
+    const isActive = (user) => {
+        if (id === user._id) {
+            return "active"
+        }
+    }
+
     return (
         <>
             <form className="message_header" /* onClick={handleSearch} */>
@@ -68,9 +76,11 @@ const LeftSide = () => {
                 }
                 {
                     chatUsers?.map(user => (
-                        <div key={user._id} className="message_user" onClick={() => handleAddChat(user)}>
+                        <div key={user._id} className={`message_user ${isActive(user)}`} onClick={() => handleAddChat(user)}>
                             <UserCard
-                                user={user} /* border="border" */ /* handleClose={handleClose} */ />
+                                user={user} /* border="border" */ /* handleClose={handleClose} */ >
+                                <i className="fas fa-circle active"></i>
+                            </UserCard>
                         </div>
                     ))
                 }

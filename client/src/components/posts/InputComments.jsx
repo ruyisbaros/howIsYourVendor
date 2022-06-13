@@ -5,6 +5,8 @@ import { createComment } from '../../redux/commentsSlicer';
 import { createNewNotification } from '../../redux/notifySlicer';
 import { postCommentCreate, postCommentUpdate } from '../../redux/postsSlicer';
 import Avatar from '../Avatar';
+import Picker from "emoji-picker-react";
+import { BsEmojiSmileFill } from "react-icons/bs";
 
 
 const InputComments = ({ children, post, reply, setReply }) => {
@@ -12,6 +14,7 @@ const InputComments = ({ children, post, reply, setReply }) => {
   const { currentUser, token, socket } = useSelector(store => store.currentUser)
   const dispatch = useDispatch()
   const [content, setContent] = useState("")
+  const [showEmojies, setShowEmojies] = useState(false)
 
   const createNotify = async (ntfy) => {
     const { data } = await axios.post("/api/v1/notifications/new", { ...ntfy }, {
@@ -58,11 +61,30 @@ const InputComments = ({ children, post, reply, setReply }) => {
 
   }
 
+  const handleEmojiPicker = () => {
+    setShowEmojies(!showEmojies)
+  }
+
+  const getSelectedEmoji = (e, emojiObject) => {
+    let msg = content
+    msg += emojiObject.emoji;
+    setContent(msg);
+  }
+
+
+
+
   return (
     <div className="input_box">
       <Avatar src={currentUser.avatar.url} size="xbig-avatar" />
       <form onSubmit={submitHandler} className="card-footer comment_input">
         {children}
+        <div className="emoji">
+          <div className="emoji-cover">
+            <BsEmojiSmileFill onClick={handleEmojiPicker} />
+            {showEmojies && <Picker onEmojiClick={getSelectedEmoji} />}
+          </div>
+        </div>
         <input type="text" placeholder="Add your comments..." value={content}
           onChange={(e) => setContent(e.target.value)} />
 
