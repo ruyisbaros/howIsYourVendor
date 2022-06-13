@@ -7,7 +7,12 @@ const fileUpload = require("express-fileupload")
 const cookieParser = require("cookie-parser")
 const socketServer = require("./socketServer")
 const app = express()
-
+/* const io = require("socket.io")(8900, {
+    cors: {
+        origin: "http://localhost:3000"
+    }
+}) */
+//"proxy": "http://127.0.0.1:5000",
 //Socket connection
 const http = require("http").createServer(app)
 const io = require("socket.io")(http)

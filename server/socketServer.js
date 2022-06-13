@@ -21,9 +21,11 @@ const socketServer = (socket) => {
         //console.log(clients);
         if (clients.length > 0) {
             clients.forEach(client => {
-                socket.to(`${client.socketId}`).emit('likePostToClient', newPost)
+                socket.to(`${client?.socketId}`).emit('likePostToClient', newPost)
 
             })
+        } else {
+            return false;
         }
     })
 
