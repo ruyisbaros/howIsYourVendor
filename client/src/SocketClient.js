@@ -6,7 +6,7 @@ import { postCommentCreate, postCommentDelete, postCommentLikeUpdate, postCommen
 import { profileFollowUnFollowUpdates } from './redux/profileSlicer';
 import AlertPage from './utils/AlertPage';
 
-const alertNotify = (body, icon, url, title) => {
+/* const alertNotify = (body, icon, url, title) => {
     let options = {
         body, icon
     }
@@ -17,13 +17,13 @@ const alertNotify = (body, icon, url, title) => {
         e.preventDefault();
         window.open(url, "_blank")
     }
-}
+} */
 
 const SocketClient = () => {
     const { currentUser, socket } = useSelector(store => store.currentUser)
     const { alert } = useSelector(store => store.notifies)
     const dispatch = useDispatch()
-    const [showAlert, setShowAlert] = useState(false)
+    /* const [showAlert, setShowAlert] = useState(false) */
     useEffect(() => {
         socket.emit("joinUser", currentUser._id)
     }, [socket, currentUser])

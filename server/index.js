@@ -2,30 +2,12 @@ require("dotenv").config()
 const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
+const { Server } = require("socket.io")
 const morgan = require("morgan")
 const fileUpload = require("express-fileupload")
 const cookieParser = require("cookie-parser")
 const socketServer = require("./socketServer")
 const app = express()
-/* const io = require("socket.io")(8900, {
-    cors: {
-        origin: "http://localhost:3000"
-    }
-}) */
-//"proxy": "http://127.0.0.1:5000",
-//Socket connection
-const http = require("http").createServer(app)
-const io = require("socket.io")(http, {
-    cors: {
-        origin: "*"
-    }
-})
-
-
-
-io.on('connection', socket => {
-    socketServer(socket)
-})
 
 //Import Routes
 const userRouter = require("./routes/userRouter")
@@ -43,6 +25,17 @@ app.use(morgan("dev"))
 app.use(fileUpload({
     useTempFiles: true
 }))
+
+//Socket connection
+const http = require("http").createServer(app)
+const io = require("socket.io")(http, {
+    cors: {
+        origin: "*",
+    }
+})
+io.sockets.on('connection', socket => {
+    socketServer(socket)
+})
 
 mongoose
     .connect(process.env.DB_URL, {

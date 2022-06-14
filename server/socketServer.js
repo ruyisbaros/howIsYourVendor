@@ -1,5 +1,6 @@
 
 let users = []
+
 const socketServer = (socket) => {
 
     //Connect - Disconnect
@@ -116,7 +117,9 @@ const socketServer = (socket) => {
     socket.on("followUnFollow", (newUser) => {
         const user = users.find(user => user.id === newUser._id)
 
-        socket.to(`${user.socketId}`).emit('followUnFollowToClient', newUser)
+        if (user) {
+            socket.to(`${user.socketId}`).emit('followUnFollowToClient', newUser)
+        }
     })
 
     /*----------- NOTIFICATIONS---------- */
@@ -230,7 +233,7 @@ const socketServer = (socket) => {
         //console.log(newUser);
         const user = users.find(user => user.id === newUser.recipients[0])
         console.log(user);
-        if (user.socketId) {
+        if (user) {
             socket.to(`${user.socketId}`).emit('createNotifyAddFollowToClient', newUser)
         }
     })

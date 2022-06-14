@@ -29,6 +29,7 @@ import Conversation from "./pages/Conversation";
 function App() {
 
   const { token, currentUser } = useSelector(store => store.currentUser)
+  const { notifies } = useSelector(store => store.notifies)
   const { status } = useSelector(store => store.posts)
   const { statusNot, alert } = useSelector(store => store.notifies)
   const dispatch = useDispatch()
@@ -57,7 +58,7 @@ function App() {
 
   //SOCKET API
   useEffect(() => {
-    const socket = io()
+    const socket = io.connect("http://localhost:5000")
     dispatch(getSocket(socket))
     return () => socket.close()
   }, [dispatch, token])
@@ -91,7 +92,7 @@ function App() {
 
   useEffect(() => {
     if (token) getNotifies()
-  }, [token, dispatch])
+  }, [token, dispatch, notifies.length])
 
   //NOTIFY API
   useEffect(() => {

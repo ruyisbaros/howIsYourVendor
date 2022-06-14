@@ -53,7 +53,7 @@ const Profile = () => {
                     url: `/profile/${currentUser._id}`,
                     image: currentUser.avatar.url
                 }
-                profile && createNotify(notify)
+                profile._id !== currentUser._id && createNotify(notify)
 
             }
             catch (error) {
@@ -62,7 +62,7 @@ const Profile = () => {
         }
         getProfile();
 
-    }, [id, dispatch, token]);
+    }, [id, dispatch, token, profile]);
 
     useEffect(() => {
         const getProfilePosts = async () => {
