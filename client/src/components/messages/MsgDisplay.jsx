@@ -1,19 +1,28 @@
 import React from 'react'
 import Avatar from '../Avatar'
+import moment from 'moment'
 
-const MsgDisplay = ({ user }) => {
+
+const MsgDisplay = ({ user, msg }) => {
     return (
         <>
             <div className="chat_title">
                 <Avatar src={user?.avatar?.url} size="small-avatar" />
                 <span>{user.username}</span>
                 <div className="chat_time">
-                    12 june 2022
+                    {/* {new Date(msg.createdAt).toISOString()} */}
                 </div>
             </div>
-            <div className="chat_text">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit esse perspiciatis ullam ea nobis nihil amet assumenda temporibus eius rem?
-            </div>
+            {msg.chatMessage && <div className="chat_text">
+                {msg.chatMessage}
+            </div>}
+            {
+                msg.images?.map((img, index) => (
+                    <div key={index} className="container_img">
+                        <img src={img.url} alt="" />
+                    </div>
+                ))
+            }
 
         </>
     )

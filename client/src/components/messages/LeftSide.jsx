@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { usersFetchFail, usersFetchSuccess } from '../../redux/usersSlicer';
 import { useNavigate, useParams } from "react-router-dom"
 import axios from 'axios';
-import { createChat } from '../../redux/messageSlicer';
+import { createChatUser } from '../../redux/messageSlicer';
 
 const LeftSide = () => {
 
@@ -30,7 +30,6 @@ const LeftSide = () => {
                     setLoad(false)
                 } catch (error) {
                     dispatch(usersFetchFail())
-
                 }
 
             }
@@ -45,7 +44,7 @@ const LeftSide = () => {
         //console.log(user);
         setSearch("")
         setSearchUsers([])
-        user._id !== currentUser._id && dispatch(createChat(user))
+        user._id !== currentUser._id && dispatch(createChatUser(user))
         navigate(`/message/${user._id}`)
     }
 
@@ -78,7 +77,7 @@ const LeftSide = () => {
                     chatUsers?.map(user => (
                         <div key={user._id} className={`message_user ${isActive(user)}`} onClick={() => handleAddChat(user)}>
                             <UserCard
-                                user={user} /* border="border" */ /* handleClose={handleClose} */ >
+                                user={user} msg={true} /* border="border" */ /* handleClose={handleClose} */ >
                                 <i className="fas fa-circle active"></i>
                             </UserCard>
                         </div>

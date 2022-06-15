@@ -6,7 +6,7 @@ import Avatar from '../Avatar'
 //import axios from 'axios';
 //import { profileFailure, profileStart, profileSuccess } from '../../redux/profileSlicer';
 
-const UserCard = ({ children, user, border, handleClose }) => {
+const UserCard = ({ children, user, border, handleClose, msg }) => {
 
     /* const { token } = useSelector(store => store.currentUser)
     const dispatch = useDispatch()
@@ -34,7 +34,10 @@ const UserCard = ({ children, user, border, handleClose }) => {
                     <Avatar src={user?.avatar?.url} size="big-avatar" />
                     <div className="ml-3">
                         <span className="d-block">{user?.username}</span>
-                        <small style={{ opacity: "0.6" }}>{user?.fullName}</small>
+                        {msg
+                            ? <small style={{ opacity: "0.6" }}>{user?.text}</small>
+                            : <small style={{ opacity: "0.6" }}>{user?.fullName}</small>
+                        }
                     </div>
                 </Link>
             </div>

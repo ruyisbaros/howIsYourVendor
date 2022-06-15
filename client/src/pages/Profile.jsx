@@ -62,7 +62,7 @@ const Profile = () => {
         }
         getProfile();
 
-    }, [id, dispatch, token, profile]);
+    }, [id, dispatch, token]);
 
     useEffect(() => {
         const getProfilePosts = async () => {

@@ -54,9 +54,6 @@ const StatusModal = () => {
             imageUpload(formData)
 
         })
-
-
-
     }
     //console.log(images);
 
