@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+
+
 const initialState = {
     chatWith: [],
     chatUsers: [],
@@ -16,7 +18,7 @@ const messagesSlicer = createSlice({
             state.data = [...state.data, action.payload]
             state.chatUsers = state.chatUsers.map(user =>
                 user._id === action.payload.recipient || user._id === action.payload.sender
-                    ? { ...user, text: action.payload.chatMessage, media: action.payload.images }
+                    ? { ...user, text: action.payload.chatMessage, images: action.payload.images }
                     : user
             )
         },
@@ -25,12 +27,16 @@ const messagesSlicer = createSlice({
             if (state.chatUsers.every(item => item._id !== user._id)) {
                 state.chatUsers = [user, ...state.chatUsers]
             }
-
-
+        },
+        fetchChatWith: (state, action) => {
+            state.chatUsers = action.payload
+        },
+        getBetweenChats: (state, action) => {
+            state.data = action.payload
         }
     }
 })
 
-export const { createSingleChat, createChatUser } = messagesSlicer.actions
+export const { createSingleChat, createChatUser, fetchChatWith, getBetweenChats } = messagesSlicer.actions
 
 export default messagesSlicer.reducer

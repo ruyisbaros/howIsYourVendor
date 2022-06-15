@@ -4,12 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { usersFetchFail, usersFetchSuccess } from '../../redux/usersSlicer';
 import { useNavigate, useParams } from "react-router-dom"
 import axios from 'axios';
-import { createChatUser } from '../../redux/messageSlicer';
+import { createChatUser, fetchChatWith } from '../../redux/messageSlicer';
 
 const LeftSide = () => {
 
     const { currentUser, token } = useSelector(store => store.currentUser)
-    const { chatUsers } = useSelector(store => store.messages)
+    const { chatUsers, chatWith } = useSelector(store => store.messages)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { id } = useParams()
@@ -39,6 +39,27 @@ const LeftSide = () => {
         }
 
     }, [token, dispatch, search])
+
+    useEffect(() => {
+        const getConversations = async () => {
+
+            const { data } = await axios.get("/api/v1/chats/conversations", {
+                headers: { authorization: token }
+            })
+            //console.log(data);
+            let newArr = []
+            data.forEach(item => {
+                item.recipients.forEach(rcp => {
+                    if (rcp._id !== currentUser._id) {
+                        newArr.push({ ...rcp, chatMessage: item.chatMessage, images: item.images })
+                    }
+                })
+            })
+
+            dispatch(fetchChatWith(newArr))
+        }
+        getConversations()
+    }, [token, dispatch, currentUser])
 
     const handleAddChat = (user) => {
         //console.log(user);

@@ -10,7 +10,7 @@ const MsgDisplay = ({ user, msg }) => {
                 <Avatar src={user?.avatar?.url} size="small-avatar" />
                 <span>{user.username}</span>
                 <div className="chat_time">
-                    {/* {new Date(msg.createdAt).toISOString()} */}
+                    {new Date(msg.createdAt).toLocaleTimeString()}
                 </div>
             </div>
             {msg.chatMessage && <div className="chat_text">

@@ -6,7 +6,7 @@ import MsgDisplay from './MsgDisplay';
 import Icons from '../posts/Icons'
 import axios from 'axios';
 
-import { createSingleChat } from '../../redux/messageSlicer';
+import { createSingleChat, getBetweenChats } from '../../redux/messageSlicer';
 
 const RightSide = ({ user }) => {
 
@@ -62,12 +62,27 @@ const RightSide = ({ user }) => {
             images
         }
 
-        //const { data } = await axios.post()
-        dispatch(createSingleChat(message))
+        const { data } = await axios.post("/api/v1/chats/new", { ...message }, {
+            headers: { authorization: token }
+        })
+        console.log(data);
+        dispatch(createSingleChat(data))
         setChatMessage("")
         setImages([])
 
     }
+
+    useEffect(() => {
+        if (user) {
+            const getMessages = async () => {
+                const { data } = await axios.get(`/api/v1/chats/between/${user._id}`, {
+                    headers: { authorization: token }
+                })
+                dispatch(getBetweenChats(data))
+            }
+            getMessages()
+        }
+    }, [user, dispatch, token])
 
     return (
         <>
@@ -82,11 +97,11 @@ const RightSide = ({ user }) => {
                     {
                         data?.map((msg, i) => (
                             <div key={i}>
-                                {msg.sender !== currentUser._id &&
+                                {msg.sender._id !== currentUser._id &&
                                     <div className="chat-row other_message">
                                         <MsgDisplay user={user} msg={msg} />
                                     </div>}
-                                {msg.sender === currentUser._id &&
+                                {msg.sender._id === currentUser._id &&
                                     <div className="chat-row your_message">
                                         <MsgDisplay user={currentUser} msg={msg} />
                                     </div>}
