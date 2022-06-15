@@ -8,13 +8,19 @@ const MsgDisplay = ({ user, msg }) => {
         <>
             <div className="chat_title">
                 <Avatar src={user?.avatar?.url} size="small-avatar" />
-                <span>{user.username}</span>
-                <div className="chat_time">
+                {/* <span>{user.username}</span> */}
+                {/* <div className="chat_time">
                     {new Date(msg.createdAt).toLocaleTimeString()}
-                </div>
+                </div> */}
             </div>
             {msg.chatMessage && <div className="chat_text">
-                {msg.chatMessage}
+                <div>
+                    {msg.chatMessage}
+                </div>
+                <div className="time_box text-muted">
+                    <small>{new Date(msg.createdAt).toLocaleTimeString()}</small>
+                    <i className="fa-solid fa-check"></i>
+                </div>
             </div>}
             {
                 msg.images?.map((img, index) => (

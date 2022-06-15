@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 //import { useParams } from "react-router-dom"
 import UserCard from '../user/UserCard';
@@ -12,10 +12,11 @@ const RightSide = ({ user }) => {
 
     const { currentUser, token, socket } = useSelector(store => store.currentUser)
     const { chatUsers, data } = useSelector(store => store.messages)
-    const dispatch = useDispatch()
-
     const [chatMessage, setChatMessage] = useState("")
     const [images, setImages] = useState([])
+
+    const dispatch = useDispatch()
+    const displayRef = useRef()
 
     let newImages = []
     const imageUpload = async (dt) => {
@@ -65,10 +66,11 @@ const RightSide = ({ user }) => {
         const { data } = await axios.post("/api/v1/chats/new", { ...message }, {
             headers: { authorization: token }
         })
-        console.log(data);
+        //console.log(data);
         dispatch(createSingleChat(data))
         setChatMessage("")
         setImages([])
+        socket.emit("newMessage", data)
 
     }
 
@@ -79,6 +81,9 @@ const RightSide = ({ user }) => {
                     headers: { authorization: token }
                 })
                 dispatch(getBetweenChats(data))
+                if (displayRef.current) {
+                    displayRef.current.scrollIntoView({ behavior: "smooth", block: "end" })
+                }
             }
             getMessages()
         }
@@ -93,7 +98,8 @@ const RightSide = ({ user }) => {
             </div>
 
             <div className="chat_container" style={{ height: images.length === 0 ? "calc(100% - 110px)" : "calc(100% - 180px)" }}>
-                <div className="chat_display">
+                <div className="chat_display" ref={displayRef}>
+
                     {
                         data?.map((msg, i) => (
                             <div key={i}>

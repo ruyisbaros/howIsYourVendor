@@ -1,23 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { currentUserFollowUnFollowUpdates } from './redux/authSlicer';
+import { createSingleChat } from './redux/messageSlicer';
 import { createNewNotification, openAlert } from './redux/notifySlicer';
 import { postCommentCreate, postCommentDelete, postCommentLikeUpdate, postCommentUpdate, PostCreateSuccess, postLikeUpdate } from './redux/postsSlicer';
-import { profileFollowUnFollowUpdates } from './redux/profileSlicer';
-import AlertPage from './utils/AlertPage';
 
-/* const alertNotify = (body, icon, url, title) => {
-    let options = {
-        body, icon
-    }
-
-    let not = new Notification(title, options)
-
-    not.onclick = (e) => {
-        e.preventDefault();
-        window.open(url, "_blank")
-    }
-} */
 
 const SocketClient = () => {
     const { currentUser, socket } = useSelector(store => store.currentUser)
@@ -182,8 +169,16 @@ const SocketClient = () => {
         return () => socket.off("createNotifyAddFollowToClient")
     }, [socket, dispatch])
 
+    /*------------ CHATS-------- */
+    //receive emitted new message
+    useEffect(() => {
+        socket.on("newMessageToClient", newMessage => {
+            //console.log(newMessage);
+            dispatch(createSingleChat(newMessage))
+        })
 
-
+        return () => socket.off("newMessageToClient")
+    }, [socket, dispatch])
     return (
         <>
 

@@ -18,6 +18,7 @@ const LeftSide = () => {
 
     const [searchUsers, setSearchUsers] = useState([])
 
+
     useEffect(() => {
         if (search) {
             const getUsers = async () => {
@@ -75,6 +76,10 @@ const LeftSide = () => {
         }
     }
 
+    const alertFnc = () => {
+
+    }
+
     return (
         <>
             <form className="message_header" /* onClick={handleSearch} */>
@@ -100,6 +105,7 @@ const LeftSide = () => {
                             <UserCard
                                 user={user} msg={true} /* border="border" */ /* handleClose={handleClose} */ >
                                 <i className="fas fa-circle active"></i>
+
                             </UserCard>
                         </div>
                     ))

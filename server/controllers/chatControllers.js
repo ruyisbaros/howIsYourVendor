@@ -9,7 +9,7 @@ class APIfeatures {
     }
     pagination() {
         const page = this.queryString.page * 1 || 1
-        const limit = this.queryString.limit * 1 || 9
+        const limit = this.queryString.limit * 1 || 90
         const skip = (page - 1) * limit
         this.query = this.query.skip(skip).limit(limit)
 
@@ -42,25 +42,21 @@ exports.createNewMessage = asyncHandler(async (req, res) => {
 
 exports.getConversations = asyncHandler(async (req, res) => {
 
-    const features = new APIfeatures(Conversation.find({ recipients: req.user._id }), req.query).pagination()
-
-    const conversations = await features.query.sort("updatedAt").populate("recipients", "-password")
+    const conversations = await Conversation.find({ recipients: req.user._id }).sort("updatedAt").populate("recipients", "-password")
 
     res.status(200).json(conversations)
 
 })
 
 exports.getChatMessages = asyncHandler(async (req, res) => {
-    const features = new APIfeatures(Chat.find(
+
+    const chats = await Chat.find(
         {
             $or: [
                 { sender: req.user._id, recipient: req.params.id },
                 { sender: req.params.id, recipient: req.user._id },
             ]
-        })
-        , req.query).pagination()
-
-    const chats = await features.query.sort("createdAt").populate("recipient sender", "-password")
+        }).sort("createdAt").populate("recipient sender", "-password")
 
     res.status(200).json(chats)
 

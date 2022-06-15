@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import Avatar from '../Avatar'
@@ -8,21 +9,17 @@ import Avatar from '../Avatar'
 
 const UserCard = ({ children, user, border, handleClose, msg }) => {
 
-    /* const { token } = useSelector(store => store.currentUser)
-    const dispatch = useDispatch()
+    const { data } = useSelector(store => store.messages)
+    const chatBox = []
+    data.forEach(chat => {
+        if (chat.sender._id === user._id) {
+            chatBox.push(chat)
+        }
+    })
 
-    const getProfile = async (id) => {
-        try {
-            dispatch(profileStart())
-            const { data } = await axios.get(`/api/v1/users/user/${id}`, {
-                headers: { authorization: token }
-            })
-            dispatch(profileSuccess(data))
-        }
-        catch (error) {
-            dispatch(profileFailure())
-        }
-    } */
+
+    console.log(chatBox);
+    //console.log(chatBox[chatBox.length - 1].sender);
     return (
         <div className={`d-flex p-2 align-items-center justify-content-between w-100 ${border}`}>
             <div>
@@ -34,8 +31,8 @@ const UserCard = ({ children, user, border, handleClose, msg }) => {
                     <Avatar src={user?.avatar?.url} size="big-avatar" />
                     <div className="ml-3">
                         <span className="d-block">{user?.username}</span>
-                        {msg
-                            ? <small style={{ opacity: "0.6" }}>{user?.text}</small>
+                        {chatBox.length > 0
+                            ? <small style={{ opacity: "0.6" }}>{chatBox[chatBox.length - 1].chatMessage}</small>
                             : <small style={{ opacity: "0.6" }}>{user?.fullName}</small>
                         }
                     </div>
