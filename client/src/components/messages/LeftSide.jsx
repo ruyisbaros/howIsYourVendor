@@ -9,12 +9,12 @@ import { createChatUser, fetchChatWith } from '../../redux/messageSlicer';
 const LeftSide = () => {
 
     const { currentUser, token } = useSelector(store => store.currentUser)
-    const { chatUsers, chatWith } = useSelector(store => store.messages)
+    const { chatUsers } = useSelector(store => store.messages)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { id } = useParams()
     const [search, setSearch] = useState("")
-    const [load, setLoad] = useState(false)
+
 
     const [searchUsers, setSearchUsers] = useState([])
 
@@ -23,12 +23,12 @@ const LeftSide = () => {
         if (search) {
             const getUsers = async () => {
                 try {
-                    setLoad(true)
+
                     const { data } = await axios.get(`/api/v1/users/search?username=${search}`, {
                         headers: { authorization: token }
                     })
                     setSearchUsers(data)
-                    setLoad(false)
+
                 } catch (error) {
                     dispatch(usersFetchFail())
                 }

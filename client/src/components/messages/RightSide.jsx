@@ -11,7 +11,7 @@ import { createSingleChat, getBetweenChats } from '../../redux/messageSlicer';
 const RightSide = ({ user }) => {
 
     const { currentUser, token, socket } = useSelector(store => store.currentUser)
-    const { chatUsers, data } = useSelector(store => store.messages)
+    const { data } = useSelector(store => store.messages)
     const [chatMessage, setChatMessage] = useState("")
     const [images, setImages] = useState([])
 
