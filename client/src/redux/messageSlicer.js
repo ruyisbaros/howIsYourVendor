@@ -37,7 +37,8 @@ const messagesSlicer = createSlice({
         deleteAMessage: (state, action) => {
             const id = action.payload
             state.data = state.data.filter(item => item._id !== id)
-        }
+        },
+        deleteFullConversation: (state, action) => { }
     }
 })
 
