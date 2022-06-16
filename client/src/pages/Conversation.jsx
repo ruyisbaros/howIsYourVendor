@@ -12,7 +12,7 @@ const Conversation = () => {
     const [user, setUser] = useState("")
 
     useEffect(() => {
-        const newUser = chatUsers.find(user => user._id === id)
+        const newUser = chatUsers?.find(user => user._id === id)
         if (newUser) {
             setUser(newUser)
         }

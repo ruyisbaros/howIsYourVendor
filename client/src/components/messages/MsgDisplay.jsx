@@ -1,9 +1,24 @@
 import React from 'react'
 import Avatar from '../Avatar'
-import moment from 'moment'
+//import moment from 'moment'
+import { useSelector, useDispatch } from 'react-redux'
+import { deleteAMessage } from '../../redux/messageSlicer'
+import axios from 'axios'
 
 
 const MsgDisplay = ({ user, msg }) => {
+    const { currentUser, socket, token } = useSelector(store => store.currentUser)
+    const dispatch = useDispatch()
+
+    const deleteMessage = async () => {
+        console.log(msg);
+        await axios.delete(`/api/v1/chats/delete/${msg._id}`, {
+            headers: { authorization: token }
+        })
+        dispatch(deleteAMessage(msg._id))
+        socket.emit("deleteAMessage", msg)
+    }
+
     return (
         <>
             <div className="chat_title">
@@ -13,22 +28,27 @@ const MsgDisplay = ({ user, msg }) => {
                     {new Date(msg.createdAt).toLocaleTimeString()}
                 </div> */}
             </div>
-            {msg.chatMessage && <div className="chat_text">
+            <div className="your_content">
+                {user._id === currentUser._id && <i className="fas fa-trash text-danger" onClick={deleteMessage}></i>}
                 <div>
-                    {msg.chatMessage}
+                    {msg.chatMessage && <div className="chat_text">
+                        <div>
+                            {msg.chatMessage}
+                        </div>
+                        <div className="time_box text-muted">
+                            <small>{new Date(msg.createdAt).toLocaleTimeString()}</small>
+                            <i className="fa-solid fa-check"></i>
+                        </div>
+                    </div>}
+                    {
+                        msg.images?.map((img, index) => (
+                            <div key={index} className="container_img">
+                                <img src={img.url} alt="" />
+                            </div>
+                        ))
+                    }
                 </div>
-                <div className="time_box text-muted">
-                    <small>{new Date(msg.createdAt).toLocaleTimeString()}</small>
-                    <i className="fa-solid fa-check"></i>
-                </div>
-            </div>}
-            {
-                msg.images?.map((img, index) => (
-                    <div key={index} className="container_img">
-                        <img src={img.url} alt="" />
-                    </div>
-                ))
-            }
+            </div>
 
         </>
     )

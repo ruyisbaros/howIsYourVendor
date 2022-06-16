@@ -161,9 +161,30 @@
     margin-left: 20px;
 }
 
+/* Delete message */
+.your_content {
+    position: relative;
+    cursor: pointer;
+}
+
+.your_content .fa-trash {
+    position: absolute;
+    top: 0;
+    left: -10px;
+    font-size: 10px;
+    z-index: 4;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.your_content:hover .fa-trash {
+    opacity: 1;
+}
+
 .container_img {
     width: 100%;
-    max-width: 300px;
+    width: 300px;
     height: 200px;
     overflow: hidden;
 }

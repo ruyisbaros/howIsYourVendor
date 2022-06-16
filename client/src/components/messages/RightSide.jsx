@@ -81,9 +81,12 @@ const RightSide = ({ user }) => {
                     headers: { authorization: token }
                 })
                 dispatch(getBetweenChats(data))
-                if (displayRef.current) {
+                /* if (displayRef.current) {
                     displayRef.current.scrollIntoView({ behavior: "smooth", block: "end" })
-                }
+                } */
+                setTimeout(() => {
+                    displayRef.current.scrollIntoView({ behavior: "smooth", block: "end" })
+                }, 50)
             }
             getMessages()
         }

@@ -18,7 +18,7 @@ const UserCard = ({ children, user, border, handleClose, msg }) => {
     })
 
 
-    console.log(chatBox);
+    //console.log(chatBox);
     //console.log(chatBox[chatBox.length - 1].sender);
     return (
         <div className={`d-flex p-2 align-items-center justify-content-between w-100 ${border}`}>

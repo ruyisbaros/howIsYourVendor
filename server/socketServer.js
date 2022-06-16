@@ -239,12 +239,22 @@ const socketServer = (socket) => {
     })
 
     /* ---------CHATS------- */
+    //New Message
     socket.on("newMessage", newMessage => {
         //console.log(newMessage);
         const user = users.find(user => user.id === newMessage.recipient)
-        console.log(user);
+        //console.log(user);
         if (user) {
             socket.to(`${user.socketId}`).emit('newMessageToClient', newMessage)
+        }
+    })
+    //Delete Message
+    socket.on("deleteAMessage", newMessage => {
+        //console.log(newMessage);
+        const user = users.find(user => user.id === newMessage.recipient._id)
+        //console.log(user);
+        if (user) {
+            socket.to(`${user.socketId}`).emit('deleteAMessageToClient', newMessage)
         }
     })
 }

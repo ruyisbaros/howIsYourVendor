@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { currentUserFollowUnFollowUpdates } from './redux/authSlicer';
-import { createSingleChat } from './redux/messageSlicer';
+import { createSingleChat, deleteAMessage } from './redux/messageSlicer';
 import { createNewNotification, openAlert } from './redux/notifySlicer';
 import { postCommentCreate, postCommentDelete, postCommentLikeUpdate, postCommentUpdate, PostCreateSuccess, postLikeUpdate } from './redux/postsSlicer';
 
@@ -179,6 +179,18 @@ const SocketClient = () => {
 
         return () => socket.off("newMessageToClient")
     }, [socket, dispatch])
+
+    //receive emitted delete message
+    useEffect(() => {
+        socket.on("deleteAMessageToClient", newMessage => {
+            //console.log(newMessage);
+            dispatch(deleteAMessage(newMessage._id))
+        })
+
+        return () => socket.off("deleteAMessageToClient")
+    }, [socket, dispatch])
+
+
     return (
         <>
 

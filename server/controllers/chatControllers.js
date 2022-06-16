@@ -61,3 +61,9 @@ exports.getChatMessages = asyncHandler(async (req, res) => {
     res.status(200).json(chats)
 
 })
+
+exports.deleteAMessage = asyncHandler(async (req, res) => {
+
+    await Chat.findByIdAndDelete(req.params.id)
+    res.status(200).json({ message: "Message deleted successfully" })
+})
