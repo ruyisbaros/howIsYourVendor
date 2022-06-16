@@ -38,10 +38,13 @@ const messagesSlicer = createSlice({
             const id = action.payload
             state.data = state.data.filter(item => item._id !== id)
         },
-        deleteFullConversation: (state, action) => { }
+        deleteFullConversation: (state, action) => {
+            const id = action.payload
+            state.chatUsers = state.chatUsers.filter(item => item._id !== id)
+        }
     }
 })
 
-export const { createSingleChat, createChatUser, fetchChatWith, getBetweenChats, deleteAMessage } = messagesSlicer.actions
+export const { createSingleChat, createChatUser, fetchChatWith, getBetweenChats, deleteAMessage, deleteFullConversation } = messagesSlicer.actions
 
 export default messagesSlicer.reducer

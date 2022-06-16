@@ -5,8 +5,9 @@ import UserCard from '../user/UserCard';
 import MsgDisplay from './MsgDisplay';
 import Icons from '../posts/Icons'
 import axios from 'axios';
+import { useNavigate } from "react-router-dom"
 
-import { createSingleChat, getBetweenChats } from '../../redux/messageSlicer';
+import { createSingleChat, deleteFullConversation, getBetweenChats } from '../../redux/messageSlicer';
 
 const RightSide = ({ user }) => {
 
@@ -17,6 +18,7 @@ const RightSide = ({ user }) => {
 
     const dispatch = useDispatch()
     const displayRef = useRef()
+    const navigate = useNavigate()
 
     let newImages = []
     const imageUpload = async (dt) => {
@@ -92,11 +94,20 @@ const RightSide = ({ user }) => {
         }
     }, [user, dispatch, token])
 
+    const deleteConversation = async () => {
+        //console.log(user);
+        await axios.delete(`/api/v1/chats/conversation/${user._id}`, {
+            headers: { authorization: token }
+        })
+        dispatch(deleteFullConversation(user._id))
+        navigate("/messages")
+    }
+
     return (
         <>
-            <div className="message_header">
+            <div className="message_header" style={{ cursor: "pointer" }}>
                 {user && <UserCard user={user}>
-                    <i className="fas fa-trash text-danger"></i>
+                    <i className="fas fa-trash text-danger" onClick={deleteConversation}></i>
                 </UserCard>}
             </div>
 

@@ -67,3 +67,16 @@ exports.deleteAMessage = asyncHandler(async (req, res) => {
     await Chat.findByIdAndDelete(req.params.id)
     res.status(200).json({ message: "Message deleted successfully" })
 })
+
+exports.deleteAConversation = asyncHandler(async (req, res) => {
+
+    const deletedConversation = await Conversation.findOneAndDelete({
+        $or: [
+            { recipients: [req.user._id, req.params.id] },
+            { recipients: [req.params.id, req.user._id] }
+        ]
+    })
+
+    await Chat.deleteMany({ conversation: deletedConversation._id })
+    res.status(200).json({ message: "Conversation deleted successfully" })
+})
