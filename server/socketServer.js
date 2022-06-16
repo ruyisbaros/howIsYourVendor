@@ -240,7 +240,7 @@ const socketServer = (socket) => {
 
     /* ---------CHATS------- */
     //New Message
-    socket.on("newMessage", newMessage => {
+    socket.on("newMessage", ({ data: newMessage, user: socketUser }) => {
         //console.log(newMessage);
         const user = users.find(user => user.id === newMessage.recipient)
         //console.log(user);

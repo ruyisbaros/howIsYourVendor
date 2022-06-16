@@ -72,7 +72,8 @@ const RightSide = ({ user }) => {
         dispatch(createSingleChat(data))
         setChatMessage("")
         setImages([])
-        socket.emit("newMessage", data)
+        const { _id, avatar, fullName, username } = currentUser
+        socket.emit("newMessage", { data, user: { _id, avatar, fullName, username } })
 
     }
 
