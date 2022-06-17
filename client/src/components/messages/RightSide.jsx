@@ -12,12 +12,14 @@ import { createSingleChat, deleteFullConversation, getBetweenChats } from '../..
 const RightSide = ({ user }) => {
 
     const { currentUser, token, socket } = useSelector(store => store.currentUser)
-    const { data } = useSelector(store => store.messages)
+    const { data, isTyping } = useSelector(store => store.messages)
     const [chatMessage, setChatMessage] = useState("")
     const [images, setImages] = useState([])
 
+
     const dispatch = useDispatch()
     const displayRef = useRef()
+    const typeRef = useRef()
     const navigate = useNavigate()
 
     let newImages = []
@@ -53,11 +55,11 @@ const RightSide = ({ user }) => {
         newArr.splice(i, 1)
         setImages(newArr)
     }
-
+    //let message;
     const chatSubmit = async (e) => {
         e.preventDefault()
 
-        const message = {
+        let message = {
             sender: currentUser._id,
             recipient: user._id,
             /* createdAt: new Date().toISOString(), */
@@ -69,11 +71,13 @@ const RightSide = ({ user }) => {
             headers: { authorization: token }
         })
         //console.log(data);
+        // setMsgData(data)
         dispatch(createSingleChat(data))
         setChatMessage("")
         setImages([])
         const { _id, avatar, fullName, username } = currentUser
         socket.emit("newMessage", { data, user: { _id, avatar, fullName, username } })
+        socket.emit("closeTyping", user._id)
 
     }
 
@@ -104,12 +108,23 @@ const RightSide = ({ user }) => {
         navigate("/messages")
     }
 
+    const textMessage = (e) => {
+
+        setChatMessage(e.target.value)
+        socket.emit("openTyping", user._id)
+        setTimeout(() => {
+            typeRef.scrollIntoView({ behavior: "smooth", block: "end" })
+        }, 50)
+    }
+
+
     return (
         <>
             <div className="message_header" style={{ cursor: "pointer" }}>
                 {user && <UserCard user={user}>
                     <i className="fas fa-trash text-danger" onClick={deleteConversation}></i>
                 </UserCard>}
+
             </div>
 
             <div className="chat_container" style={{ height: images.length === 0 ? "calc(100% - 110px)" : "calc(100% - 180px)" }}>
@@ -130,7 +145,7 @@ const RightSide = ({ user }) => {
                         ))
                     }
 
-
+                    {isTyping && <span ref={typeRef} id="isTyping">{`${user.username} is typing `} <span>...</span></span>}
                 </div>
             </div>
 
@@ -147,8 +162,9 @@ const RightSide = ({ user }) => {
             </div>
 
             <form className="chat_input" onSubmit={chatSubmit}>
+
                 <input type="text" placeholder="Enter your message..."
-                    value={chatMessage} onChange={(e) => setChatMessage(e.target.value)} />
+                    value={chatMessage} onChange={textMessage} />
                 <Icons setContent={setChatMessage} content={chatMessage} />
                 <div className="file_upload">
                     <i className="fas fa-image text-danger"></i>

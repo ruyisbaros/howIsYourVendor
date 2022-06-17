@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { currentUserFollowUnFollowUpdates } from './redux/authSlicer';
-import { createSingleChat, deleteAMessage } from './redux/messageSlicer';
+import { checkUserOnlineOffline, closeTyping, createSingleChat, deleteAMessage, openTyping } from './redux/messageSlicer';
 import { createNewNotification, openAlert } from './redux/notifySlicer';
 import { postCommentCreate, postCommentDelete, postCommentLikeUpdate, postCommentUpdate, PostCreateSuccess, postLikeUpdate } from './redux/postsSlicer';
 
 
 const SocketClient = () => {
+
+
     const { currentUser, socket } = useSelector(store => store.currentUser)
     const { alert } = useSelector(store => store.notifies)
     const dispatch = useDispatch()
-    /* const [showAlert, setShowAlert] = useState(false) */
+
+
+
+
     useEffect(() => {
-        socket.emit("joinUser", currentUser._id)
+        socket.emit("joinUser", currentUser)
     }, [socket, currentUser])
 
     //receive emitted Create new POST event
@@ -24,7 +29,7 @@ const SocketClient = () => {
         })
 
         return () => socket.off("createANewPostToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted LIKE POST event
     useEffect(() => {
@@ -35,7 +40,7 @@ const SocketClient = () => {
         })
 
         return () => socket.off("likePostToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted createComment event
 
@@ -46,7 +51,7 @@ const SocketClient = () => {
             // alert(updatedPost.owner.username)
         })
         return () => socket.off("createCommentToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted deleteComment event
     useEffect(() => {
@@ -55,7 +60,7 @@ const SocketClient = () => {
             dispatch(postCommentDelete(updatedPost))
         })
         return () => socket.off("deleteCommentToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted likeComment event
     useEffect(() => {
@@ -64,7 +69,7 @@ const SocketClient = () => {
             dispatch(postCommentLikeUpdate(updatedPost))
         })
         return () => socket.off("likeCommentToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted replyComment event
     useEffect(() => {
@@ -73,7 +78,7 @@ const SocketClient = () => {
             dispatch(postCommentCreate({ updatedPost }))
         })
         return () => socket.off("replyCommentToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted updateComment event
     useEffect(() => {
@@ -82,7 +87,7 @@ const SocketClient = () => {
             dispatch(postCommentUpdate(updatedPost))
         })
         return () => socket.off("updateCommentToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted Follow UnFollow event
     useEffect(() => {
@@ -91,7 +96,7 @@ const SocketClient = () => {
             dispatch(currentUserFollowUnFollowUpdates({ followers: newUser.followers, followings: newUser.followings }))
         })
         return () => socket.off("followUnFollowToClient")
-    }, [socket, dispatch])
+    })
 
     /*------------ NOTIFICATIONS-------- */
 
@@ -103,7 +108,7 @@ const SocketClient = () => {
 
         })
         return () => socket.off("createPostNotifyToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted LIKE POST notification
     useEffect(() => {
@@ -114,7 +119,7 @@ const SocketClient = () => {
         })
 
         return () => socket.off("createNotifyPostLikeToClient")
-    }, [socket, dispatch, alert])
+    })
 
     //receive emitted Comment Reply notification
     useEffect(() => {
@@ -127,7 +132,7 @@ const SocketClient = () => {
         })
 
         return () => socket.off("createNotifyReplyCommentToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted Comment POST notification
     useEffect(() => {
@@ -137,7 +142,7 @@ const SocketClient = () => {
         })
 
         return () => socket.off("createNotifyPostCommentToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted Comment Like notification
     useEffect(() => {
@@ -147,7 +152,7 @@ const SocketClient = () => {
         })
 
         return () => socket.off("createNotifyLikeCommentToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted View Profile notification
     useEffect(() => {
@@ -157,7 +162,7 @@ const SocketClient = () => {
         })
 
         return () => socket.off("createNotifyViewProfileToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted Add Follow notification
     useEffect(() => {
@@ -178,7 +183,7 @@ const SocketClient = () => {
         })
 
         return () => socket.off("newMessageToClient")
-    }, [socket, dispatch])
+    })
 
     //receive emitted delete message
     useEffect(() => {
@@ -188,7 +193,28 @@ const SocketClient = () => {
         })
 
         return () => socket.off("deleteAMessageToClient")
-    }, [socket, dispatch])
+    })
+
+    //receive emitted typing message
+    useEffect(() => {
+        socket.on("openTypingToClient", () => {
+            //console.log(newMessage);
+            dispatch(openTyping())
+        })
+
+        return () => socket.off("openTypingToClient")
+    })
+
+    //receive emitted stop typing message
+    useEffect(() => {
+        socket.on("closeTypingToClient", () => {
+            //console.log(newMessage);
+            dispatch(closeTyping())
+        })
+
+        return () => socket.off("closeTypingToClient")
+    })
+
 
 
     return (

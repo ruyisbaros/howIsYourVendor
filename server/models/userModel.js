@@ -85,6 +85,10 @@ const UserSchema = new mongoose.Schema({
             ref: "Posts"
         }
     ],
+    /* isOnline: {
+        type: Boolean,
+        default: false
+    }, */
     resetPasswordToken: String,
     resetPasswordTime: Date,
 

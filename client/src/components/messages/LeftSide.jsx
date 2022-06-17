@@ -104,7 +104,7 @@ const LeftSide = () => {
                         <div key={user._id} className={`message_user ${isActive(user)}`} onClick={() => handleAddChat(user)}>
                             <UserCard
                                 user={user} msg={true} /* border="border" */ /* handleClose={handleClose} */ >
-                                <i className="fas fa-circle active"></i>
+                                <i style={{ color: user.isOnline ? "teal" : "red" }} className="fas fa-circle active"></i>
 
                             </UserCard>
                         </div>

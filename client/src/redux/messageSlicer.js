@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 
 const initialState = {
-
+    isTyping: false,
     chatUsers: [],
     numberOfUsers: 0,
     data: [],
@@ -41,10 +41,26 @@ const messagesSlicer = createSlice({
         deleteFullConversation: (state, action) => {
             const id = action.payload
             state.chatUsers = state.chatUsers.filter(item => item._id !== id)
+        },
+        checkUserOnlineOffline: (state, action) => {
+            console.log(action.payload.id);
+            state.chatUsers = state.chatUsers.map(user =>
+                user._id === action.payload.id ? { ...user, isOnline: true } : { ...user, isOnline: false })
+        },
+        openTyping: (state, action) => {
+            state.isTyping = true
+        },
+        closeTyping: (state, action) => {
+            state.isTyping = false
         }
+        /* checkUserOffline: (state, action) => {
+            state.chatUsers = state.chatUsers.map(user => user !== action.payload)
+        } */
     }
 })
 
-export const { createSingleChat, createChatUser, fetchChatWith, getBetweenChats, deleteAMessage, deleteFullConversation } = messagesSlicer.actions
+export const { createSingleChat, createChatUser, fetchChatWith, getBetweenChats, deleteAMessage, deleteFullConversation, checkUserOnlineOffline,
+    openTyping, closeTyping
+} = messagesSlicer.actions
 
 export default messagesSlicer.reducer

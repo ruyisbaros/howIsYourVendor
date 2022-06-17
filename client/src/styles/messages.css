@@ -273,3 +273,27 @@
     left: 0;
     opacity: 0;
 }
+
+#isTyping {
+    font-size: 14px;
+    color: teal;
+    letter-spacing: 1.3px;
+
+}
+
+#isTyping span {
+    display: inline-block;
+    animation: typing 1s alternate infinite;
+}
+
+@keyframes typing {
+    0% {
+        transform: translateX(0);
+        transform: scale(0)
+    }
+
+    100% {
+        transform: translateX(5px);
+        transform: scale(1.05)
+    }
+}

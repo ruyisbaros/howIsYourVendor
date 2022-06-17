@@ -8,6 +8,7 @@ import axios from 'axios'
 
 const MsgDisplay = ({ user, msg }) => {
     const { currentUser, socket, token } = useSelector(store => store.currentUser)
+    const { isTyping } = useSelector(store => store.messages)
     const dispatch = useDispatch()
 
     const deleteMessage = async () => {
@@ -48,6 +49,7 @@ const MsgDisplay = ({ user, msg }) => {
                         ))
                     }
                 </div>
+
             </div>
 
         </>

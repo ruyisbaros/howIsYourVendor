@@ -30,12 +30,14 @@ app.use(fileUpload({
 //Socket connection
 const http = require("http").createServer(app)
 const io = require("socket.io")(http, {
+    pingTimeout: 60000,
     cors: {
-        origin: "*",
+        origin: "http://localhost:3000",
     }
 })
 io.sockets.on('connection', socket => {
     socketServer(socket)
+    console.log("Connected to socket IO");
 })
 
 mongoose

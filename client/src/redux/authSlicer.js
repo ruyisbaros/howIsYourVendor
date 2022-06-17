@@ -9,6 +9,7 @@ const initialState = {
     error: false,
     message: "",
     token: "",
+    isOnline: false
 }
 
 const currentUserSlicer = createSlice({
@@ -43,6 +44,7 @@ const currentUserSlicer = createSlice({
             state.token = ""
             state.message = ""
             state.error = false;
+            state.isOnline = false
         },
         updateCurrentStart: (state) => {
             state.authFetching = true

@@ -4,11 +4,22 @@ let users = []
 const socketServer = (socket) => {
 
     //Connect - Disconnect
-    socket.on('joinUser', id => {
-        users.push({ id, socketId: socket.id })
+    socket.on('joinUser', user => {
+        //console.log("currentUser: " + user._id);
+        users.push({ id: user._id, socketId: socket.id, followers: user.followers, followings: user.followings })
         //console.log(users);
     })
     socket.on('disconnect', () => {
+        /* const data = users.find(user => user.socketId !== socket.id)
+        console.log("data", data);
+        if (data) {
+            const clients = users.filter(user =>
+                data.followers.find(item => item._id === user.id))
+            if (clients.length > 0) {
+                clients.forEach(client =>
+                    socket.to(`${client.socketId}`).emit("checkUserOffline", data.id))
+            }
+        } */
         users = users.filter(user => user.socketId !== socket.id)
         //console.log(users);
     })
@@ -255,6 +266,25 @@ const socketServer = (socket) => {
         //console.log(user);
         if (user) {
             socket.to(`${user.socketId}`).emit('deleteAMessageToClient', newMessage)
+        }
+    })
+
+    //Typing
+    socket.on("openTyping", userId => {
+        console.log(userId);
+        const user = users.find(user => user.id === userId)
+        //console.log(user);
+        if (user) {
+            socket.to(`${user.socketId}`).emit('openTypingToClient')
+        }
+    })
+    //Stop Typing
+    socket.on("closeTyping", userId => {
+        console.log(userId);
+        const user = users.find(user => user.id === userId)
+        //console.log(user);
+        if (user) {
+            socket.to(`${user.socketId}`).emit('closeTypingToClient')
         }
     })
 }
