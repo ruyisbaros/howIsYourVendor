@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { currentUserFollowUnFollowUpdates } from './redux/authSlicer';
-import { checkUserOnlineOffline, closeTyping, createSingleChat, deleteAMessage, openTyping } from './redux/messageSlicer';
-import { createNewNotification, openAlert } from './redux/notifySlicer';
+import { checkUserOnlineOffline, closeTyping, createSingleChat, deleteAMessage, openRead, openTyping } from './redux/messageSlicer';
+import { createNewNotification } from './redux/notifySlicer';
 import { postCommentCreate, postCommentDelete, postCommentLikeUpdate, postCommentUpdate, PostCreateSuccess, postLikeUpdate } from './redux/postsSlicer';
 
 
@@ -10,7 +10,7 @@ const SocketClient = () => {
 
 
     const { currentUser, socket } = useSelector(store => store.currentUser)
-    const { alert } = useSelector(store => store.notifies)
+    //const { alert } = useSelector(store => store.notifies)
     const dispatch = useDispatch()
 
 
@@ -197,9 +197,10 @@ const SocketClient = () => {
 
     //receive emitted typing message
     useEffect(() => {
-        socket.on("openTypingToClient", () => {
+        socket.on("openTypingToClient", (typeTo) => {
             //console.log(newMessage);
-            dispatch(openTyping())
+            dispatch(openTyping(typeTo))
+            //console.log(typeTo);
         })
 
         return () => socket.off("openTypingToClient")
@@ -214,6 +215,16 @@ const SocketClient = () => {
 
         return () => socket.off("closeTypingToClient")
     })
+
+    /*  //receive emitted Read message
+     useEffect(() => {
+         socket.on("msgReadToClient", () => {
+             //console.log(newMessage);
+             dispatch(openRead())
+         })
+ 
+         return () => socket.off("msgReadToClient")
+     }) */
 
 
 

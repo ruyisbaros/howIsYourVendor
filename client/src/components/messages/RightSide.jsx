@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-//import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import UserCard from '../user/UserCard';
 import MsgDisplay from './MsgDisplay';
 import Icons from '../posts/Icons'
@@ -9,10 +9,10 @@ import { useNavigate } from "react-router-dom"
 
 import { createSingleChat, deleteFullConversation, getBetweenChats } from '../../redux/messageSlicer';
 
-const RightSide = ({ user }) => {
+const RightSide = () => {
 
     const { currentUser, token, socket } = useSelector(store => store.currentUser)
-    const { data, isTyping } = useSelector(store => store.messages)
+    const { data, isTyping, typingTo } = useSelector(store => store.messages)
     const [chatMessage, setChatMessage] = useState("")
     const [images, setImages] = useState([])
 
@@ -21,6 +21,21 @@ const RightSide = ({ user }) => {
     const displayRef = useRef()
     const typeRef = useRef()
     const navigate = useNavigate()
+
+    const { chatUsers } = useSelector(store => store.messages)
+
+    const { id } = useParams()
+    //console.log(id, typingTo);
+
+    const [user, setUser] = useState("")
+
+    useEffect(() => {
+        const newUser = chatUsers?.find(user => user._id === id)
+        if (newUser) {
+            setUser(newUser)
+        }
+        //console.log(newUser);
+    }, [id, chatUsers])
 
     let newImages = []
     const imageUpload = async (dt) => {
@@ -61,7 +76,7 @@ const RightSide = ({ user }) => {
 
         let message = {
             sender: currentUser._id,
-            recipient: user._id,
+            recipient: id,
             /* createdAt: new Date().toISOString(), */
             chatMessage,
             images
@@ -70,7 +85,7 @@ const RightSide = ({ user }) => {
         const { data } = await axios.post("/api/v1/chats/new", { ...message }, {
             headers: { authorization: token }
         })
-        //console.log(data);
+        console.log(data);
         // setMsgData(data)
         dispatch(createSingleChat(data))
         setChatMessage("")
@@ -82,9 +97,9 @@ const RightSide = ({ user }) => {
     }
 
     useEffect(() => {
-        if (user) {
+        if (id) {
             const getMessages = async () => {
-                const { data } = await axios.get(`/api/v1/chats/between/${user._id}`, {
+                const { data } = await axios.get(`/api/v1/chats/between/${id}`, {
                     headers: { authorization: token }
                 })
                 dispatch(getBetweenChats(data))
@@ -111,12 +126,14 @@ const RightSide = ({ user }) => {
     const textMessage = (e) => {
 
         setChatMessage(e.target.value)
-        socket.emit("openTyping", user._id)
-        setTimeout(() => {
-            typeRef.scrollIntoView({ behavior: "smooth", block: "end" })
-        }, 50)
-    }
+        socket.emit("openTyping", { id, id2: currentUser._id })
 
+    }
+    useEffect(() => {
+        setTimeout(() => {
+            displayRef.current.scrollIntoView({ behavior: "smooth", block: "end" })
+        }, 50)
+    }, [isTyping])
 
     return (
         <>
@@ -145,7 +162,7 @@ const RightSide = ({ user }) => {
                         ))
                     }
 
-                    {isTyping && <span ref={typeRef} id="isTyping">{`${user.username} is typing `} <span>...</span></span>}
+                    {isTyping && id === typingTo && <span ref={typeRef} id="isTyping">{`${user.username} is typing `} <span>...</span></span>}
                 </div>
             </div>
 

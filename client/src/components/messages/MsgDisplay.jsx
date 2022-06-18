@@ -8,7 +8,7 @@ import axios from 'axios'
 
 const MsgDisplay = ({ user, msg }) => {
     const { currentUser, socket, token } = useSelector(store => store.currentUser)
-    const { isTyping } = useSelector(store => store.messages)
+    const { isTyping, isRead } = useSelector(store => store.messages)
     const dispatch = useDispatch()
 
     const deleteMessage = async () => {
@@ -38,7 +38,8 @@ const MsgDisplay = ({ user, msg }) => {
                         </div>
                         <div className="time_box text-muted">
                             <small>{new Date(msg.createdAt).toLocaleTimeString()}</small>
-                            <i className="fa-solid fa-check"></i>
+                            {user === currentUser && <i style={{ color: isRead ? "teal" : "gray", marginLeft: "4px" }} className="fa-solid fa-check"></i>}
+                            {user === currentUser && <i style={{ color: isRead ? "teal" : "gray", marginLeft: "-6px" }} className="fa-solid fa-check"></i>}
                         </div>
                     </div>}
                     {

@@ -8,7 +8,7 @@ import { createChatUser, fetchChatWith } from '../../redux/messageSlicer';
 
 const LeftSide = () => {
 
-    const { currentUser, token } = useSelector(store => store.currentUser)
+    const { currentUser, token, socket } = useSelector(store => store.currentUser)
     const { chatUsers } = useSelector(store => store.messages)
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -76,9 +76,9 @@ const LeftSide = () => {
         }
     }
 
-    const alertFnc = () => {
-
-    }
+    /* const selectUser = (user) => {
+        socket.emit("msgRead", user._id)
+    } */
 
     return (
         <>
@@ -101,7 +101,11 @@ const LeftSide = () => {
                 }
                 {
                     chatUsers?.map(user => (
-                        <div key={user._id} className={`message_user ${isActive(user)}`} onClick={() => handleAddChat(user)}>
+                        <div key={user._id} className={`message_user ${isActive(user)}`}
+                            onClick={() => {
+                                handleAddChat(user)
+                                /* selectUser(user) */
+                            }}>
                             <UserCard
                                 user={user} msg={true} /* border="border" */ /* handleClose={handleClose} */ >
                                 <i style={{ color: user.isOnline ? "teal" : "red" }} className="fas fa-circle active"></i>

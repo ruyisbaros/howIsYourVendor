@@ -243,7 +243,7 @@ const socketServer = (socket) => {
     socket.on("createNotifyAddFollow", (newUser) => {
         //console.log(newUser);
         const user = users.find(user => user.id === newUser.recipients[0])
-        console.log(user);
+        //console.log(user);
         if (user) {
             socket.to(`${user.socketId}`).emit('createNotifyAddFollowToClient', newUser)
         }
@@ -270,23 +270,33 @@ const socketServer = (socket) => {
     })
 
     //Typing
-    socket.on("openTyping", userId => {
-        console.log(userId);
-        const user = users.find(user => user.id === userId)
+    socket.on("openTyping", ({ id, id2 }) => {
+        console.log(id, id2);
+        const user = users.find(user => user.id === id)
         //console.log(user);
         if (user) {
-            socket.to(`${user.socketId}`).emit('openTypingToClient')
+            socket.to(`${user.socketId}`).emit('openTypingToClient', id2)
         }
     })
     //Stop Typing
     socket.on("closeTyping", userId => {
-        console.log(userId);
+        //console.log(userId);
         const user = users.find(user => user.id === userId)
         //console.log(user);
         if (user) {
             socket.to(`${user.socketId}`).emit('closeTypingToClient')
         }
     })
+
+    /* //Message Read
+    socket.on("msgRead", userId => {
+        //console.log(userId);
+        const user = users.find(user => user.id === userId)
+        //console.log(user);
+        if (user) {
+            socket.to(`${user.socketId}`).emit('msgReadToClient')
+        }
+    }) */
 }
 
 module.exports = socketServer
