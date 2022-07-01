@@ -63,10 +63,6 @@ app.use("/api/v1/comments", commentRouter)
 app.use("/api/v1/notifications", notificationRouter)
 app.use("/api/v1/chats", chatRouter)
 
-app.get("/", (req, res) => {
-    res.send("Hello")
-})
-
 
 const port = process.env.PORT || 8080
 
