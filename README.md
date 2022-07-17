@@ -8,7 +8,7 @@
 
 # Create a Full-Stack Social Media API [2022]
 
-Welcome to my social media application such as Instagram, Youtube, Facebook. As you can see from the photos, you can use almost all the features on the current social media pages in my application. Due to the Socket.io feature, users have been notified about other users' activities such as likes, comments, profile viewing, instant messages, etc. and many more up-to-date social media features
+Welcome to my social media application such as Instagram, Youtube, Facebook. As you can see from the photos, you can use almost all the features on the current social media pages in my application. Due to the Socket.io feature, users have been notified about other users' activities -LIVELY- such as likes, comments, profile viewing, instant messages, etc. and many more up-to-date social media features
 
 ## Languages, Libraries and Frameworks used
 
